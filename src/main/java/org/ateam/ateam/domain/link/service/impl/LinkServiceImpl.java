@@ -19,41 +19,47 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class LinkServiceImpl implements LinkService {
-    private final LinkRepository linkRepository;
-    private final LinkoRepository linkoRepository;
-    private final LinkerRepository linkerRepository;
+  private final LinkRepository linkRepository;
+  private final LinkoRepository linkoRepository;
+  private final LinkerRepository linkerRepository;
 
-    @Transactional
-    @Override
-    public void doLink(LinkReqDTO.linkDTO dto, Long memberId) {
-        Linker linker;
-        Linko linko;
+  @Transactional
+  @Override
+  public void doLink(LinkReqDTO.linkDTO dto, Long memberId) {
+    Linker linker;
+    Linko linko;
 
-        if (dto.linkTingRole() == LinkTingRole.LINKER) {
-            linker = linkerRepository.findByMemberId(memberId)
-                    .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+    if (dto.linkTingRole() == LinkTingRole.LINKER) {
+      linker =
+          linkerRepository
+              .findByMemberId(memberId)
+              .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
 
-            linko = linkoRepository.findById(dto.linkoId())
-                    .orElseThrow(() -> new LinkException(ErrorCode.LINKO_NOT_FOUND));
-        }
-        else if (dto.linkTingRole() == LinkTingRole.LINKO) {
-            linko = linkoRepository.findByMemberId(memberId)
-                    .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+      linko =
+          linkoRepository
+              .findById(dto.linkoId())
+              .orElseThrow(() -> new LinkException(ErrorCode.LINKO_NOT_FOUND));
+    } else if (dto.linkTingRole() == LinkTingRole.LINKO) {
+      linko =
+          linkoRepository
+              .findByMemberId(memberId)
+              .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
 
-            linker = linkerRepository.findById(dto.linkerId())
-                    .orElseThrow(() -> new LinkException(ErrorCode.LINKER_NOT_FOUND));
-        }
-        else {
-            throw new LinkException(ErrorCode.LINKTINGROLE_NOT_FOUND);
-        }
-
-        // 2. (권장) 이미 링크가 존재하는지 중복 체크
-        // Repository에 boolean existsByLinkerAndLinko(Linker linker, Linko linko); 메서드가 필요합니다.
-        if (linkRepository.existsByLinkerAndLinko(linker, linko)) {
-            throw new LinkException(ErrorCode.LINK_EXIST);
-        }
-
-        // 3. 링크 저장
-        linkRepository.save(LinkConverter.toLinkEntity(linker, linko));
+      linker =
+          linkerRepository
+              .findById(dto.linkerId())
+              .orElseThrow(() -> new LinkException(ErrorCode.LINKER_NOT_FOUND));
+    } else {
+      throw new LinkException(ErrorCode.LINKTINGROLE_NOT_FOUND);
     }
+
+    // 2. (권장) 이미 링크가 존재하는지 중복 체크
+    // Repository에 boolean existsByLinkerAndLinko(Linker linker, Linko linko); 메서드가 필요합니다.
+    if (linkRepository.existsByLinkerAndLinko(linker, linko)) {
+      throw new LinkException(ErrorCode.LINK_EXIST);
+    }
+
+    // 3. 링크 저장
+    linkRepository.save(LinkConverter.toLinkEntity(linker, linko));
+  }
 }

@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface LinkService {
 
-
-    @Transactional
-    void doLink(LinkReqDTO.linkDTO dto, Long memberId);
+  @Transactional
+  void doLink(LinkReqDTO.linkDTO dto, Long memberId);
 }

@@ -4,5 +4,5 @@ import org.ateam.ateam.domain.linker.controller.response.LinkerProfileSummaryRes
 
 public interface LinkerProfileService {
 
-	LinkerProfileSummaryResponse getMyProfileSummary(Long memberId);
+  LinkerProfileSummaryResponse getMyProfileSummary(Long memberId);
 }
