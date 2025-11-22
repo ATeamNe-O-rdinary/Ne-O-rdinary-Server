@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.linker.exception.InvalidLinkerEnumException;
 import org.ateam.ateam.domain.linker.model.enums.CareerLevel;
-import org.ateam.ateam.domain.linker.model.enums.CollaborationType;
 import org.ateam.ateam.domain.linker.model.enums.RateUnit;
-import org.ateam.ateam.domain.linker.model.enums.Region;
-import org.ateam.ateam.domain.linker.model.enums.TechStack;
 import org.ateam.ateam.domain.linker.model.enums.WorkTimeType;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
+import org.ateam.ateam.domain.member.enums.CollaborationType;
+import org.ateam.ateam.domain.member.enums.Region;
+import org.ateam.ateam.domain.member.enums.TechStack;
 import org.springframework.stereotype.Component;
 
 @Component

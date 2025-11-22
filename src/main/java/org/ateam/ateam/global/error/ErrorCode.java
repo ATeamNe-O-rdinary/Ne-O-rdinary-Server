@@ -47,7 +47,9 @@ public enum ErrorCode {
   LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
   LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
 
-  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다.");
+  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
+    LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다.")
+    ;
 
 
   private final String code;

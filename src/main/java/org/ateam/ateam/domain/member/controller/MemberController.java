@@ -39,9 +39,11 @@ public class MemberController {
         - **sort 값은 받지 않습니다.**
         """)
   @ApiErrorCodeExamples({ErrorCode.CATEGORY_NOT_FOUND, ErrorCode.INVALID_SALARY})
-  public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberList(
-      @Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
-    PagedResponse<MemberResDTO.ProfileListDTO> result = memberService.getProfileList(dto, pageable);
+  public ResponseDto<PagedResponse<?>> getMemberList(@Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
+    PagedResponse<?> result = memberService.getProfileList(dto, pageable);
+
+
+
     return ResponseDto.of(HttpStatus.OK, null, "회원 프로필 목록 조회 성공", result);
   }
 
@@ -52,15 +54,15 @@ public class MemberController {
 
   }
 
-  @GetMapping("/api/members/category-list")
-    public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(@RequestParam CategoryOfBusiness categoryOfBusiness){
-      return ResponseDto.of(HttpStatus.OK, null, "카테고리 목록 조회 성공", memberService.getCategoryOfBusinessList(categoryOfBusiness));
+//  @GetMapping("/api/members/category-list")
+//    public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(@RequestParam CategoryOfBusiness categoryOfBusiness){
+//      return ResponseDto.of(HttpStatus.OK, null, "카테고리 목록 조회 성공", memberService.getCategoryOfBusinessList(categoryOfBusiness));
+//
+//  }
 
-  }
-
-  @GetMapping("/api/members/top")
-    public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberTopList(@RequestBody MemberReqDTO.TopListDTO dto){
-
-
-  }
+//  @GetMapping("/api/members/top")
+//    public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberTopList(@RequestBody MemberReqDTO.TopListDTO dto){
+//
+//
+//  }
 }

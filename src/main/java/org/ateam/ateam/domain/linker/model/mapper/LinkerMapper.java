@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.ateam.ateam.domain.linker.controller.response.LinkerResponse;
 import org.ateam.ateam.domain.linker.model.entity.Linker;
-import org.ateam.ateam.domain.linker.model.enums.TechStack;
+import org.ateam.ateam.domain.member.enums.TechStack;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

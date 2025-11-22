@@ -67,18 +67,18 @@ public class LinkoProfileReqDTO {
 
   public Linko toEntity(Long memberId) {
     return Linko.builder()
-        .memberId(memberId)
+//        .memberId(memberId)
         .companyName(companyName)
         .companyType(companyType)
         .mainCategory(mainCategory)
         .categoryOfBusiness(categoryOfBusiness)
         .projectIntro(projectIntro)
         .expectedDuration(expectedDuration)
-        .expectedScope(expectedScope)
+//        .expectedScope(expectedScope)
         .collaborationType(collaborationType)
         .region(region)
         .deadline(deadline)
-        .requiredSkills(convertEnumListToJson(requiredSkills))
+//        .requiredSkills(convertEnumListToJson(requiredSkills))
         .build();
   }
 

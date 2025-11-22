@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface MemberService {
 
-  PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(
+  PagedResponse<?> getProfileList(
       MemberReqDTO.ProfileListDTO dto, Pageable pageable);
     CategoryOfBusiness getCategoryOfBusiness(Long memberId, String linkTingRole);
 

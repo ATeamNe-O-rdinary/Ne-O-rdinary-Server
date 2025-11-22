@@ -34,11 +34,11 @@ public class LinkoProfileResDTO {
         .categoryOfBusiness(linko.getCategoryOfBusiness())
         .projectIntro(linko.getProjectIntro())
         .expectedDuration(linko.getExpectedDuration())
-        .expectedScope(linko.getExpectedScope())
+//        .expectedScope(linko.getExpectedScope())
         .collaborationType(linko.getCollaborationType())
         .region(linko.getRegion())
         .deadline(linko.getDeadline())
-        .requiredSkills(parseSkills(linko.getRequiredSkills()))
+//        .requiredSkills(parseSkills(linko.getRequiredSkills()))
         .build();
   }
 

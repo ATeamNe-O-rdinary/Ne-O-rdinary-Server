@@ -44,7 +44,7 @@ public class LinkoProfileService {
     Linko linko =
         repository.findByMemberId(memberId).orElseThrow(LinkoProfileNotFoundException::new);
 
-    linko.update(request);
+//    linko.update(request);
 
     log.info("[Linko Profile] 프로필 수정 완료 - memberId={}", memberId);
   }

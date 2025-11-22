@@ -1,15 +1,23 @@
 package org.ateam.ateam.domain.member.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.ateam.ateam.domain.linker.model.entity.Linker;
+import org.ateam.ateam.domain.linker.model.enums.RateUnit;
+import org.ateam.ateam.domain.linker.repository.LinkerRepository;
+import org.ateam.ateam.domain.linko.model.Linko;
+import org.ateam.ateam.domain.linko.repository.LinkoRepository;
 import org.ateam.ateam.domain.member.converter.MemberConverter;
 import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
 import org.ateam.ateam.domain.member.dto.res.MemberResDTO;
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.entity.Spec;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
+import org.ateam.ateam.domain.member.enums.LinkTingRole;
+import org.ateam.ateam.domain.member.exception.MemberException;
 import org.ateam.ateam.domain.member.repository.MemberRepository;
 import org.ateam.ateam.domain.member.service.MemberService;
 import org.ateam.ateam.global.dto.PagedResponse;
+import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,25 +29,50 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
+    private final LinkerRepository linkerRepository;
+    private final LinkoRepository linkoRepository;
 
     @Override
-    public PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(
+    public PagedResponse<?> getProfileList(
             MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
 
-        Spec spec = MemberConverter.toSpecEntity(dto);
+        CategoryOfBusiness category = dto.categoryOfBusiness();
+        RateUnit rateUnit = dto.rateUnit();
+        Integer rateAmount = dto.rateAmount();
+        LinkTingRole linkTingRole = dto.linkTingRole();
 
-        CategoryOfBusiness category = spec.getCategoryOfBusiness();
-        Integer minSalary = spec.getMinSalary();
-        Integer maxSalary = spec.getMaxSalary();
-
+        Integer calculatedMonthlyRate = 0;
+        switch (rateUnit) {
+            case WEEKLY:
+                // 주급 * 4
+                calculatedMonthlyRate = rateAmount * 4;
+                break;
+            case HOURLY:
+                // 시급 * 8 * 30
+                calculatedMonthlyRate = rateAmount * 8 * 30;
+                break;
+            case MONTHLY:
+            default:
+                // 월급은 그대로 적용
+                calculatedMonthlyRate = rateAmount;
+                break;
+        }
         Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
 
-        Page<Member> memberList =
-                memberRepository.findByCategoryOfBusiness(category, minSalary, maxSalary, unsortedPageable);
+        if(linkTingRole==LinkTingRole.LINKER){
+            Page<Linker> linker = linkerRepository.findByCategoryAndRateGreaterThan(category, calculatedMonthlyRate, unsortedPageable);
+            Page<MemberResDTO.LinkerProfileDTO> pageList = linker.map(MemberConverter::toLinkerProfileDTO);
+            return PagedResponse.pagedFrom(pageList);
+        }
+        else if(linkTingRole==LinkTingRole.LINKO){
+            Page<Linko> linko = linkoRepository.findByCategoryAndRateGreaterThan(category, calculatedMonthlyRate, unsortedPageable);
+            Page<MemberResDTO.LinkoProfileDTO> pageList = linko.map(MemberConverter::toLinkoProfileDTO);
+            return PagedResponse.pagedFrom(pageList);
 
-        Page<MemberResDTO.ProfileListDTO> pageList = memberList.map(MemberConverter::toProfileListDTO);
-
-        return PagedResponse.pagedFrom(pageList);
+        }
+        else {
+            throw new MemberException(ErrorCode.LINKTINGROLE_NOT_FOUND);
+        }
     }
     @Override
     public CategoryOfBusiness getCategoryOfBusiness(Long memberId, String linkTingRole) {
