@@ -32,7 +32,11 @@ public enum ErrorCode {
 
   // Spec
   CATEGORY_NOT_FOUND(400, "S001", "잘못된 카테고리 입니다."),
-  INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다.");
+  INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다."),
+
+  // Linker
+  LINKER_NOT_FOUND(404, "L001", "링커 정보를 찾을 수 없습니다."),
+  LINKER_ALREADY_EXISTS(409, "L002", "이미 등록된 링커 프로필입니다.");
 
   private final String code;
   private final String message;

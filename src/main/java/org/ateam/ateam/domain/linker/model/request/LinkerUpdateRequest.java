@@ -1,12 +1,9 @@
-package org.ateam.ateam.domain.linker.controller.response;
+package org.ateam.ateam.domain.linker.model.request;
 
 import java.util.List;
 
-public record LinkerResponse(
-	Long id,
-	Long memberId,
+public record LinkerUpdateRequest(
 	String nickname,
-	String mainCategory,
 	String jobCategory,
 	String careerLevel,
 	String oneLineDescription,
