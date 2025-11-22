@@ -32,27 +32,26 @@ public class LinkoProfileController {
           summary = "회사 프로필 등록 (Create Company Profile)",
           description = "회사(Linko)의 프로젝트 정보를 등록합니다.\n\n" +
                   "**등록 정보:**\n\n" +
-                  "- **companyName**: 회사명 (Company name)\n" +
-                  "- **companyType**: 업종 (Business type)\n" +
+                  "- **companyName**: 회사명\n" +
+                  "- **companyType**: 업종\n" +
                   "  - MANUFACTURING, CONSTRUCTION, WHOLESALE_RETAIL, ACCOMMODATION_FOOD, TRANSPORT_WAREHOUSE, INFORMATION_COMMUNICATION, FINANCE_INSURANCE, REAL_ESTATE, PROFESSIONAL_TECHNICAL\n" +
-                  "- **mainCategory**: 대분류 카테고리 (Main category)\n" +
-                  "  - DESIGN, DEVELOPMENT, MARKETING, CONTENT, BUSINESS\n" +
-                  "- **categoryOfBusiness**: 세부 카테고리 (Sub category)\n" +
-                  "  - Design: LOGO_BRANDING, WEB_MOBILE_DESIGN, PRODUCT_PACKAGE, ILLUSTRATION, PRINT_EDITORIAL\n" +
-                  "  - Development: WEB_DEVELOPMENT, APP_DEVELOPMENT, GAME_DEVELOPMENT, AI_DATA, SYSTEM_NETWORK\n" +
-                  "  - Marketing: DIGITAL_MARKETING, CONTENT_MARKETING, SNS_MARKETING, BRAND_STRATEGY, SEO_SEM\n" +
-                  "  - Content: VIDEO_PRODUCTION, PHOTOGRAPHY, WRITING, TRANSLATION, VOICE_NARRATION\n" +
-                  "  - Business: BUSINESS_CONSULTING, ACCOUNTING_TAX, LEGAL_PATENT, HR_EDUCATION, RESEARCH_ANALYSIS\n" +
-                  "- **projectIntro**: 프로젝트 소개 (Project introduction)\n" +
-                  "- **expectedDuration**: 예상 기간 (Expected duration)\n" +
-                  "- **expectedScope**: 예상 범위 (Expected scope)\n" +
-                  "- **collaborationType**: 협업 방식 (Collaboration type)\n" +
-                  "  - ONLINE (온라인), OFFLINE (오프라인), HYBRID (혼합)\n" +
-                  "- **region**: 지역 (Region)\n" +
-                  "  - SEOUL, GYEONGGI, INCHEON, BUSAN, DAEGU, GWANGJU, DAEJEON, ULSAN, SEJONG, GANGWON, CHUNGBUK, CHUNGNAM, JEONBUK, JEONNAM, GYEONGBUK, GYEONGNAM, JEJU, OVERSEAS\n" +
-                  "- **deadline**: 마감기한 (Deadline)\n" +
-                  "- **requiredSkills**: 요구 스킬 (Required skills)\n" +
-                  "  - JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, REACT, VUE, ANGULAR, SPRING, DJANGO, NODEJS, SWIFT, KOTLIN, FLUTTER, FIGMA, PHOTOSHOP, ILLUSTRATOR 등"
+                  "- **mainCategory**: 대분류 카테고리\n" +
+                  "  - DESIGN, MARKETING, IT_PROGRAMMING\n" +
+                  "- **categoryOfBusiness**: 세부 카테고리\n" +
+                  "  - Design: LOGO_BRANDING, WEB_APP_BANNER, CHARACTER_DESIGN, PACKAGE_PACKAGING, DESIGN_ETC\n" +
+                  "  - Marketing: SNS_OPERATION, CONTENT_CREATION, PERFORMANCE_AD\n" +
+                  "  - IT_PROGRAMMING: WEB_DEV, APP_DEV, GAME_DEV, AI_DEV, SERVER_SETUP\n" +
+                  "- **projectIntro**: 프로젝트 소개\n" +
+                  "- **expectedDuration**: 예상 기간\n" +
+                  "- **expectedScope**: 예상 범위\n" +
+                  "- **collaborationType**: 협업 방식\n" +
+                  "  - ONLINE, OFFLINE, BOTH\n" +
+                  "- **region**: 지역\n" +
+                  "  - SEOUL, GYEONGGI, INCHEON, DAEJEON, SEJONG, CHUNGBUK, CHUNGNAM, GWANGJU, JEONBUK, JEONNAM, DAEGU, GYEONGBUK, BUSAN, ULSAN, GYEONGNAM, GANGWON, JEJU, ANYWHERE\n" +
+                  "- **deadline**: 마감기한\n" +
+                  "  - YYYY-MM-DD\n" +
+                  "- **requiredSkills**: 요구 스킬\n" +
+                  "  - SWIFT, KOTLIN, JAVA, FLUTTER, REACT, NODEJS, DJANGO, FASTAPI"
   )
   @ApiErrorCodeExamples({
     ErrorCode.INVALID_INPUT_VALUE,
