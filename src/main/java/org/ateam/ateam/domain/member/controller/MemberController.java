@@ -23,6 +23,6 @@ public class MemberController {
   public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberList(
       @Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
     PagedResponse<MemberResDTO.ProfileListDTO> result = memberService.getProfileList(dto, pageable);
-    return ResponseDto.of(HttpStatus.OK, "회원 프로필 목록 조회 성공", result);
+      return ResponseDto.of(HttpStatus.OK, null, "회원 프로필 목록 조회 성공", result);
   }
 }
