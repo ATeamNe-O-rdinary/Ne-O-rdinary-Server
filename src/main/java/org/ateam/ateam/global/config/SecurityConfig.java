@@ -41,7 +41,7 @@ public class SecurityConfig {
                 auth
                     // 인증 없이 접근 가능한 URL
                     .requestMatchers(
-                        "/auth/**",
+                        "/api/v1/auth/**",
                         "/actuator/health",
                         "/health",
                         "/swagger-ui/**",
