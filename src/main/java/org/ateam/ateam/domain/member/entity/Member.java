@@ -26,9 +26,6 @@ public class Member extends BaseEntity {
     @Column(name = "name", length = 50, nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
     @Column(name = "email", unique = true)  // nullable 제거 (이메일 선택사항)
     private String email;
 
@@ -44,7 +41,7 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Gender gender = Gender.NONE;
 
-    @Column(name = "birth", nullable = false)
+    @Column(name = "birth")
     private LocalDate birth;
 
     @Column(name = "phone_number")
