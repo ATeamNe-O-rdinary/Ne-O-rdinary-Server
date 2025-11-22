@@ -1,6 +1,7 @@
 package org.ateam.ateam.domain.linker.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.linker.controller.response.LinkerResponse;
 import org.ateam.ateam.domain.linker.model.request.LinkerCreateRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/linkers")
+@Tag(name = "Linker Profile", description = "Linker 프로필 관리 API")
 public class LinkerController {
 
 	private final LinkerService linkerService;
