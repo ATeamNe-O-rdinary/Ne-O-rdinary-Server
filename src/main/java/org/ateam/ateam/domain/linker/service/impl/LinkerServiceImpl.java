@@ -34,120 +34,126 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LinkerServiceImpl implements LinkerService {
 
-	private final LinkerRepository linkerRepository;
+  private final LinkerRepository linkerRepository;
 
-	private final LinkerRequestValidator requestValidator;
-	private final LinkerExistValidator existValidator;
-	private final LinkerEnumValidator enumValidator;
+  private final LinkerRequestValidator requestValidator;
+  private final LinkerExistValidator existValidator;
+  private final LinkerEnumValidator enumValidator;
 
-	private final LinkerMapper linkerMapper;
+  private final LinkerMapper linkerMapper;
 
-	@Override
-	@Transactional
-	public LinkerResponse linkerCreate(Long memberId, LinkerCreateRequest request) {
+  @Override
+  @Transactional
+  public LinkerResponse linkerCreate(Long memberId, LinkerCreateRequest request) {
 
-		requestValidator.validateCreate(request);
-		existValidator.validateLinkerNotExists(memberId);
+    requestValidator.validateCreate(request);
+    existValidator.validateLinkerNotExists(memberId);
 
-		Member member = existValidator.getMemberOrThrow(memberId);
+    Member member = existValidator.getMemberOrThrow(memberId);
 
-		ParsedEnums parsed = parseEnums(request.jobCategory(), request.careerLevel(),
-			request.workTimeType(), request.rateUnit(), request.collaborationType(),
-			request.region(), request.techStacks());
+    ParsedEnums parsed =
+        parseEnums(
+            request.jobCategory(),
+            request.careerLevel(),
+            request.workTimeType(),
+            request.rateUnit(),
+            request.collaborationType(),
+            request.region(),
+            request.techStacks());
 
-		Linker linker = LinkerFactory.create(
-			member,
-			request.nickname(),
-			parsed.jobCategory(),
-			parsed.careerLevel(),
-			request.oneLineDescription(),
-			parsed.workTimeType(),
-			parsed.rateUnit(),
-			request.rateAmount(),
-			parsed.collaborationType(),
-			parsed.region(),
-			parsed.techStacks()
-		);
+    Linker linker =
+        LinkerFactory.create(
+            member,
+            request.nickname(),
+            parsed.jobCategory(),
+            parsed.careerLevel(),
+            request.oneLineDescription(),
+            parsed.workTimeType(),
+            parsed.rateUnit(),
+            request.rateAmount(),
+            parsed.collaborationType(),
+            parsed.region(),
+            parsed.techStacks());
 
-		return linkerMapper.toResponse(linkerRepository.save(linker));
-	}
+    return linkerMapper.toResponse(linkerRepository.save(linker));
+  }
 
-	@Override
-	public LinkerResponse getById(Long linkerId) {
-		Linker linker = linkerRepository.findById(linkerId)
-			.orElseThrow(LinkerNotFoundException::new);
-		return linkerMapper.toResponse(linker);
-	}
+  @Override
+  public LinkerResponse getById(Long linkerId) {
+    Linker linker = linkerRepository.findById(linkerId).orElseThrow(LinkerNotFoundException::new);
+    return linkerMapper.toResponse(linker);
+  }
 
-	@Override
-	public PagedResponse<LinkerResponse> getPage(Pageable pageable) {
-		Page<Linker> page = linkerRepository.findAll(pageable);
-		return PagedResponse.of(page, linkerMapper::toResponse);
-	}
+  @Override
+  public PagedResponse<LinkerResponse> getPage(Pageable pageable) {
+    Page<Linker> page = linkerRepository.findAll(pageable);
+    return PagedResponse.of(page, linkerMapper::toResponse);
+  }
 
-	@Override
-	@Transactional
-	public LinkerResponse linkerUpdate(Long memberId, Long linkerId, LinkerUpdateRequest request) {
+  @Override
+  @Transactional
+  public LinkerResponse linkerUpdate(Long memberId, Long linkerId, LinkerUpdateRequest request) {
 
-		requestValidator.validateUpdate(request);
+    requestValidator.validateUpdate(request);
 
-		Linker linker = existValidator.getOwnedLinkerOrThrow(linkerId, memberId);
+    Linker linker = existValidator.getOwnedLinkerOrThrow(linkerId, memberId);
 
-		ParsedEnums parsed = parseEnums(request.jobCategory(), request.careerLevel(),
-			request.workTimeType(), request.rateUnit(), request.collaborationType(),
-			request.region(), request.techStacks());
+    ParsedEnums parsed =
+        parseEnums(
+            request.jobCategory(),
+            request.careerLevel(),
+            request.workTimeType(),
+            request.rateUnit(),
+            request.collaborationType(),
+            request.region(),
+            request.techStacks());
 
-		linker.update(
-			request.nickname(),
-			parsed.jobCategory(),
-			parsed.careerLevel(),
-			request.oneLineDescription(),
-			parsed.workTimeType(),
-			parsed.rateUnit(),
-			request.rateAmount(),
-			parsed.collaborationType(),
-			parsed.region(),
-			parsed.techStacks()
-		);
+    linker.update(
+        request.nickname(),
+        parsed.jobCategory(),
+        parsed.careerLevel(),
+        request.oneLineDescription(),
+        parsed.workTimeType(),
+        parsed.rateUnit(),
+        request.rateAmount(),
+        parsed.collaborationType(),
+        parsed.region(),
+        parsed.techStacks());
 
-		return linkerMapper.toResponse(linker);
-	}
+    return linkerMapper.toResponse(linker);
+  }
 
-	@Override
-	@Transactional
-	public void linkerDelete(Long memberId, Long linkerId) {
-		Linker linker = existValidator.getOwnedLinkerOrThrow(linkerId, memberId);
-		linkerRepository.delete(linker);
-	}
+  @Override
+  @Transactional
+  public void linkerDelete(Long memberId, Long linkerId) {
+    Linker linker = existValidator.getOwnedLinkerOrThrow(linkerId, memberId);
+    linkerRepository.delete(linker);
+  }
 
-	private record ParsedEnums(
-		CategoryOfBusiness jobCategory,
-		CareerLevel careerLevel,
-		WorkTimeType workTimeType,
-		RateUnit rateUnit,
-		CollaborationType collaborationType,
-		Region region,
-		Set<TechStack> techStacks
-	) {}
+  private record ParsedEnums(
+      CategoryOfBusiness jobCategory,
+      CareerLevel careerLevel,
+      WorkTimeType workTimeType,
+      RateUnit rateUnit,
+      CollaborationType collaborationType,
+      Region region,
+      Set<TechStack> techStacks) {}
 
-
-	private ParsedEnums parseEnums(
-		String jobCategory,
-		String careerLevel,
-		String workTimeType,
-		String rateUnit,
-		String collaborationType,
-		String region,
-		List<String> techStacks
-	) {
-		return new ParsedEnums(
-			enumValidator.parseJobCategory(jobCategory),
-			enumValidator.parseCareerLevel(careerLevel),
-			enumValidator.parseWorkTimeType(workTimeType),
-			enumValidator.parseRateUnit(rateUnit),
-			enumValidator.parseCollaborationType(collaborationType),
-			enumValidator.parseRegion(region),
-			enumValidator.parseTechStacks(techStacks)
-		);
-	}
+  private ParsedEnums parseEnums(
+      String jobCategory,
+      String careerLevel,
+      String workTimeType,
+      String rateUnit,
+      String collaborationType,
+      String region,
+      List<String> techStacks) {
+    return new ParsedEnums(
+        enumValidator.parseJobCategory(jobCategory),
+        enumValidator.parseCareerLevel(careerLevel),
+        enumValidator.parseWorkTimeType(workTimeType),
+        enumValidator.parseRateUnit(rateUnit),
+        enumValidator.parseCollaborationType(collaborationType),
+        enumValidator.parseRegion(region),
+        enumValidator.parseTechStacks(techStacks));
+  }
 }

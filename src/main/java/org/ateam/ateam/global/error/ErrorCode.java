@@ -49,7 +49,6 @@ public enum ErrorCode {
 
   INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다.");
 
-
   private final String code;
   private final String message;
   private int status;

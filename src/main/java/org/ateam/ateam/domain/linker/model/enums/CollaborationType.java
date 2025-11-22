@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum CollaborationType {
-	ONLINE("온라인"),
-	OFFLINE("오프라인"),
-	BOTH("온라인/오프라인");
+  ONLINE("온라인"),
+  OFFLINE("오프라인"),
+  BOTH("온라인/오프라인");
 
-	private final String title;
+  private final String title;
 }

@@ -25,71 +25,70 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LinkoProfileService {
 
-    private final LinkoRepository repository;
-    private final MemberRepository memberRepository;
+  private final LinkoRepository repository;
+  private final MemberRepository memberRepository;
 
-    @Transactional
-    public void createProfile(Long memberId, LinkoProfileReqDTO request) {
-        if (repository.existsByMember_Id(memberId)) {
-            throw new ProfileAlreadyExistsException();
-        }
-
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("회원 정보를 찾을 수 없습니다."));
-
-        Linko linko = request.toEntity(member);
-        repository.save(linko);
-
-        log.info("[Linko] 프로필 등록 완료 - memberId={}", memberId);
+  @Transactional
+  public void createProfile(Long memberId, LinkoProfileReqDTO request) {
+    if (repository.existsByMember_Id(memberId)) {
+      throw new ProfileAlreadyExistsException();
     }
 
-    public LinkoProfileResDTO getProfile(Long memberId) {
-        Linko linko = repository.findByMember_Id(memberId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
+    Member member =
+        memberRepository
+            .findById(memberId)
+            .orElseThrow(() -> new MemberNotFoundException("회원 정보를 찾을 수 없습니다."));
 
-        return LinkoProfileResDTO.from(linko);
+    Linko linko = request.toEntity(member);
+    repository.save(linko);
+
+    log.info("[Linko] 프로필 등록 완료 - memberId={}", memberId);
+  }
+
+  public LinkoProfileResDTO getProfile(Long memberId) {
+    Linko linko =
+        repository.findByMember_Id(memberId).orElseThrow(LinkoProfileNotFoundException::new);
+
+    return LinkoProfileResDTO.from(linko);
+  }
+
+  public LinkoProfileResDTO getProfileById(Long linkoId) {
+    Linko linko = repository.findById(linkoId).orElseThrow(LinkoProfileNotFoundException::new);
+
+    return LinkoProfileResDTO.from(linko);
+  }
+
+  public PagedResponse<LinkoProfileResDTO> getPage(Pageable pageable) {
+    Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+    Page<Linko> page = repository.findAll(unsortedPageable);
+    return PagedResponse.of(page, LinkoProfileResDTO::from);
+  }
+
+  @Transactional
+  public void updateProfile(Long linkoId, Long memberId, LinkoProfileReqDTO request) {
+    Linko linko = repository.findById(linkoId).orElseThrow(LinkoProfileNotFoundException::new);
+
+    // 본인 확인
+    if (!linko.getMember().getId().equals(memberId)) {
+      throw new LinkoAccessDeniedException("본인의 프로필만 수정할 수 있습니다.");
     }
 
-    public LinkoProfileResDTO getProfileById(Long linkoId) {
-        Linko linko = repository.findById(linkoId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
+    linko.update(request);
 
-        return LinkoProfileResDTO.from(linko);
+    log.info("[Linko] 프로필 수정 완료 - linkoId={}, memberId={}", linkoId, memberId);
+  }
+
+  @Transactional
+  public void deleteProfile(Long linkoId, Long memberId) {
+    Linko linko = repository.findById(linkoId).orElseThrow(LinkoProfileNotFoundException::new);
+
+    // 본인 확인
+    if (!linko.getMember().getId().equals(memberId)) {
+      throw new LinkoAccessDeniedException("본인의 프로필만 삭제할 수 있습니다.");
     }
 
-    public PagedResponse<LinkoProfileResDTO> getPage(Pageable pageable) {
-        Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-        Page<Linko> page = repository.findAll(unsortedPageable);
-        return PagedResponse.of(page, LinkoProfileResDTO::from);
-    }
+    repository.delete(linko);
 
-    @Transactional
-    public void updateProfile(Long linkoId, Long memberId, LinkoProfileReqDTO request) {
-        Linko linko = repository.findById(linkoId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
-
-        // 본인 확인
-        if (!linko.getMember().getId().equals(memberId)) {
-            throw new LinkoAccessDeniedException("본인의 프로필만 수정할 수 있습니다.");
-        }
-
-        linko.update(request);
-
-        log.info("[Linko] 프로필 수정 완료 - linkoId={}, memberId={}", linkoId, memberId);
-    }
-
-    @Transactional
-    public void deleteProfile(Long linkoId, Long memberId) {
-        Linko linko = repository.findById(linkoId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
-
-        // 본인 확인
-        if (!linko.getMember().getId().equals(memberId)) {
-            throw new LinkoAccessDeniedException("본인의 프로필만 삭제할 수 있습니다.");
-        }
-
-        repository.delete(linko);
-
-        log.info("[Linko] 프로필 삭제 완료 - linkoId={}, memberId={}", linkoId, memberId);
-    }
+    log.info("[Linko] 프로필 삭제 완료 - linkoId={}, memberId={}", linkoId, memberId);
+  }
 }
