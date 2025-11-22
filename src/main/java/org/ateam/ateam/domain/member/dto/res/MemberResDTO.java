@@ -22,7 +22,7 @@ public class MemberResDTO {
             MainCategory mainCategory,
             CategoryOfBusiness categoryOfBusiness,
             String projectIntro,
-            String expectedDuration,
+            ExpectedDuration expectedDuration,
             RateUnit rateUnit,
             Integer rateAmount,
             CollaborationType collaborationType,

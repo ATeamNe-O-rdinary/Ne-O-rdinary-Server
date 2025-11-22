@@ -1,6 +1,8 @@
 package org.ateam.ateam.domain.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
@@ -25,20 +27,14 @@ public class MemberController {
   private final MemberService memberService;
 
   // 메인화면 프로필 리스트 (슬라이드)
-  @GetMapping("/api/members/profiles")
-  @Operation(
-      summary = "메인화면 슬라이드 프로필 목록 조회",
-      description =
-          """
-        특정 직종와 연봉 범위 조건을 만족하는 회원의 프로필 목록을 조회합니다.
 
-        - **categoryOfBusiness**: 조회할 직무/비즈니스 카테고리 (필수)
-        - **minSalary**: 희망 최소 연봉 (필수, 해당 값 이상인 회원 검색)
-        - **maxSalary**: 희망 최대 연봉 (필수, 해당 값 이하인 회원 검색)
-        - **page / size**: 페이징 처리를 위한 파라미터 (기본값: page=0, size=10)
-        - **sort 값은 받지 않습니다.**
-        """)
-  @ApiErrorCodeExamples({ErrorCode.CATEGORY_NOT_FOUND, ErrorCode.INVALID_SALARY})
+    @Operation(
+            summary = "메인 페이지 슬라이드 프로필 목록 조회",
+            description = "업종, 급여 조건, 역할(Linker/Linko)을 기준으로 회원의 프로필 목록을 페이징하여 조회합니다. " +
+                    "급여 조건 입력 시 내부적으로 월 환산 금액으로 계산되어, 해당 금액 이상인 프로필을 '월 환산 금액 내림차순'으로 정렬하여 반환합니다."
+    )
+  @ApiErrorCodeExamples({ErrorCode.INVALID_RATE_AMOUNT, ErrorCode.LINKTINGROLE_NOT_FOUND})
+  @GetMapping("/api/members/profiles")
   public ResponseDto<PagedResponse<?>> getMemberList(@Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
     PagedResponse<?> result = memberService.getProfileList(dto, pageable);
 

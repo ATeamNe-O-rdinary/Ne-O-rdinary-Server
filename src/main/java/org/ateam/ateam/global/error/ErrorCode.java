@@ -38,7 +38,7 @@ public enum ErrorCode {
 
     // Spec
     CATEGORY_NOT_FOUND(400, "S001", "잘못된 카테고리 입니다."),
-    INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다."),
+    INVALID_RATE_AMOUNT(400, "S002", "잘못된 급여 범위 입니다."),
 
     // Profile
     PROFILE_NOT_FOUND(404, "P001", "프로필 이미지를 찾을 수 없습니다."),
