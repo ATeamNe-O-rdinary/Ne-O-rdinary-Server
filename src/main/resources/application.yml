@@ -2,7 +2,8 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
+
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
