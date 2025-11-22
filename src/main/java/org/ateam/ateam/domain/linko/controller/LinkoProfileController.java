@@ -8,18 +8,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.domain.linko.controller.response.LinkoProfileResDTO;
 import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
 import org.ateam.ateam.domain.linko.service.LinkoProfileService;
+import org.ateam.ateam.global.auth.context.UserContext;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
+import org.ateam.ateam.global.dto.PagedResponse;
 import org.ateam.ateam.global.dto.ResponseDto;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.security.UserAuthentication;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.ateam.ateam.global.auth.context.UserContext;
-
+import org.springframework.data.domain.Pageable;
 
 @Slf4j
 @RestController
@@ -84,7 +86,7 @@ public class LinkoProfileController {
         service.createProfile(memberId, request);
 
         return ResponseEntity.ok(
-                ResponseDto.of(HttpStatus.OK, "SUCCESS", "프로필이 등록되었습니다.")
+                ResponseDto.of(HttpStatus.OK, null, "프로필이 등록되었습니다.")
         );
     }
 
@@ -106,7 +108,24 @@ public class LinkoProfileController {
         LinkoProfileResDTO profile = service.getProfile(memberId);
 
         return ResponseEntity.ok(
-                ResponseDto.of(HttpStatus.OK, "SUCCESS", "프로필 조회 성공", profile)
+                ResponseDto.of(HttpStatus.OK, null, "프로필 조회 성공", profile)
+        );
+    }
+
+    @GetMapping
+    @Operation(
+            summary = "회사 페이징 목록 조회",
+            description = "등록된 회사 프로필 목록을 페이징하여 조회합니다."
+    )
+    public ResponseEntity<ResponseDto<PagedResponse<LinkoProfileResDTO>>> getPage(
+            Pageable pageable) {
+
+        log.debug("[Linko] 목록 조회 - page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+
+        PagedResponse<LinkoProfileResDTO> response = service.getPage(pageable);
+
+        return ResponseEntity.ok(
+                ResponseDto.of(HttpStatus.OK, null, "Linko 목록 조회 성공", response)
         );
     }
 
@@ -126,7 +145,7 @@ public class LinkoProfileController {
         LinkoProfileResDTO profile = service.getProfileById(linkoId);
 
         return ResponseEntity.ok(
-                ResponseDto.of(HttpStatus.OK, "SUCCESS", "프로필 조회 성공", profile)
+                ResponseDto.of(HttpStatus.OK, null, "프로필 조회 성공", profile)
         );
     }
 
@@ -153,7 +172,7 @@ public class LinkoProfileController {
         service.updateProfile(linkoId, memberId, request);
 
         return ResponseEntity.ok(
-                ResponseDto.of(HttpStatus.OK, "SUCCESS", "프로필이 수정되었습니다.")
+                ResponseDto.of(HttpStatus.OK, null, "프로필이 수정되었습니다.")
         );
     }
 
@@ -177,7 +196,7 @@ public class LinkoProfileController {
         service.deleteProfile(linkoId, memberId);
 
         return ResponseEntity.ok(
-                ResponseDto.of(HttpStatus.OK, "SUCCESS", "프로필이 삭제되었습니다.")
+                ResponseDto.of(HttpStatus.OK, null, "프로필이 삭제되었습니다.")
         );
     }
 }

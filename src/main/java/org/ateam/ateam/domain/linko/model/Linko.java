@@ -1,7 +1,9 @@
 package org.ateam.ateam.domain.linko.model;
 
 import jakarta.persistence.*;
+
 import java.util.Set;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

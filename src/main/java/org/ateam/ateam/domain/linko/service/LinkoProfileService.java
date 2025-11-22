@@ -3,15 +3,19 @@ package org.ateam.ateam.domain.linko.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.domain.linko.controller.response.LinkoProfileResDTO;
+import org.ateam.ateam.domain.linko.exception.LinkoAccessDeniedException;
 import org.ateam.ateam.domain.linko.exception.LinkoProfileNotFoundException;
+import org.ateam.ateam.domain.linko.exception.ProfileAlreadyExistsException;
 import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
 import org.ateam.ateam.domain.linko.repository.LinkoRepository;
 import org.ateam.ateam.domain.member.entity.Member;
-import org.ateam.ateam.domain.linko.exception.ProfileAlreadyExistsException;
+import org.ateam.ateam.domain.member.exception.MemberNotFoundException;
 import org.ateam.ateam.domain.member.repository.MemberRepository;
-import org.ateam.ateam.global.error.ErrorCode;
-import org.ateam.ateam.global.error.exception.BusinessException;
+import org.ateam.ateam.global.dto.PagedResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +35,7 @@ public class LinkoProfileService {
         }
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessException(ErrorCode.ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new MemberNotFoundException("회원 정보를 찾을 수 없습니다."));
 
         Linko linko = request.toEntity(member);
         repository.save(linko);
@@ -53,6 +57,12 @@ public class LinkoProfileService {
         return LinkoProfileResDTO.from(linko);
     }
 
+    public PagedResponse<LinkoProfileResDTO> getPage(Pageable pageable) {
+        Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Page<Linko> page = repository.findAll(unsortedPageable);
+        return PagedResponse.of(page, LinkoProfileResDTO::from);
+    }
+
     @Transactional
     public void updateProfile(Long linkoId, Long memberId, LinkoProfileReqDTO request) {
         Linko linko = repository.findById(linkoId)
@@ -60,7 +70,7 @@ public class LinkoProfileService {
 
         // 본인 확인
         if (!linko.getMember().getId().equals(memberId)) {
-            throw new BusinessException(ErrorCode.HANDLE_ACCESS_DENIED);
+            throw new LinkoAccessDeniedException("본인의 프로필만 수정할 수 있습니다.");
         }
 
         linko.update(request);
@@ -75,7 +85,7 @@ public class LinkoProfileService {
 
         // 본인 확인
         if (!linko.getMember().getId().equals(memberId)) {
-            throw new BusinessException(ErrorCode.HANDLE_ACCESS_DENIED);
+            throw new LinkoAccessDeniedException("본인의 프로필만 삭제할 수 있습니다.");
         }
 
         repository.delete(linko);
