@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.dto.req;
+package org.ateam.ateam.domain.linko.model.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.AssertTrue;
@@ -8,7 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.ateam.ateam.domain.member.entity.Linko;
+
+import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.member.enums.*;
 
 @Getter

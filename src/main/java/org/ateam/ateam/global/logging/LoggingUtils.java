@@ -1,20 +1,37 @@
 package org.ateam.ateam.global.logging;
 
+import org.ateam.ateam.global.error.exception.LoggingException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class LoggingUtils {
 
+  public static void warn(LoggingException exception) {
+    String message = getExceptionMessage(exception.getMessage());
+    log.warn(message + "\n \t {}", exception);
+  }
+
+  public static void warn(MethodArgumentNotValidException exception) {
+    String message = getExceptionMessage(exception.getMessage());
+    log.warn(message + "\n \t {}", exception);
+  }
+
   public static void warn(Exception exception) {
-    log.warn(formatMessage(exception));
+    String message = getExceptionMessage(exception.getMessage());
+    log.warn(message + "\n \t {}", exception);
   }
 
   public static void error(RuntimeException exception) {
-    log.error(formatMessage(exception));
+    String message = getExceptionMessage(exception.getMessage());
+    log.error(message + "\n \t {}", exception);
   }
 
-  private static String formatMessage(Exception exception) {
-    String message = exception.getMessage();
-    return (message == null || message.isBlank()) ? "" : message;
+  private static String getExceptionMessage(String message) {
+    if (message == null || message.isBlank()) {
+      return "";
+    }
+    return message;
   }
 }

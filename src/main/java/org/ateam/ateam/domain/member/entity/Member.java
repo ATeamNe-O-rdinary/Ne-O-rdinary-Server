@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.*;
-import org.ateam.ateam.domain.common.BaseEntity;
+import org.ateam.ateam.global.common.BaseEntity;
 import org.ateam.ateam.domain.member.enums.Gender;
 import org.ateam.ateam.global.auth.enums.Provider;
 

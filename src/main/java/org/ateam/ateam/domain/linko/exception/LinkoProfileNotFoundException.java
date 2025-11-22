@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.exception;
+package org.ateam.ateam.domain.linko.exception;
 
 import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
