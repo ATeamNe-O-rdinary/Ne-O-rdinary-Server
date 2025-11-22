@@ -1,11 +1,12 @@
-package org.ateam.ateam.domain.member.dto.res;
+package org.ateam.ateam.domain.linko.controller.response;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
-import org.ateam.ateam.domain.member.entity.Linko;
+
+import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.member.enums.*;
 
 @Getter

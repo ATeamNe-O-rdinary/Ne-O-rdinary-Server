@@ -6,7 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.ateam.ateam.domain.common.BaseEntity;
+import org.ateam.ateam.global.common.BaseEntity;
 import org.ateam.ateam.global.auth.enums.Provider;
 
 @Entity

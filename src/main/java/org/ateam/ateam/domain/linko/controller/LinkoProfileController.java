@@ -1,12 +1,13 @@
-package org.ateam.ateam.domain.member.controller;
+package org.ateam.ateam.domain.linko.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ateam.ateam.domain.member.dto.req.LinkoProfileReqDTO;
-import org.ateam.ateam.domain.member.service.LinkoProfileService;
+
+import org.ateam.ateam.domain.linko.service.LinkoProfileService;
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
 import org.ateam.ateam.global.auth.context.UserContext;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;
