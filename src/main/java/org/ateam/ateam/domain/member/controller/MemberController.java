@@ -1,6 +1,7 @@
 package org.ateam.ateam.domain.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Member", description = "회원 관련 API")
 public class MemberController {
   private final UserContext userContext;
   private final MemberService memberService;

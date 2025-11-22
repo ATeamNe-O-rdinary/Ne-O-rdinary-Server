@@ -1,5 +1,7 @@
 package org.ateam.ateam.domain.link.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.link.dto.req.LinkReqDTO;
 import org.ateam.ateam.domain.link.service.LinkService;
@@ -11,12 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Link", description = "링크 관리 API")
 public class LinkController {
+
   private final LinkService linkService;
 
-  @PostMapping("/api/links")
+  @Operation(summary = "링크 요청")
+  @PostMapping("/api/v1/links")
   public ResponseDto<Void> doLink(@RequestBody LinkReqDTO.linkDTO dto) {
     linkService.doLink(dto);
-    return ResponseDto.of(HttpStatus.OK, null, "링크 성공", null);
+    return ResponseDto.of(
+        HttpStatus.OK,
+        "LINK_SUCCESS",
+        "링크 성공",
+        null
+    );
   }
 }
