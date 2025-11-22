@@ -12,9 +12,10 @@ import org.springframework.data.repository.query.Param;
 
 public interface LinkerRepository extends JpaRepository<Linker, Long> {
 
-	boolean existsByMemberId(Long memberId);
+    boolean existsByMemberId(Long memberId);
 
-	Optional<Linker> findByIdAndMemberId(Long id, Long memberId);
+    Optional<Linker> findByIdAndMemberId(Long id, Long memberId);
+
 
     @Query(value = "SELECT l FROM Linker l JOIN FETCH l.member " +
             "WHERE l.jobCategory = :categoryOfBusiness " +
@@ -28,4 +29,7 @@ public interface LinkerRepository extends JpaRepository<Linker, Long> {
             @Param("minMonthlyRate") Integer minMonthlyRate,
             Pageable pageable
     );
+
+    Optional<Linker> findByMemberId(Long memberId);
+
 }
