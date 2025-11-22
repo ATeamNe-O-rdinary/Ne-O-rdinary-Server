@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class MemberServiceImpl implements MemberService {
     private final LinkoRepository linkoRepository;
 
     @Override
+    @Transactional
     public PagedResponse<?> getProfileList(
             MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
 
