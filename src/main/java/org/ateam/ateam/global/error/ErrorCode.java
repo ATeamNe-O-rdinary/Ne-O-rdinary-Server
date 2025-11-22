@@ -23,8 +23,12 @@ public enum ErrorCode {
   USER_NOT_FOUND(404, "U001", "사용자를 찾을 수 없습니다."),
   USER_ALREADY_REGISTERED(409, "U002", "이미 가입된 사용자입니다."),
   EMAIL_ALREADY_EXISTS(409, "U003", "이미 사용 중인 이메일입니다."),
-  USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다.");
+  USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다."),
 
+  // S3
+  S3_UPLOAD_FAILED(500, "S3001", "S3 업로드에 실패했습니다."),
+  S3_DELETE_FAILED(500, "S3002", "S3 파일 삭제에 실패했습니다."),
+  S3_INVALID_URL(400, "S3003", "유효하지 않은 S3 파일 URL입니다.");
 
   private final String code;
   private final String message;

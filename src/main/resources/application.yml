@@ -20,3 +20,15 @@ jwt:
   accessExpiration: ${JWT_ACCESS_EXPIRATION:1800}
   refreshExpiration: ${JWT_REFRESH_EXPIRATION:604800}
   aesKey: ${JWT_AES_KEY}
+
+cloud:
+  aws:
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+      stack:
+        auto: false
+    region:
+      static: ap-northeast-2
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}

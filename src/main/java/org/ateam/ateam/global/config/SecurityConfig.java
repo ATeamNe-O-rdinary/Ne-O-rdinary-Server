@@ -1,7 +1,6 @@
 package org.ateam.ateam.global.config;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,12 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
   private static final String[] SWAGGER_WHITELIST = {
     "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/webjars/**"
   };
 
-  private static final String[] PUBLIC_APIS = {"/api/auth/**", "/api/users/**", "/health"};
+  private static final String[] PUBLIC_APIS = {
+    "/api/auth/**", "/api/users/**", "/health", "/api/v1/files/**"
+  };
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -45,7 +45,7 @@ public class SecurityConfig {
                     .permitAll()
                     .anyRequest()
                     .authenticated());
-        // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

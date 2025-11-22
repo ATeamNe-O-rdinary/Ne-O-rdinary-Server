@@ -1,12 +1,11 @@
 package org.ateam.ateam.global.error.handler;
 
-import org.ateam.ateam.global.error.ErrorCode;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.ateam.ateam.global.error.ErrorCode;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Schema(description = "공통 에러 응답")
 @Getter
