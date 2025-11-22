@@ -33,9 +33,12 @@ public enum CategoryOfBusiness {
   private final MainCategory mainCategory;
 
   public static CategoryOfBusiness from(String value) {
-    return Arrays.stream(CategoryOfBusiness.values())
-        .filter(category -> category.getTitle().equals(value))
+    return Arrays.stream(values())
+        .filter(c ->
+            c.name().equalsIgnoreCase(value) ||
+                c.getTitle().equals(value)
+        )
         .findFirst()
-        .orElseThrow(() -> new BusinessException(ErrorCode.CATEGORY_NOT_FOUND));
+        .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ENUM_VALUE));
   }
 }

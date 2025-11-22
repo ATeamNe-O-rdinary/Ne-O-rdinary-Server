@@ -93,4 +93,31 @@ public class Linker {
 		this.region = region;
 		this.techStacks = techStacks;
 	}
+
+	public void update(
+		String nickname,
+		CategoryOfBusiness jobCategory,
+		CareerLevel careerLevel,
+		String oneLineDescription,
+		WorkTimeType workTimeType,
+		RateUnit rateUnit,
+		Integer rateAmount,
+		CollaborationType collaborationType,
+		Region region,
+		Set<TechStack> techStacks
+	) {
+		this.nickname = nickname;
+		this.jobCategory = jobCategory;
+		this.careerLevel = careerLevel;
+		this.oneLineDescription = oneLineDescription;
+		this.workTimeType = workTimeType;
+		this.rateUnit = rateUnit;
+		this.rateAmount = rateAmount;
+		this.collaborationType = collaborationType;
+		this.region = region;
+
+		this.techStacks.clear();
+		this.techStacks.addAll(techStacks);
+	}
+
 }

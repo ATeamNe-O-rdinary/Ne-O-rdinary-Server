@@ -15,6 +15,5 @@ public record LinkerResponse(
 	Integer rateAmount,
 	String collaborationType,
 	String region,
-	List<String> techStacks,
-	String profileImageUrl
+	List<String> techStacks
 ) {}

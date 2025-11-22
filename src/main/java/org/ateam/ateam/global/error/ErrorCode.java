@@ -36,7 +36,12 @@ public enum ErrorCode {
 
   // Linker
   LINKER_NOT_FOUND(404, "L001", "링커 정보를 찾을 수 없습니다."),
-  LINKER_ALREADY_EXISTS(409, "L002", "이미 등록된 링커 프로필입니다.");
+  LINKER_ALREADY_EXISTS(409, "L002", "이미 생성된 링커가 있습니다."),
+  LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
+  LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
+
+  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다.");
+
 
   private final String code;
   private final String message;
