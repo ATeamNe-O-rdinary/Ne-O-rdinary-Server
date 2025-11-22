@@ -22,9 +22,10 @@ public class MemberReqDTO {
           Integer maxSalary,
 
       LinkTingRole linkTingRole
-
-
-
-
   ) {}
+
+    @Builder
+    public record TopListDTO(
+            CategoryOfBusiness categoryOfBusiness
+    ){}
 }

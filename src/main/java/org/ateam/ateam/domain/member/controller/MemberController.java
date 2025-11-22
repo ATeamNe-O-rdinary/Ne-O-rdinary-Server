@@ -14,10 +14,7 @@ import org.ateam.ateam.global.dto.ResponseDto;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -58,6 +55,12 @@ public class MemberController {
   @GetMapping("/api/members/category-list")
     public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(@RequestParam CategoryOfBusiness categoryOfBusiness){
       return ResponseDto.of(HttpStatus.OK, null, "카테고리 목록 조회 성공", memberService.getCategoryOfBusinessList(categoryOfBusiness));
+
+  }
+
+  @GetMapping("/api/members/top")
+    public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberTopList(@RequestBody MemberReqDTO.TopListDTO dto){
+
 
   }
 }

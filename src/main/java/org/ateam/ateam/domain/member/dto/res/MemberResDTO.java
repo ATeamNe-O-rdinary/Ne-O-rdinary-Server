@@ -6,4 +6,9 @@ public class MemberResDTO {
 
   @Builder
   public record ProfileListDTO(Long memberId, String username, String profileImage) {}
+
+    @Builder
+    public record TopListDTO(
+
+    ){}
 }
