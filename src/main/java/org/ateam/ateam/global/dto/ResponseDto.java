@@ -20,17 +20,13 @@ public class ResponseDto<T> {
   }
 
   public static <T> ResponseDto<T> of(HttpStatus httpStatus, String code, String message) {
-    int status = Optional.ofNullable(httpStatus)
-        .orElse(HttpStatus.OK)
-        .value();
+    int status = Optional.ofNullable(httpStatus).orElse(HttpStatus.OK).value();
 
     return new ResponseDto<>(status, code, null, message);
   }
 
   public static <T> ResponseDto<T> of(HttpStatus httpStatus, String code, String message, T data) {
-    int status = Optional.ofNullable(httpStatus)
-        .orElse(HttpStatus.OK)
-        .value();
+    int status = Optional.ofNullable(httpStatus).orElse(HttpStatus.OK).value();
 
     return new ResponseDto<>(status, code, data, message);
   }

@@ -13,33 +13,32 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SecurityUserContext implements UserContext {
 
-    /**
-     * 현재 인증된 User의 Id를 가져옵니다.
-     */
-    @Override
-    public Long getCurrentUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+  /** 현재 인증된 User의 Id를 가져옵니다. */
+  @Override
+  public Long getCurrentUserId() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null) {
-            log.warn("[SecurityUserContext] 인증 객체가 null입니다.");
-            throw new UnauthorizedException();
-        }
-
-        if (!(authentication instanceof UserAuthentication)) {
-            log.warn("[SecurityUserContext] 인증 객체 타입이 예상과 다릅니다. 현재 타입: {}",
-                    authentication.getClass().getName());
-            log.debug("[SecurityUserContext] authentication 전체 정보: {}", authentication);
-            throw new UnauthorizedException();
-        }
-
-        UserAuthentication userAuthentication = (UserAuthentication) authentication;
-        Long userId = userAuthentication.getUserId();
-
-        if (userId == null) {
-            log.warn("[SecurityUserContext] 인증된 사용자 ID가 null입니다.");
-            throw new UnauthorizedException();
-        }
-
-        return userId;
+    if (authentication == null) {
+      log.warn("[SecurityUserContext] 인증 객체가 null입니다.");
+      throw new UnauthorizedException();
     }
+
+    if (!(authentication instanceof UserAuthentication)) {
+      log.warn(
+          "[SecurityUserContext] 인증 객체 타입이 예상과 다릅니다. 현재 타입: {}",
+          authentication.getClass().getName());
+      log.debug("[SecurityUserContext] authentication 전체 정보: {}", authentication);
+      throw new UnauthorizedException();
+    }
+
+    UserAuthentication userAuthentication = (UserAuthentication) authentication;
+    Long userId = userAuthentication.getUserId();
+
+    if (userId == null) {
+      log.warn("[SecurityUserContext] 인증된 사용자 ID가 null입니다.");
+      throw new UnauthorizedException();
+    }
+
+    return userId;
+  }
 }

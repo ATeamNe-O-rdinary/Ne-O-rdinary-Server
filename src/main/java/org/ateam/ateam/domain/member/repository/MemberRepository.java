@@ -1,5 +1,6 @@
 package org.ateam.ateam.domain.member.repository;
 
+import java.util.Optional;
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.global.auth.enums.Provider;
@@ -9,47 +10,37 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
-
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    /**
-     * 이메일로 회원 조회
-     */
-    Optional<Member> findByEmail(String email);
+  /** 이메일로 회원 조회 */
+  Optional<Member> findByEmail(String email);
 
-    /**
-     * 이메일과 Provider로 회원 조회
-     */
-    Optional<Member> findByEmailAndLoginProvider(String email, Provider loginProvider);
+  /** 이메일과 Provider로 회원 조회 */
+  Optional<Member> findByEmailAndLoginProvider(String email, Provider loginProvider);
 
-    /**
-     * 활성 회원만 조회 (탈퇴하지 않은 회원)
-     */
-    @Query("SELECT m FROM Member m WHERE m.email = :email AND m.deletedAt IS NULL")
-    Optional<Member> findActiveByEmail(@Param("email") String email);
+  /** 활성 회원만 조회 (탈퇴하지 않은 회원) */
+  @Query("SELECT m FROM Member m WHERE m.email = :email AND m.deletedAt IS NULL")
+  Optional<Member> findActiveByEmail(@Param("email") String email);
 
-    /**
-     * ID로 활성 회원 조회
-     */
-    @Query("SELECT m FROM Member m WHERE m.id = :id AND m.deletedAt IS NULL")
-    Optional<Member> findActiveById(@Param("id") Long id);
+  /** ID로 활성 회원 조회 */
+  @Query("SELECT m FROM Member m WHERE m.id = :id AND m.deletedAt IS NULL")
+  Optional<Member> findActiveById(@Param("id") Long id);
 
-    @Query(
-            value =
-                    "SELECT m FROM Member m "
-                            + "JOIN FETCH m.spec s "
-                            + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
-                            + "AND s.minSalary >= :minSalary "
-                            + "AND s.maxSalary <= :maxSalary",
-            countQuery =
-                    "SELECT count(m) FROM Member m JOIN m.spec s "
-                            + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
-                            + "AND s.minSalary >= :minSalary "
-                            + "AND s.maxSalary <= :maxSalary")
-    Page<Member> findByCategoryOfBusiness(
-            @Param("categoryOfBusiness") CategoryOfBusiness categoryOfBusiness,
-            @Param("minSalary") Integer minSalary,
-            @Param("maxSalary") Integer maxSalary,
-            Pageable pageable);
+  @Query(
+      value =
+          "SELECT m FROM Member m "
+              + "JOIN FETCH m.spec s "
+              + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
+              + "AND s.minSalary >= :minSalary "
+              + "AND s.maxSalary <= :maxSalary",
+      countQuery =
+          "SELECT count(m) FROM Member m JOIN m.spec s "
+              + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
+              + "AND s.minSalary >= :minSalary "
+              + "AND s.maxSalary <= :maxSalary")
+  Page<Member> findByCategoryOfBusiness(
+      @Param("categoryOfBusiness") CategoryOfBusiness categoryOfBusiness,
+      @Param("minSalary") Integer minSalary,
+      @Param("maxSalary") Integer maxSalary,
+      Pageable pageable);
 }

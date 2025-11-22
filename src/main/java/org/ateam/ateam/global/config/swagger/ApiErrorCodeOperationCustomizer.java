@@ -44,7 +44,6 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
 
     for (ErrorCode errorCode : errorCodes) {
       String statusCode = String.valueOf(errorCode.getStatus());
-
       ExampleHolder holder = createExampleHolder(errorCode);
 
       ApiResponse apiResponse = responses.computeIfAbsent(statusCode, code -> new ApiResponse());
@@ -62,7 +61,7 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
       MediaType mediaType = content.get("application/json");
       if (mediaType == null) {
         mediaType = new MediaType();
-        mediaType.setSchema(new Schema<>().$ref("#/components/schemas/ErrorResponse"));
+        mediaType.setSchema(new Schema<>().$ref("#/components/schemas/ResponseDto"));
         content.addMediaType("application/json", mediaType);
       }
 
@@ -74,10 +73,10 @@ public class ApiErrorCodeOperationCustomizer implements OperationCustomizer {
 
   private ExampleHolder createExampleHolder(ErrorCode errorCode) {
     Map<String, Object> body = new LinkedHashMap<>();
-    body.put("message", errorCode.getMessage());
     body.put("status", errorCode.getStatus());
-    body.put("errors", Collections.emptyList());
     body.put("code", errorCode.getCode());
+    body.put("data", null);
+    body.put("message", errorCode.getMessage());
 
     Example example = new Example();
     example.setSummary(errorCode.name());

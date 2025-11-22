@@ -1,17 +1,15 @@
 package org.ateam.ateam.global.error.handler;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.ateam.ateam.global.error.ErrorCode;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.ateam.ateam.global.error.ErrorCode;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Schema(description = "공통 에러 응답")
 @Getter
@@ -58,8 +56,7 @@ public class ErrorResponse {
 
   public static ErrorResponse of(MethodArgumentTypeMismatchException e) {
     final String value = e.getValue() == null ? "" : e.getValue().toString();
-    final List<FieldError> errors =
-        FieldError.of(e.getName(), value, e.getErrorCode());
+    final List<FieldError> errors = FieldError.of(e.getName(), value, e.getErrorCode());
     return new ErrorResponse(ErrorCode.INVALID_TYPE_VALUE, errors);
   }
 

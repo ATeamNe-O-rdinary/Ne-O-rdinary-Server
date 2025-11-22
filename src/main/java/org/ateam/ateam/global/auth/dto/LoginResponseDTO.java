@@ -14,28 +14,27 @@ import lombok.NoArgsConstructor;
 @Schema(description = "카카오 로그인 시 JWT 응답 DTO")
 public class LoginResponseDTO {
 
-    @Schema(description = "Access Token (JWT)", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
-    private String accessToken;
+  @Schema(description = "Access Token (JWT)", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+  private String accessToken;
 
-    @Schema(description = "Access Token의 만료 시간 (초 단위)", example = "3600")
-    private Long expiresIn;
+  @Schema(description = "Access Token의 만료 시간 (초 단위)", example = "3600")
+  private Long expiresIn;
 
-    @Schema(description = "로그인한 사용자 정보")
-    private LoginUserInfo userInfo;
+  @Schema(description = "로그인한 사용자 정보")
+  private LoginUserInfo userInfo;
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class LoginUserInfo {
+  @Getter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class LoginUserInfo {
 
-        @JsonIgnore
-        private Long userId;
+    @JsonIgnore private Long userId;
 
-        @Schema(description = "사용자 닉네임", example = "홍길동")
-        private String username;
+    @Schema(description = "사용자 닉네임", example = "홍길동")
+    private String username;
 
-        @Schema(description = "신규 회원 여부", example = "true")
-        private Boolean isNewUser;
-    }
+    @Schema(description = "신규 회원 여부", example = "true")
+    private Boolean isNewUser;
+  }
 }
