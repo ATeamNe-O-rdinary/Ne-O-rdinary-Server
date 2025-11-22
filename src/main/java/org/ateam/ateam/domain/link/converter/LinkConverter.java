@@ -6,10 +6,10 @@ import org.ateam.ateam.domain.linko.model.Linko;
 
 public class LinkConverter {
 
-//    public static Link toLinkEntity(Linker linker, Linko linko){
-//        return Link.builder()
-//                .linker(linker)
-//                .linko(linko)
-//                .build();
-//    }
+    public static Link toLinkEntity(Linker linker, Linko linko){
+        return Link.builder()
+                .linker(linker)
+                .linko(linko)
+                .build();
+    }
 }

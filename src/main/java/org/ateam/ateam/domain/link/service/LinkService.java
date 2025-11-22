@@ -1,7 +1,11 @@
 package org.ateam.ateam.domain.link.service;
 
 import org.ateam.ateam.domain.link.dto.req.LinkReqDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface LinkService {
-    void doLink(LinkReqDTO.linkDTO dto);
+
+
+    @Transactional
+    void doLink(LinkReqDTO.linkDTO dto, Long memberId);
 }

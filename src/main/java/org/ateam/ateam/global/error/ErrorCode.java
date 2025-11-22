@@ -54,7 +54,11 @@ public enum ErrorCode {
 
     INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
 
-    LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다.")
+    LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다."),
+
+    LINKO_NOT_FOUND(404, "L006", "링오 정보를 찾을 수 없습니다."),
+
+    LINK_EXIST(400, "L007", "이미 링크가 존재합니다.")
     ;
 
 
