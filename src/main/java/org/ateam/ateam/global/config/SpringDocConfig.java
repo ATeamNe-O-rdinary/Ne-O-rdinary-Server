@@ -12,21 +12,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringDocConfig {
 
-	@Bean
-	public OpenAPI openAPI() {
-		return new OpenAPI()
-			.components(new Components()
-				.addSchemas("ErrorResponse", errorSchema())
-			);
-	}
+  @Bean
+  public OpenAPI openAPI() {
+    return new OpenAPI().components(new Components().addSchemas("ErrorResponse", errorSchema()));
+  }
 
-	private Schema<?> errorSchema() {
-		Schema<?> schema = new Schema<>();
-		schema.setType("object");
-		schema.addProperty("message", new StringSchema());
-		schema.addProperty("status", new IntegerSchema());
-		schema.addProperty("errors", new ArraySchema().items(new StringSchema()));
-		schema.addProperty("code", new StringSchema());
-		return schema;
-	}
+  private Schema<?> errorSchema() {
+    Schema<?> schema = new Schema<>();
+    schema.setType("object");
+    schema.addProperty("message", new StringSchema());
+    schema.addProperty("status", new IntegerSchema());
+    schema.addProperty("errors", new ArraySchema().items(new StringSchema()));
+    schema.addProperty("code", new StringSchema());
+    return schema;
+  }
 }

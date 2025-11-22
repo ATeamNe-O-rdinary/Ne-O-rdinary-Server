@@ -56,10 +56,12 @@ public class KakaoAuthController {
 
         log.info("[Kakao Login] 로그인 성공 - userId={}", loginResponse.getUserInfo().getUserId());
 
+
         // ResponseDto로 감싸기
         ResponseDto<LoginResponseDTO.LoginUserInfo> response =
                 ResponseDto.of(
                         HttpStatus.OK,
+                        null,
                         "카카오 로그인에 성공했습니다.",
                         loginResponse.getUserInfo()
                 );
