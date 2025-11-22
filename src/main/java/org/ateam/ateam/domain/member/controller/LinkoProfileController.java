@@ -29,11 +29,10 @@ public class LinkoProfileController {
 
   @PostMapping
   @Operation(
-      summary = "회사 프로필 등록 (Create Company Profile)",
+      summary = "회사 프로필 등록",
       description =
-          "회사의 프로젝트 정보를 등록합니다.\n"
-              + "Register company project information\n\n"
-              + "**등록 정보 (Registration Information):**\n"
+          "회사(Linko)의 프로젝트 정보를 등록합니다.\n"
+              + "**등록 정보:**\n"
               + "- Company name: 회사명\n"
               + "- Business type: 업종\n"
               + "- Category (Main/Sub): 카테고리 (대분류/세부)\n"
@@ -85,7 +84,7 @@ public class LinkoProfileController {
   //    }
 
   @PutMapping
-  @Operation(summary = "프로필 수정", description = "등록한 회사 프로필 정보를 수정합니다.")
+  @Operation(summary = "회사 프로필 수정", description = "등록한 회사 프로필 정보를 수정합니다.")
   @ApiErrorCodeExamples({
     ErrorCode.INVALID_INPUT_VALUE,
     ErrorCode.CATEGORY_MISMATCH,
@@ -105,7 +104,7 @@ public class LinkoProfileController {
   }
 
   @DeleteMapping
-  @Operation(summary = "프로필 삭제", description = "등록한 회사 프로필을 삭제합니다.")
+  @Operation(summary = "회사 프로필 삭제", description = "등록한 회사 프로필을 삭제합니다.")
   @ApiErrorCodeExamples({ErrorCode.ENTITY_NOT_FOUND, ErrorCode.AUTHENTICATION_FAILED})
   public ResponseEntity<ResponseDto<Void>> deleteProfile(
       @AuthenticationPrincipal UserAuthentication auth) {
