@@ -1,57 +1,82 @@
 package org.ateam.ateam.global.config;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-
+import org.ateam.ateam.global.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableMethodSecurity
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
-  private static final String[] SWAGGER_WHITELIST = {
-    "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/webjars/**"
-  };
-
-  private static final String[] PUBLIC_APIS = {"/api/auth/**", "/api/users/**", "/health"};
+  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.cors(Customizer.withDefaults())
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        // CSRF 비활성화 (JWT 사용)
+        .csrf(AbstractHttpConfigurer::disable)
+
+        // CORS 설정
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+        // 세션 사용 안 함 (JWT 사용)
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .csrf(AbstractHttpConfigurer::disable)
-        .formLogin(AbstractHttpConfigurer::disable)
-        .httpBasic(AbstractHttpConfigurer::disable)
-        // .exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+
+        // 요청 인증 설정
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers(HttpMethod.OPTIONS, "/**")
+                auth
+                    // 인증 없이 접근 가능한 URL
+                    .requestMatchers(
+                        "/auth/**",
+                        "/actuator/health",
+                        "/health",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/h2-console/**",
+                        "/favicon.ico",
+                        "/error")
                     .permitAll()
-                    .requestMatchers(SWAGGER_WHITELIST)
-                    .permitAll()
-                    .requestMatchers(PUBLIC_APIS)
-                    .permitAll()
+                    // 나머지는 인증 필요
                     .anyRequest()
-                    .authenticated());
-        // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                    .authenticated())
+
+        // H2 Console 프레임 옵션 비활성화
+        .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
+
+        // JWT 필터 추가
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
 
+  /** CORS 설정 */
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+
+    configuration.setAllowedOriginPatterns(List.of("*")); // 모든 origin 허용 (개발용)
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
+    configuration.setExposedHeaders(List.of("Authorization"));
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+
+    return source;
   }
 }

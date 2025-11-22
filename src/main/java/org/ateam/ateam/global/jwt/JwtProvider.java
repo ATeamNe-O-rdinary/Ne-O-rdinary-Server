@@ -145,7 +145,8 @@
 //             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 //
 //     UserDetails userDetails = new UserDetailsImpl(user);
-//     return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+//     return new UsernamePasswordAuthenticationToken(userDetails, null,
+// userDetails.getAuthorities());
 //   }
 //
 //   public void addTokenHeaders(HttpServletResponse res, TokenResponse tokens) {
