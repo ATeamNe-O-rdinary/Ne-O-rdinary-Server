@@ -15,8 +15,16 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
 
+# JWT Configuration
 jwt:
   secret: ${JWT_SECRET}
   accessExpiration: ${JWT_ACCESS_EXPIRATION:1800}
   refreshExpiration: ${JWT_REFRESH_EXPIRATION:604800}
   aesKey: ${JWT_AES_KEY}
+
+# Kakao OAuth Configuration
+auth:
+  kakao:
+    native-app-key: ${KAKAO_NATIVE_APP_KEY}
+    api-url: https://kapi.kakao.com
+    token-url: https://kauth.kakao.com
