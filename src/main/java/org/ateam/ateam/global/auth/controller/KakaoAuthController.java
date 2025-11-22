@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/kakao")
+@RequestMapping("/api/v1/auth/kakao")
 @Tag(name = "Kakao Auth", description = "카카오 소셜 로그인 API")
 public class KakaoAuthController {
 

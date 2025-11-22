@@ -1,9 +1,5 @@
 package org.ateam.ateam.global.error.handler;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,43 +7,36 @@ import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-@Schema(description = "공통 에러 응답")
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
 
-  @Schema(description = "에러 메시지", example = "게시글을 찾을 수 없습니다.")
+  private int status;
+  private String code;
+  private Object data;
   private String message;
 
-  @Schema(description = "HTTP 상태 코드", example = "404")
-  private int status;
-
-  @Schema(description = "필드 에러 목록")
-  private List<FieldError> errors;
-
-  @Schema(description = "비즈니스 에러 코드", example = "P001")
-  private String code;
-
-  private ErrorResponse(final ErrorCode code, final List<FieldError> errors) {
-    this.message = code.getMessage();
+  private ErrorResponse(final ErrorCode code, final Object data) {
     this.status = code.getStatus();
-    this.errors = errors;
     this.code = code.getCode();
+    this.data = data;
+    this.message = code.getMessage();
   }
 
   private ErrorResponse(final ErrorCode code) {
-    this.message = code.getMessage();
-    this.status = code.getStatus();
-    this.code = code.getCode();
-    this.errors = new ArrayList<>();
+    this(code, null);
+  }
+
+  public static ErrorResponse of(final ErrorCode code) {
+    return new ErrorResponse(code, null);
   }
 
   public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
     return new ErrorResponse(code, FieldError.of(bindingResult));
-  }
-
-  public static ErrorResponse of(final ErrorCode code) {
-    return new ErrorResponse(code);
   }
 
   public static ErrorResponse of(final ErrorCode code, final List<FieldError> errors) {
@@ -63,13 +52,9 @@ public class ErrorResponse {
   @Getter
   @NoArgsConstructor(access = AccessLevel.PROTECTED)
   public static class FieldError {
-    @Schema(description = "필드명", example = "title")
+
     private String field;
-
-    @Schema(description = "거부된 값", example = "")
     private String value;
-
-    @Schema(description = "오류 이유", example = "must not be blank")
     private String reason;
 
     private FieldError(final String field, final String value, final String reason) {
@@ -87,13 +72,12 @@ public class ErrorResponse {
     private static List<FieldError> of(final BindingResult bindingResult) {
       final List<org.springframework.validation.FieldError> fieldErrors =
           bindingResult.getFieldErrors();
+
       return fieldErrors.stream()
-          .map(
-              error ->
-                  new FieldError(
-                      error.getField(),
-                      error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
-                      error.getDefaultMessage()))
+          .map(error -> new FieldError(
+              error.getField(),
+              error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
+              error.getDefaultMessage()))
           .collect(Collectors.toList());
     }
   }
