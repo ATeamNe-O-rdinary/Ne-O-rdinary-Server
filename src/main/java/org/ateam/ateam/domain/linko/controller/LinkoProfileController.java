@@ -112,7 +112,7 @@ public class LinkoProfileController {
 
     @GetMapping("/{linkoId}")
     @Operation(
-            summary = "특정 프로필 조회",
+            summary = "특정 회사 프로필 조회",
             description = "linkoId로 특정 회사 프로필을 조회합니다."
     )
     @ApiErrorCodeExamples({
@@ -132,7 +132,7 @@ public class LinkoProfileController {
 
     @PutMapping("/{linkoId}")
     @Operation(
-            summary = "프로필 수정",
+            summary = "회사 프로필 수정",
             description = "등록한 회사 프로필 정보를 수정합니다."
     )
     @ApiErrorCodeExamples({
@@ -159,7 +159,7 @@ public class LinkoProfileController {
 
     @DeleteMapping("/{linkoId}")
     @Operation(
-            summary = "프로필 삭제",
+            summary = "회사 프로필 삭제",
             description = "등록한 회사 프로필을 삭제합니다."
     )
     @ApiErrorCodeExamples({
