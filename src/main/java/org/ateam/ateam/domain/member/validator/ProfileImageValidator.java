@@ -2,7 +2,7 @@ package org.ateam.ateam.domain.member.validator;
 
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.exception.MemberNotFoundException;
-import org.ateam.ateam.domain.member.exception.ProfileAlreadyExistsException;
+import org.ateam.ateam.domain.member.exception.profile.ProfileAlreadyExistsException;
 import org.ateam.ateam.domain.member.exception.profile.ProfileNotFoundException;
 import org.ateam.ateam.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
