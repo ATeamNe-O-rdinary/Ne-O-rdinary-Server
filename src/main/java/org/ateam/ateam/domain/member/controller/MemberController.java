@@ -33,7 +33,7 @@ public class MemberController {
           "업종, 급여 조건, 역할(Linker/Linko)을 기준으로 회원의 프로필 목록을 페이징하여 조회합니다. "
               + "급여 조건 입력 시 내부적으로 월 환산 금액으로 계산되어, 해당 금액 이상인 프로필을 '월 환산 금액 내림차순'으로 정렬하여 반환합니다.")
   @ApiErrorCodeExamples({ErrorCode.INVALID_RATE_AMOUNT, ErrorCode.LINKTINGROLE_NOT_FOUND})
-  @GetMapping("/api/members/profiles")
+  @GetMapping("/api/v1/members/profiles")
   public ResponseDto<PagedResponse<?>> getMemberList(
       @Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
     PagedResponse<?> result = memberService.getProfileList(dto, pageable);
@@ -45,7 +45,7 @@ public class MemberController {
       summary = "회원 직무/업종 카테고리 조회",
       description = "현재 로그인한 회원의 역할(LINKER/LINKO)에 따라 설정된 직무 또는 업종 카테고리를 조회합니다.")
   @ApiErrorCodeExamples({ErrorCode.INVALID_RATE_AMOUNT, ErrorCode.LINKTINGROLE_NOT_FOUND})
-  @GetMapping("/api/members/category")
+  @GetMapping("/api/v1/members/category")
   public ResponseDto<CategoryOfBusiness> getCategoryOfBusiness(
       @RequestParam LinkTingRole linkTingRole) {
     Long userId = userContext.getCurrentUserId();
@@ -61,7 +61,7 @@ public class MemberController {
       description = "입력받은 카테고리가 속한 대분류(Main Category)의 연관된 모든 카테고리 목록을 조회합니다.")
   // 예시: Enum 변환 실패나 유효하지 않은 값 관련 에러 코드가 있다면 여기에 추가
   @ApiErrorCodeExamples({ErrorCode.INVALID_INPUT_VALUE})
-  @GetMapping("/api/members/category-list")
+  @GetMapping("/api/v1/members/category-list")
   public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(
       @RequestParam CategoryOfBusiness categoryOfBusiness) {
     return ResponseDto.of(
@@ -82,7 +82,7 @@ public class MemberController {
               - **LINKO**: `LinkoProfileDTO` (기업 프로필)
             """)
   @ApiErrorCodeExamples({ErrorCode.LINKTINGROLE_NOT_FOUND})
-  @GetMapping("/api/members/top")
+  @GetMapping("/api/v1/members/top")
   public ResponseDto<PagedResponse<?>> getMemberTopList(
       @RequestParam List<CategoryOfBusiness> categoryOfBusinessList,
       @RequestParam LinkTingRole linkTingRole,
@@ -105,7 +105,7 @@ public class MemberController {
               - **LINKO**: `LinkoProfileDTO`
             """)
   @ApiErrorCodeExamples({ErrorCode.LINKTINGROLE_NOT_FOUND})
-  @GetMapping("/api/members/latest")
+  @GetMapping("/api/v1/members/latest")
   public ResponseDto<PagedResponse<?>> getMemberLatestList(
       @RequestParam List<CategoryOfBusiness> categoryOfBusinessList,
       @RequestParam LinkTingRole linkTingRole,

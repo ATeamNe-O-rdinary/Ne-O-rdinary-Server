@@ -37,7 +37,7 @@ public class LinkController {
     ErrorCode.LINKER_NOT_FOUND,
     ErrorCode.LINKO_NOT_FOUND
   })
-  @PostMapping("/api/links")
+  @PostMapping("/api/v1/links")
   public ResponseDto<Void> doLink(@RequestBody LinkReqDTO.linkDTO dto) {
     Long userId = userContext.getCurrentUserId();
     linkService.doLink(dto, userId);
