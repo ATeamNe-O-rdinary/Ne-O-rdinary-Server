@@ -25,6 +25,11 @@ public enum ErrorCode {
   EMAIL_ALREADY_EXISTS(409, "U003", "이미 사용 중인 이메일입니다."),
   USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다."),
 
+  // Kakao Auth
+  KAKAO_TOKEN_INVALID(401, "K001", "유효하지 않은 카카오 액세스 토큰입니다."),
+  KAKAO_USER_INFO_FAILED(500, "K002", "카카오 사용자 정보 조회에 실패했습니다."),
+  KAKAO_SERVER_ERROR(500, "K003", "카카오 서버 오류가 발생했습니다."),
+
   // S3
   S3_UPLOAD_FAILED(500, "S3001", "S3 업로드에 실패했습니다."),
   S3_DELETE_FAILED(500, "S3002", "S3 파일 삭제에 실패했습니다."),

@@ -26,6 +26,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
   @Query("SELECT m FROM Member m WHERE m.id = :id AND m.deletedAt IS NULL")
   Optional<Member> findActiveById(@Param("id") Long id);
 
+  /** 이메일 존재 여부 확인 */
+  boolean existsByEmail(String email);
+
+  /** 활성 회원 수 조회 */
+  @Query("SELECT COUNT(m) FROM Member m WHERE m.deletedAt IS NULL")
+  long countActiveMembers();
+
   @Query(
       value =
           "SELECT m FROM Member m "

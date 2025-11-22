@@ -11,7 +11,9 @@ import org.ateam.ateam.global.auth.dto.LoginResponseDTO;
 import org.ateam.ateam.global.auth.dto.UserAuthInfoDTO;
 import org.ateam.ateam.global.auth.enums.Provider;
 import org.ateam.ateam.global.auth.service.UserAuthService;
+import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;
+import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth/kakao")
-@Tag(name = "Kakao Login", description = "카카오 로그인 API")
+@Tag(name = "Kakao Auth", description = "카카오 소셜 로그인 API")
 public class KakaoAuthController {
 
   private final KakaoAuthService kakaoAuthService;
@@ -38,10 +40,15 @@ public class KakaoAuthController {
               + "* 이미 가입된 유저면 로그인 처리  \n"
               + "* 신규 유저면 회원가입 후 로그인 처리  \n"
               + "* Access Token은 응답 헤더의 `Authorization`에 포함됩니다.")
+  @ApiErrorCodeExamples({
+    ErrorCode.INVALID_INPUT_VALUE,
+    ErrorCode.KAKAO_TOKEN_INVALID,
+    ErrorCode.KAKAO_USER_INFO_FAILED,
+    ErrorCode.KAKAO_SERVER_ERROR
+  })
   public ResponseEntity<ResponseDto<LoginResponseDTO.LoginUserInfo>> kakaoLogin(
       @Valid @RequestBody KakaoLoginRequestDTO request) {
 
-    // record 타입은 필드명으로 직접 접근 (getter 메서드 이름이 getAccessToken()이 아니라 accessToken())
     String accessToken = request.accessToken();
     String refreshToken = request.refreshToken();
 
@@ -54,9 +61,12 @@ public class KakaoAuthController {
     LoginResponseDTO loginResponse =
         userAuthService.createOrUpdateUser(userInfo, Provider.KAKAO, refreshToken);
 
-    log.info("[Kakao Login] 로그인 성공 - userId={}", loginResponse.getUserInfo().getUserId());
+    log.info(
+        "[Kakao Login] 로그인 성공 - userId={}, isNewUser={}",
+        loginResponse.getUserInfo().getUserId(),
+        loginResponse.getUserInfo().getIsNewUser());
 
-    // ResponseDto로 감싸기
+    // ResponseDto 생성
     ResponseDto<LoginResponseDTO.LoginUserInfo> response =
         ResponseDto.of(HttpStatus.OK, null, "카카오 로그인에 성공했습니다.", loginResponse.getUserInfo());
 
