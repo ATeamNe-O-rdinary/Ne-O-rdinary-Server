@@ -52,7 +52,10 @@ public enum ErrorCode {
   PROFILE_NOT_FOUND(404, "P001", "프로필 이미지를 찾을 수 없습니다."),
   PROFILE_UPLOAD_FAILED(500, "P002", "프로필 이미지 업로드에 실패했습니다."),
   PROFILE_DELETE_FAILED(500, "P003", "프로필 이미지 삭제에 실패했습니다."),
-  PROFILE_ALREADY_EXISTS(400, "P004", "이미 프로필 이미지가 존재합니다.");
+  PROFILE_ALREADY_EXISTS(400, "P004", "이미 프로필 이미지가 존재합니다."),
+
+  // Linko
+  LINKO_NOT_FOUND(404, "L001", "링오 정보를 찾을 수 없습니다.");
 
   private final String code;
   private final String message;
