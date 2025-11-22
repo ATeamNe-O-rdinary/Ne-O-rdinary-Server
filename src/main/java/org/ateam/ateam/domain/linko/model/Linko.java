@@ -117,6 +117,10 @@ public class Linko extends BaseEntity {
     }
   }
 
+  public void updateCompanyImage(String imageUrl) {
+    this.companyImageUrl = imageUrl;
+  }
+
   @Builder
   public Linko(
       Member member,
