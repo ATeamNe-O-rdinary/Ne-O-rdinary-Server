@@ -16,4 +16,8 @@ public class LinkoValidator {
   public Linko getByMemberOrThrow(Member member) {
     return linkoRepository.findByMember(member).orElseThrow(LinkoNotFoundException::new);
   }
+
+  public Linko getByIdOrThrow(Long linkoId) {
+    return linkoRepository.findById(linkoId).orElseThrow(LinkoNotFoundException::new);
+  }
 }
