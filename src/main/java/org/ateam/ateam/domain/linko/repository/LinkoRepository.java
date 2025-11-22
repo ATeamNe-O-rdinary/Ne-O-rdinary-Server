@@ -1,7 +1,8 @@
-package org.ateam.ateam.domain.member.repository;
+package org.ateam.ateam.domain.linko.repository;
 
 import java.util.Optional;
-import org.ateam.ateam.domain.member.entity.Linko;
+
+import org.ateam.ateam.domain.linko.model.Linko;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LinkoRepository extends JpaRepository<Linko, Long> {

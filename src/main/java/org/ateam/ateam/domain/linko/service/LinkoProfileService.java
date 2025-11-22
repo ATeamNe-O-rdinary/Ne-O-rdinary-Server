@@ -1,13 +1,14 @@
-package org.ateam.ateam.domain.member.service;
+package org.ateam.ateam.domain.linko.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ateam.ateam.domain.member.dto.req.LinkoProfileReqDTO;
-import org.ateam.ateam.domain.member.dto.res.LinkoProfileResDTO;
-import org.ateam.ateam.domain.member.entity.Linko;
-import org.ateam.ateam.domain.member.exception.LinkoProfileNotFoundException;
+
+import org.ateam.ateam.domain.linko.model.Linko;
+import org.ateam.ateam.domain.linko.controller.response.LinkoProfileResDTO;
+import org.ateam.ateam.domain.linko.exception.LinkoProfileNotFoundException;
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
+import org.ateam.ateam.domain.linko.repository.LinkoRepository;
 import org.ateam.ateam.domain.member.exception.ProfileAlreadyExistsException;
-import org.ateam.ateam.domain.member.repository.LinkoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

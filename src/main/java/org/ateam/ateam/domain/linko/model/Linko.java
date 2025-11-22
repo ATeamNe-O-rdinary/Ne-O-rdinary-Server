@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.entity;
+package org.ateam.ateam.domain.linko.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
@@ -7,9 +7,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.ateam.ateam.domain.common.BaseEntity;
-import org.ateam.ateam.domain.member.dto.req.LinkoProfileReqDTO;
+
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
 import org.ateam.ateam.domain.member.enums.*;
+import org.ateam.ateam.global.common.BaseEntity;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
 
