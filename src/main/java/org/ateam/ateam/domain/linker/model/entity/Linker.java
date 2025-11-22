@@ -11,12 +11,13 @@ import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.domain.member.enums.CollaborationType;
 import org.ateam.ateam.domain.member.enums.Region;
 import org.ateam.ateam.domain.member.enums.TechStack;
+import org.ateam.ateam.global.common.BaseEntity;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "linker")
-public class Linker {
+public class Linker extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
