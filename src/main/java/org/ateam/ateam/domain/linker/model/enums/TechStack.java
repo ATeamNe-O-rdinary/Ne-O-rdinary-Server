@@ -6,14 +6,14 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TechStack {
-	SWIFT("Swift"),
-	KOTLIN("Kotlin"),
-	JAVA("Java"),
-	FLUTTER("Flutter"),
-	REACT_NATIVE("React Native"),
-	NODE_JS("Node.js"),
-	PYTHON_DJANGO_FASTAPI("Python(Django/FastAPI)"),
-	SPRING_JAVA("Spring(Java)");
+  SWIFT("Swift"),
+  KOTLIN("Kotlin"),
+  JAVA("Java"),
+  FLUTTER("Flutter"),
+  REACT_NATIVE("React Native"),
+  NODE_JS("Node.js"),
+  PYTHON_DJANGO_FASTAPI("Python(Django/FastAPI)"),
+  SPRING_JAVA("Spring(Java)");
 
-	private final String title;
+  private final String title;
 }

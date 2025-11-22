@@ -5,6 +5,7 @@ import org.ateam.ateam.domain.linko.model.Linko;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LinkoRepository extends JpaRepository<Linko, Long> {
-    Optional<Linko> findByMember_Id(Long memberId);
-    boolean existsByMember_Id(Long memberId);
+  Optional<Linko> findByMember_Id(Long memberId);
+
+  boolean existsByMember_Id(Long memberId);
 }

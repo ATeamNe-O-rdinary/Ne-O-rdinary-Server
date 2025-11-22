@@ -20,111 +20,111 @@ import org.ateam.ateam.global.error.exception.BusinessException;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Linko extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "linko_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "linko_id")
+  private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false, unique = true)
-    private Member member;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id", nullable = false, unique = true)
+  private Member member;
 
-    @Column(name = "company_name", length = 100, nullable = false)
-    private String companyName;
+  @Column(name = "company_name", length = 100, nullable = false)
+  private String companyName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "company_type", nullable = false)
-    private CompanyType companyType;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "company_type", nullable = false)
+  private CompanyType companyType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "main_category", nullable = false)
-    private MainCategory mainCategory;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "main_category", nullable = false)
+  private MainCategory mainCategory;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category_of_business", nullable = false)
-    private CategoryOfBusiness categoryOfBusiness;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "category_of_business", nullable = false)
+  private CategoryOfBusiness categoryOfBusiness;
 
-    @Column(name = "project_intro", columnDefinition = "TEXT", nullable = false)
-    private String projectIntro;
+  @Column(name = "project_intro", columnDefinition = "TEXT", nullable = false)
+  private String projectIntro;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "expected_duration", nullable = false)
-    private ExpectedDuration expectedDuration;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "expected_duration", nullable = false)
+  private ExpectedDuration expectedDuration;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "rate_unit", nullable = false, length = 20)
-    private RateUnit rateUnit;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "rate_unit", nullable = false, length = 20)
+  private RateUnit rateUnit;
 
-    @Column(name = "rate_amount", nullable = false)
-    private Integer rateAmount;
+  @Column(name = "rate_amount", nullable = false)
+  private Integer rateAmount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "collaboration_type", nullable = false)
-    private CollaborationType collaborationType;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "collaboration_type", nullable = false)
+  private CollaborationType collaborationType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "region")
-    private Region region;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "region")
+  private Region region;
 
-    @Column(name = "deadline", nullable = false)
-    private String deadline;
+  @Column(name = "deadline", nullable = false)
+  private String deadline;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "linko_tech_stack", joinColumns = @JoinColumn(name = "linko_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tech_stack")
-    private Set<TechStack> techStacks;
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "linko_tech_stack", joinColumns = @JoinColumn(name = "linko_id"))
+  @Enumerated(EnumType.STRING)
+  @Column(name = "tech_stack")
+  private Set<TechStack> techStacks;
 
-    @Builder
-    public Linko(
-            Member member,
-            String companyName,
-            CompanyType companyType,
-            MainCategory mainCategory,
-            CategoryOfBusiness categoryOfBusiness,
-            String projectIntro,
-            ExpectedDuration expectedDuration,
-            RateUnit rateUnit,
-            Integer rateAmount,
-            CollaborationType collaborationType,
-            Region region,
-            String deadline,
-            Set<TechStack> techStacks) {
-        this.member = member;
-        this.companyName = companyName;
-        this.companyType = companyType;
-        this.mainCategory = mainCategory;
-        this.categoryOfBusiness = categoryOfBusiness;
-        this.projectIntro = projectIntro;
-        this.expectedDuration = expectedDuration;
-        this.rateUnit = rateUnit;
-        this.rateAmount = rateAmount;
-        this.collaborationType = collaborationType;
-        this.region = region;
-        this.deadline = deadline;
-        this.techStacks = techStacks;
+  @Builder
+  public Linko(
+      Member member,
+      String companyName,
+      CompanyType companyType,
+      MainCategory mainCategory,
+      CategoryOfBusiness categoryOfBusiness,
+      String projectIntro,
+      ExpectedDuration expectedDuration,
+      RateUnit rateUnit,
+      Integer rateAmount,
+      CollaborationType collaborationType,
+      Region region,
+      String deadline,
+      Set<TechStack> techStacks) {
+    this.member = member;
+    this.companyName = companyName;
+    this.companyType = companyType;
+    this.mainCategory = mainCategory;
+    this.categoryOfBusiness = categoryOfBusiness;
+    this.projectIntro = projectIntro;
+    this.expectedDuration = expectedDuration;
+    this.rateUnit = rateUnit;
+    this.rateAmount = rateAmount;
+    this.collaborationType = collaborationType;
+    this.region = region;
+    this.deadline = deadline;
+    this.techStacks = techStacks;
+  }
+
+  @PrePersist
+  @PreUpdate
+  private void validateCategory() {
+    if (categoryOfBusiness.getMainCategory() != mainCategory) {
+      throw new BusinessException(ErrorCode.CATEGORY_MISMATCH);
     }
+  }
 
-    @PrePersist
-    @PreUpdate
-    private void validateCategory() {
-        if (categoryOfBusiness.getMainCategory() != mainCategory) {
-            throw new BusinessException(ErrorCode.CATEGORY_MISMATCH);
-        }
-    }
-
-    public void update(LinkoProfileReqDTO dto) {
-        this.companyName = dto.getCompanyName();
-        this.companyType = dto.getCompanyType();
-        this.mainCategory = dto.getMainCategory();
-        this.categoryOfBusiness = dto.getCategoryOfBusiness();
-        this.projectIntro = dto.getProjectIntro();
-        this.expectedDuration = dto.getExpectedDuration();
-        this.rateUnit = dto.getRateUnit();
-        this.rateAmount = dto.getRateAmount();
-        this.collaborationType = dto.getCollaborationType();
-        this.region = dto.getRegion();
-        this.deadline = dto.getDeadline();
-        this.techStacks = dto.getTechStacks();
-    }
+  public void update(LinkoProfileReqDTO dto) {
+    this.companyName = dto.getCompanyName();
+    this.companyType = dto.getCompanyType();
+    this.mainCategory = dto.getMainCategory();
+    this.categoryOfBusiness = dto.getCategoryOfBusiness();
+    this.projectIntro = dto.getProjectIntro();
+    this.expectedDuration = dto.getExpectedDuration();
+    this.rateUnit = dto.getRateUnit();
+    this.rateAmount = dto.getRateAmount();
+    this.collaborationType = dto.getCollaborationType();
+    this.region = dto.getRegion();
+    this.deadline = dto.getDeadline();
+    this.techStacks = dto.getTechStacks();
+  }
 }

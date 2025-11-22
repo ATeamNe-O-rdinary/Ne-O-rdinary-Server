@@ -8,13 +8,13 @@ import org.springframework.data.domain.Pageable;
 
 public interface LinkerService {
 
-	LinkerResponse linkerCreate(Long memberId, LinkerCreateRequest request);
+  LinkerResponse linkerCreate(Long memberId, LinkerCreateRequest request);
 
-	LinkerResponse getById(Long linkerId);
+  LinkerResponse getById(Long linkerId);
 
-	PagedResponse<LinkerResponse> getPage(Pageable pageable);
+  PagedResponse<LinkerResponse> getPage(Pageable pageable);
 
-	LinkerResponse linkerUpdate(Long memberId, Long linkerId, LinkerUpdateRequest request);
+  LinkerResponse linkerUpdate(Long memberId, Long linkerId, LinkerUpdateRequest request);
 
-	void linkerDelete(Long memberId, Long linkerId);
+  void linkerDelete(Long memberId, Long linkerId);
 }

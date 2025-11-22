@@ -4,7 +4,7 @@ import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
 
 public class InvalidLinkerEnumException extends BusinessException {
-	public InvalidLinkerEnumException() {
-		super(ErrorCode.LINKER_INVALID_ENUM);
-	}
+  public InvalidLinkerEnumException() {
+    super(ErrorCode.LINKER_INVALID_ENUM);
+  }
 }
