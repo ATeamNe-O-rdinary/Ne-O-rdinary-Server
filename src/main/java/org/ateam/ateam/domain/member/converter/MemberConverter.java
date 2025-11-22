@@ -12,6 +12,7 @@ public class MemberConverter {
     return MemberResDTO.ProfileListDTO.builder()
         .memberId(member.getId())
         .username(member.getUsername())
+            .profileImage(member.getProfileImage())
         .build();
   }
 

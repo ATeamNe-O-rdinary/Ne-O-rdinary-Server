@@ -1,0 +1,7 @@
+package org.ateam.ateam.domain.member.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Linker {
+}

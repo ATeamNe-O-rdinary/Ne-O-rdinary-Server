@@ -18,25 +18,42 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-  private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-  @Override
-  public PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(
-      MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
+    @Override
+    public PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(
+            MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
 
-    Spec spec = MemberConverter.toSpecEntity(dto);
+        Spec spec = MemberConverter.toSpecEntity(dto);
 
-    CategoryOfBusiness category = spec.getCategoryOfBusiness();
-    Integer minSalary = spec.getMinSalary();
-    Integer maxSalary = spec.getMaxSalary();
+        CategoryOfBusiness category = spec.getCategoryOfBusiness();
+        Integer minSalary = spec.getMinSalary();
+        Integer maxSalary = spec.getMaxSalary();
 
-    Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+        Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
 
-    Page<Member> memberList =
-        memberRepository.findByCategoryOfBusiness(category, minSalary, maxSalary, unsortedPageable);
+        Page<Member> memberList =
+                memberRepository.findByCategoryOfBusiness(category, minSalary, maxSalary, unsortedPageable);
 
-    Page<MemberResDTO.ProfileListDTO> pageList = memberList.map(MemberConverter::toProfileListDTO);
+        Page<MemberResDTO.ProfileListDTO> pageList = memberList.map(MemberConverter::toProfileListDTO);
 
-    return PagedResponse.pagedFrom(pageList);
-  }
+        return PagedResponse.pagedFrom(pageList);
+    }
+    @Override
+    public CategoryOfBusiness getCategoryOfBusiness(Long memberId, String linkTingRole) {
+        CategoryOfBusiness category = null;
+        if("linker".equals(linkTingRole)){
+
+        }
+        else if("linko".equals(linkTingRole)){
+
+        }
+        else{
+
+        }
+        return category;
+
+    }
 }
+
+
