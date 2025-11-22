@@ -38,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             List.of(
                     "/auth/**",
                     "/actuator/health",
+                    "/health",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
                     "/h2-console/**",
