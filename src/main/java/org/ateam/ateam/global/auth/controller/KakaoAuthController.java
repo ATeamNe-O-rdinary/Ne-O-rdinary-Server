@@ -11,7 +11,9 @@ import org.ateam.ateam.global.auth.dto.LoginResponseDTO;
 import org.ateam.ateam.global.auth.dto.UserAuthInfoDTO;
 import org.ateam.ateam.global.auth.enums.Provider;
 import org.ateam.ateam.global.auth.service.UserAuthService;
+import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;
+import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +40,12 @@ public class KakaoAuthController {
               + "* 이미 가입된 유저면 로그인 처리  \n"
               + "* 신규 유저면 회원가입 후 로그인 처리  \n"
               + "* Access Token은 응답 헤더의 `Authorization`에 포함됩니다.")
+  @ApiErrorCodeExamples({
+    ErrorCode.INVALID_INPUT_VALUE,
+    ErrorCode.KAKAO_TOKEN_INVALID,
+    ErrorCode.KAKAO_USER_INFO_FAILED,
+    ErrorCode.KAKAO_SERVER_ERROR
+  })
   public ResponseEntity<ResponseDto<LoginResponseDTO.LoginUserInfo>> kakaoLogin(
       @Valid @RequestBody KakaoLoginRequestDTO request) {
 
