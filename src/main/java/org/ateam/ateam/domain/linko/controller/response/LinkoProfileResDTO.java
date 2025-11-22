@@ -1,11 +1,9 @@
 package org.ateam.ateam.domain.linko.controller.response;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
-
+import org.ateam.ateam.domain.linker.model.enums.RateUnit;
 import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.member.enums.*;
 
@@ -18,12 +16,13 @@ public class LinkoProfileResDTO {
   private MainCategory mainCategory;
   private CategoryOfBusiness categoryOfBusiness;
   private String projectIntro;
-  private String expectedDuration;
-  private String expectedScope;
+  private ExpectedDuration expectedDuration;
+  private RateUnit rateUnit;
+  private Integer rateAmount;
   private CollaborationType collaborationType;
   private Region region;
   private String deadline;
-  private List<TechStack> requiredSkills;
+  private Set<TechStack> techStacks;
 
   public static LinkoProfileResDTO from(Linko linko) {
     return LinkoProfileResDTO.builder()
@@ -34,20 +33,12 @@ public class LinkoProfileResDTO {
         .categoryOfBusiness(linko.getCategoryOfBusiness())
         .projectIntro(linko.getProjectIntro())
         .expectedDuration(linko.getExpectedDuration())
-        .expectedScope(linko.getExpectedScope())
+        .rateUnit(linko.getRateUnit())
+        .rateAmount(linko.getRateAmount())
         .collaborationType(linko.getCollaborationType())
         .region(linko.getRegion())
         .deadline(linko.getDeadline())
-        .requiredSkills(parseSkills(linko.getRequiredSkills()))
+        .techStacks(linko.getTechStacks())
         .build();
-  }
-
-  private static List<TechStack> parseSkills(String json) {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      return mapper.readValue(json, new TypeReference<>() {});
-    } catch (Exception e) {
-      return List.of();
-    }
   }
 }

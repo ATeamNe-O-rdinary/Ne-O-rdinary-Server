@@ -1,14 +1,14 @@
 package org.ateam.ateam.domain.linko.model;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import org.ateam.ateam.domain.linker.model.enums.RateUnit;
 import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
+import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.enums.*;
 import org.ateam.ateam.global.common.BaseEntity;
 import org.ateam.ateam.global.error.ErrorCode;
@@ -22,10 +22,12 @@ public class Linko extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "linko_id")
   private Long id;
 
-  @Column(name = "member_id", nullable = false, unique = true)
-  private Long memberId;
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id", nullable = false, unique = true)
+  private Member member;
 
   @Column(name = "company_name", length = 100, nullable = false)
   private String companyName;
@@ -45,11 +47,16 @@ public class Linko extends BaseEntity {
   @Column(name = "project_intro", columnDefinition = "TEXT", nullable = false)
   private String projectIntro;
 
+  @Enumerated(EnumType.STRING)
   @Column(name = "expected_duration", nullable = false)
-  private String expectedDuration;
+  private ExpectedDuration expectedDuration;
 
-  @Column(name = "expected_scope", nullable = false)
-  private String expectedScope;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "rate_unit", nullable = false, length = 20)
+  private RateUnit rateUnit;
+
+  @Column(name = "rate_amount", nullable = false)
+  private Integer rateAmount;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "collaboration_type", nullable = false)
@@ -62,35 +69,40 @@ public class Linko extends BaseEntity {
   @Column(name = "deadline", nullable = false)
   private String deadline;
 
-  @Column(name = "required_skills", columnDefinition = "JSON")
-  private String requiredSkills;
+  @ElementCollection(fetch = FetchType.LAZY)
+  @CollectionTable(name = "linko_tech_stack", joinColumns = @JoinColumn(name = "linko_id"))
+  @Enumerated(EnumType.STRING)
+  @Column(name = "tech_stack")
+  private Set<TechStack> techStacks;
 
   @Builder
   public Linko(
-      Long memberId,
+      Member member,
       String companyName,
       CompanyType companyType,
       MainCategory mainCategory,
       CategoryOfBusiness categoryOfBusiness,
       String projectIntro,
-      String expectedDuration,
-      String expectedScope,
+      ExpectedDuration expectedDuration,
+      RateUnit rateUnit,
+      Integer rateAmount,
       CollaborationType collaborationType,
       Region region,
       String deadline,
-      String requiredSkills) {
-    this.memberId = memberId;
+      Set<TechStack> techStacks) {
+    this.member = member;
     this.companyName = companyName;
     this.companyType = companyType;
     this.mainCategory = mainCategory;
     this.categoryOfBusiness = categoryOfBusiness;
     this.projectIntro = projectIntro;
     this.expectedDuration = expectedDuration;
-    this.expectedScope = expectedScope;
+    this.rateUnit = rateUnit;
+    this.rateAmount = rateAmount;
     this.collaborationType = collaborationType;
     this.region = region;
     this.deadline = deadline;
-    this.requiredSkills = requiredSkills;
+    this.techStacks = techStacks;
   }
 
   @PrePersist
@@ -101,7 +113,6 @@ public class Linko extends BaseEntity {
     }
   }
 
-  // Linko.java에 update 메서드 추가
   public void update(LinkoProfileReqDTO dto) {
     this.companyName = dto.getCompanyName();
     this.companyType = dto.getCompanyType();
@@ -109,18 +120,11 @@ public class Linko extends BaseEntity {
     this.categoryOfBusiness = dto.getCategoryOfBusiness();
     this.projectIntro = dto.getProjectIntro();
     this.expectedDuration = dto.getExpectedDuration();
-    this.expectedScope = dto.getExpectedScope();
+    this.rateUnit = dto.getRateUnit();
+    this.rateAmount = dto.getRateAmount();
     this.collaborationType = dto.getCollaborationType();
     this.region = dto.getRegion();
     this.deadline = dto.getDeadline();
-    this.requiredSkills = convertEnumListToJson(dto.getRequiredSkills());
-  }
-
-  private String convertEnumListToJson(List<TechStack> list) {
-    try {
-      return new ObjectMapper().writeValueAsString(list);
-    } catch (Exception e) {
-      return "[]";
-    }
+    this.techStacks = dto.getTechStacks();
   }
 }

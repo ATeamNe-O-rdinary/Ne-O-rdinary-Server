@@ -34,10 +34,7 @@ public enum CategoryOfBusiness {
 
   public static CategoryOfBusiness from(String value) {
     return Arrays.stream(values())
-        .filter(c ->
-            c.name().equalsIgnoreCase(value) ||
-                c.getTitle().equals(value)
-        )
+        .filter(c -> c.name().equalsIgnoreCase(value) || c.getTitle().equals(value))
         .findFirst()
         .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ENUM_VALUE));
   }

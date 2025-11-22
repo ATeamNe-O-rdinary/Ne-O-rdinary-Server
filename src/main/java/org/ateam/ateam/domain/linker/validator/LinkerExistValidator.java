@@ -15,22 +15,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LinkerExistValidator {
 
-	private final LinkerRepository linkerRepository;
-	private final MemberRepository memberRepository;
+  private final LinkerRepository linkerRepository;
+  private final MemberRepository memberRepository;
 
-	public Member getMemberOrThrow(Long memberId) {
-		return memberRepository.findById(memberId)
-			.orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
-	}
+  public Member getMemberOrThrow(Long memberId) {
+    return memberRepository
+        .findById(memberId)
+        .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+  }
 
-	public void validateLinkerNotExists(Long memberId) {
-		if (linkerRepository.existsByMemberId(memberId)) {
-			throw new LinkerAlreadyExistsException();
-		}
-	}
+  public void validateLinkerNotExists(Long memberId) {
+    if (linkerRepository.existsByMemberId(memberId)) {
+      throw new LinkerAlreadyExistsException();
+    }
+  }
 
-	public Linker getOwnedLinkerOrThrow(Long linkerId, Long memberId) {
-		return linkerRepository.findByIdAndMemberId(linkerId, memberId)
-			.orElseThrow(LinkerNotFoundException::new);
-	}
+  public Linker getOwnedLinkerOrThrow(Long linkerId, Long memberId) {
+    return linkerRepository
+        .findByIdAndMemberId(linkerId, memberId)
+        .orElseThrow(LinkerNotFoundException::new);
+  }
 }

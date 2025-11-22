@@ -1,15 +1,13 @@
 package org.ateam.ateam.domain.linko.model.request;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import java.util.List;
+import jakarta.validation.constraints.*;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import org.ateam.ateam.domain.linker.model.enums.RateUnit;
 import org.ateam.ateam.domain.linko.model.Linko;
+import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.enums.*;
 
 @Getter
@@ -31,11 +29,15 @@ public class LinkoProfileReqDTO {
   @NotBlank(message = "프로젝트 소개를 입력해주세요.")
   private String projectIntro;
 
-  @NotBlank(message = "예상 기간을 선택해주세요.")
-  private String expectedDuration;
+  @NotNull(message = "예상 기간을 선택해주세요.")
+  private ExpectedDuration expectedDuration;
 
-  @NotBlank(message = "예상 범위를 선택해주세요.")
-  private String expectedScope;
+  @NotNull(message = "예산 단위를 선택해주세요.")
+  private RateUnit rateUnit;
+
+  @NotNull(message = "예산 금액을 입력해주세요.")
+  @Positive(message = "예산 금액은 양수여야 합니다.")
+  private Integer rateAmount;
 
   @NotNull(message = "협업 방식을 선택해주세요.")
   private CollaborationType collaborationType;
@@ -46,7 +48,7 @@ public class LinkoProfileReqDTO {
   private String deadline;
 
   @NotEmpty(message = "요구 스킬을 선택해주세요.")
-  private List<TechStack> requiredSkills;
+  private Set<TechStack> techStacks;
 
   @AssertTrue(message = "선택한 세부 카테고리가 대분류와 일치하지 않습니다.")
   private boolean isCategoryValid() {
@@ -65,29 +67,21 @@ public class LinkoProfileReqDTO {
     return true;
   }
 
-  public Linko toEntity(Long memberId) {
+  public Linko toEntity(Member member) {
     return Linko.builder()
-        .memberId(memberId)
+        .member(member)
         .companyName(companyName)
         .companyType(companyType)
         .mainCategory(mainCategory)
         .categoryOfBusiness(categoryOfBusiness)
         .projectIntro(projectIntro)
         .expectedDuration(expectedDuration)
-        .expectedScope(expectedScope)
+        .rateUnit(rateUnit)
+        .rateAmount(rateAmount)
         .collaborationType(collaborationType)
         .region(region)
         .deadline(deadline)
-        .requiredSkills(convertEnumListToJson(requiredSkills))
+        .techStacks(techStacks != null ? new HashSet<>(techStacks) : new HashSet<>())
         .build();
-  }
-
-  private String convertEnumListToJson(List<TechStack> list) {
-    try {
-      ObjectMapper mapper = new ObjectMapper();
-      return mapper.writeValueAsString(list);
-    } catch (Exception e) {
-      return "[]";
-    }
   }
 }
