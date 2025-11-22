@@ -19,6 +19,7 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
+# JWT Configuration
 jwt:
   secret: ${JWT_SECRET}
   accessExpiration: ${JWT_ACCESS_EXPIRATION:1800}
@@ -36,3 +37,10 @@ cloud:
     credentials:
       accessKey: ${AWS_ACCESS_KEY_ID}
       secretKey: ${AWS_SECRET_ACCESS_KEY}
+
+# Kakao OAuth Configuration
+auth:
+  kakao:
+    native-app-key: ${KAKAO_NATIVE_APP_KEY}
+    api-url: https://kapi.kakao.com
+    token-url: https://kauth.kakao.com

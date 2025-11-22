@@ -28,7 +28,11 @@ public enum ErrorCode {
   // S3
   S3_UPLOAD_FAILED(500, "S3001", "S3 업로드에 실패했습니다."),
   S3_DELETE_FAILED(500, "S3002", "S3 파일 삭제에 실패했습니다."),
-  S3_INVALID_URL(400, "S3003", "유효하지 않은 S3 파일 URL입니다.");
+  S3_INVALID_URL(400, "S3003", "유효하지 않은 S3 파일 URL입니다."),
+
+  // Spec
+  CATEGORY_NOT_FOUND(400, "S001", "잘못된 카테고리 입니다."),
+  INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다.");
 
   private final String code;
   private final String message;
