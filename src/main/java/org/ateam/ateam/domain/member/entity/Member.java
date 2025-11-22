@@ -4,17 +4,16 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.*;
+import org.ateam.ateam.domain.common.BaseEntity;
 import org.ateam.ateam.domain.member.enums.Gender;
 import org.ateam.ateam.global.auth.enums.Provider;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public class Member {
+public class Member extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +22,17 @@ public class Member {
   @Column(name = "name", length = 50, nullable = false)
   private String username;
 
-  @Column(name = "password")
-  private String password;
-
-  @Column(name = "email", unique = true) // nullable 제거 (이메일 선택사항)
+  @Column(name = "email", unique = true)
   private String email;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "provider", nullable = false, length = 20)
+  @Column(name = "login_provider", nullable = false, length = 20)
   private Provider loginProvider;
 
-  @Column(name = "gender", length = 10)
+  @Column(name = "profile_image_url", length = 500)
+  private String profileImageUrl;
+
+  @Column(name = "gender", nullable = false)
   @Enumerated(EnumType.STRING)
   @Builder.Default
   private Gender gender = Gender.NONE;
@@ -44,23 +43,11 @@ public class Member {
   @Column(name = "phone_number")
   private String phoneNumber;
 
-  @Column(name = "profile_image_url", length = 500)
-  private String profileImageUrl;
-
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false, updatable = false)
-  private LocalDateTime createdAt;
-
-  @UpdateTimestamp
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
-
-  @Column(name = "deleted_at")
+  @Column(name = "delete_at")
   private LocalDateTime deletedAt;
 
-  // Spec 엔티티와의 관계는 Spec 쪽에서만 관리 (단방향)
-  // @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
-  // private Spec spec;
+  @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Spec spec;
 
   /** Username 변경 */
   public void setUsername(String username) {

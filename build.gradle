@@ -80,7 +80,11 @@ dependencies {
 
     // Apache HttpClient 5
     implementation 'org.apache.httpcomponents.client5:httpclient5'
+
     implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+
+    //S3
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.772'
 }
 
 tasks.named('test') {

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
 import org.ateam.ateam.global.logging.LoggingUtils;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -53,6 +54,14 @@ public class GlobalExceptionHandler {
     final ErrorResponse response = ErrorResponse.of(ErrorCode.HANDLE_ACCESS_DENIED);
     return new ResponseEntity<>(
         response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
+  }
+
+  @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+  protected ResponseEntity<ErrorResponse> handleInvalidDataAccessApiUsageException(
+      InvalidDataAccessApiUsageException e) {
+    LoggingUtils.warn(e);
+    final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(BusinessException.class)
