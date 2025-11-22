@@ -32,6 +32,9 @@ public class Linko extends BaseEntity {
     @Column(name = "company_name", length = 100, nullable = false)
     private String companyName;
 
+    @Column(name = "company_image_url", length = 500)
+    private String companyImageUrl;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "company_type", nullable = false)
     private CompanyType companyType;
@@ -79,6 +82,7 @@ public class Linko extends BaseEntity {
     public Linko(
             Member member,
             String companyName,
+            String companyImageUrl,
             CompanyType companyType,
             MainCategory mainCategory,
             CategoryOfBusiness categoryOfBusiness,
@@ -92,6 +96,7 @@ public class Linko extends BaseEntity {
             Set<TechStack> techStacks) {
         this.member = member;
         this.companyName = companyName;
+        this.companyImageUrl = companyImageUrl;
         this.companyType = companyType;
         this.mainCategory = mainCategory;
         this.categoryOfBusiness = categoryOfBusiness;
@@ -111,6 +116,9 @@ public class Linko extends BaseEntity {
         if (categoryOfBusiness.getMainCategory() != mainCategory) {
             throw new BusinessException(ErrorCode.CATEGORY_MISMATCH);
         }
+    }
+    public void updateCompanyImage(String imageUrl) {
+        this.companyImageUrl = imageUrl;
     }
 
     public void update(LinkoProfileReqDTO dto) {
