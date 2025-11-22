@@ -23,7 +23,12 @@ public enum ErrorCode {
   USER_NOT_FOUND(404, "U001", "사용자를 찾을 수 없습니다."),
   USER_ALREADY_REGISTERED(409, "U002", "이미 가입된 사용자입니다."),
   EMAIL_ALREADY_EXISTS(409, "U003", "이미 사용 중인 이메일입니다."),
-  USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다.");
+  USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다."),
+
+  // Category
+    CATEGORY_NOT_FOUND(400, "CT001", "잘못된 카테고리 입니다.")
+
+    ;
 
 
   private final String code;

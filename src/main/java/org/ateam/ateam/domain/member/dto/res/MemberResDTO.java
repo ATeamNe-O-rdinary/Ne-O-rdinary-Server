@@ -1,7 +1,12 @@
 package org.ateam.ateam.domain.member.dto.res;
 
-public class MemberResDTO {
-    public record JoinDTO(){
+import lombok.Builder;
 
-    }
+public class MemberResDTO {
+
+    @Builder
+    public record ProfileListDTO(
+            Long memberId,
+            String username
+    ){}
 }
