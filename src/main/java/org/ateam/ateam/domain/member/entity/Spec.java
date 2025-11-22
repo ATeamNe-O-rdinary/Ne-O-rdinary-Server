@@ -10,21 +10,21 @@ import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class Spec {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private CategoryOfBusiness categoryOfBusiness;
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private CategoryOfBusiness categoryOfBusiness;
 
-    @Column(nullable = false)
-    private Integer minSalary;
+  @Column(nullable = false)
+  private Integer minSalary;
 
-    @Column(nullable = false)
-    private Integer maxSalary;
+  @Column(nullable = false)
+  private Integer maxSalary;
 
-    @OneToOne(mappedBy = "spec", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Member member;
-
-
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "member_id")
+  private Member member;
 }

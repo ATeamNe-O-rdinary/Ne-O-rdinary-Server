@@ -10,17 +10,21 @@ import org.springframework.data.repository.query.Param;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @Query(value = "SELECT m FROM Member m " +
-            "JOIN FETCH m.spec s " +
-            "WHERE s.categoryOfBusiness = :categoryOfBusiness " +
-            "AND s.minSalary >= :minSalary " +
-            "AND s.maxSalary <= :maxSalary",
-            countQuery = "SELECT count(m) FROM Member m JOIN m.spec s " +
-                    "WHERE s.categoryOfBusiness = :categoryOfBusiness " +
-                    "AND s.minSalary >= :minSalary " +
-                    "AND s.maxSalary <= :maxSalary")
-    Page<Member> findByCategoryOfBusiness(@Param("categoryOfBusiness") CategoryOfBusiness categoryOfBusiness,
-                                          @Param("minSalary") Integer minSalary,
-                                          @Param("maxSalary") Integer maxSalary,
-                                          Pageable pageable);
+  @Query(
+      value =
+          "SELECT m FROM Member m "
+              + "JOIN FETCH m.spec s "
+              + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
+              + "AND s.minSalary >= :minSalary "
+              + "AND s.maxSalary <= :maxSalary",
+      countQuery =
+          "SELECT count(m) FROM Member m JOIN m.spec s "
+              + "WHERE s.categoryOfBusiness = :categoryOfBusiness "
+              + "AND s.minSalary >= :minSalary "
+              + "AND s.maxSalary <= :maxSalary")
+  Page<Member> findByCategoryOfBusiness(
+      @Param("categoryOfBusiness") CategoryOfBusiness categoryOfBusiness,
+      @Param("minSalary") Integer minSalary,
+      @Param("maxSalary") Integer maxSalary,
+      Pageable pageable);
 }

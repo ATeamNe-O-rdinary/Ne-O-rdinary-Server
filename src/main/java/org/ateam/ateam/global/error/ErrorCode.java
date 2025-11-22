@@ -25,11 +25,9 @@ public enum ErrorCode {
   EMAIL_ALREADY_EXISTS(409, "U003", "이미 사용 중인 이메일입니다."),
   USER_NAME_FAILED(403, "U004", "이름의 형식이 맞지않습니다."),
 
-  // Category
-    CATEGORY_NOT_FOUND(400, "CT001", "잘못된 카테고리 입니다.")
-
-    ;
-
+  // Spec
+  CATEGORY_NOT_FOUND(400, "S001", "잘못된 카테고리 입니다."),
+  INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다.");
 
   private final String code;
   private final String message;

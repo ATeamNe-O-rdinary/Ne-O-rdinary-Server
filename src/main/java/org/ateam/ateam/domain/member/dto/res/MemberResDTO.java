@@ -4,9 +4,6 @@ import lombok.Builder;
 
 public class MemberResDTO {
 
-    @Builder
-    public record ProfileListDTO(
-            Long memberId,
-            String username
-    ){}
+  @Builder
+  public record ProfileListDTO(Long memberId, String username) {}
 }

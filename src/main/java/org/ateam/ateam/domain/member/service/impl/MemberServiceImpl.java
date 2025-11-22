@@ -11,28 +11,32 @@ import org.ateam.ateam.domain.member.repository.MemberRepository;
 import org.ateam.ateam.domain.member.service.MemberService;
 import org.ateam.ateam.global.dto.PagedResponse;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    private final MemberRepository memberRepository;
+  private final MemberRepository memberRepository;
 
-    @Override
-    public PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(MemberReqDTO.ProfileListDTO dto, Pageable pageable){
+  @Override
+  public PagedResponse<MemberResDTO.ProfileListDTO> getProfileList(
+      MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
 
-        Spec spec = MemberConverter.toSpecEntity(dto);
+    Spec spec = MemberConverter.toSpecEntity(dto);
 
-        CategoryOfBusiness category = spec.getCategoryOfBusiness();
-        Integer minSalary = spec.getMinSalary();
-        Integer maxSalary = spec.getMaxSalary();
+    CategoryOfBusiness category = spec.getCategoryOfBusiness();
+    Integer minSalary = spec.getMinSalary();
+    Integer maxSalary = spec.getMaxSalary();
 
-        Page<Member> memberList = memberRepository.findByCategoryOfBusiness(category, minSalary, maxSalary, pageable);
+    Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
 
-        Page<MemberResDTO.ProfileListDTO> pageList = memberList.map(MemberConverter::toProfileListDTO);
+    Page<Member> memberList =
+        memberRepository.findByCategoryOfBusiness(category, minSalary, maxSalary, unsortedPageable);
 
-        return PagedResponse.pagedFrom(pageList);
+    Page<MemberResDTO.ProfileListDTO> pageList = memberList.map(MemberConverter::toProfileListDTO);
 
-    }
+    return PagedResponse.pagedFrom(pageList);
+  }
 }

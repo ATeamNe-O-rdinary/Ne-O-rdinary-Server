@@ -1,10 +1,15 @@
 package org.ateam.ateam.global.error.handler;
 
 import java.nio.file.AccessDeniedException;
+import java.util.HashMap;
+import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
 import org.ateam.ateam.global.logging.LoggingUtils;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -13,16 +18,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import lombok.extern.slf4j.Slf4j;
-
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
-      MethodArgumentNotValidException e
-  ) {
+      MethodArgumentNotValidException e) {
     LoggingUtils.warn(e);
 
     final ErrorResponse response =
@@ -33,8 +35,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(
-      MethodArgumentTypeMismatchException e
-  ) {
+      MethodArgumentTypeMismatchException e) {
     LoggingUtils.warn(e);
 
     final ErrorResponse response = ErrorResponse.of(e);
@@ -43,8 +44,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
   protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException(
-      HttpRequestMethodNotSupportedException e
-  ) {
+      HttpRequestMethodNotSupportedException e) {
     LoggingUtils.warn(e);
 
     final ErrorResponse response = ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED);
@@ -52,17 +52,23 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(AccessDeniedException.class)
-  protected ResponseEntity<ErrorResponse> handleAccessDeniedException(
-      AccessDeniedException e
-  ) {
+  protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
     LoggingUtils.warn(e);
 
     final ErrorResponse response = ErrorResponse.of(ErrorCode.HANDLE_ACCESS_DENIED);
     return new ResponseEntity<>(
-        response,
-        HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus())
-    );
+        response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
   }
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    protected ResponseEntity<ErrorResponse> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException e) {
+        LoggingUtils.warn(e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+
+
 
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
