@@ -29,20 +29,31 @@ public class LinkoProfileController {
 
   @PostMapping
   @Operation(
-      summary = "회사 프로필 등록",
-      description =
-          "회사(Linko)의 프로젝트 정보를 등록합니다.\n"
-              + "**등록 정보:**\n"
-              + "- Company name: 회사명\n"
-              + "- Business type: 업종\n"
-              + "- Category (Main/Sub): 카테고리 (대분류/세부)\n"
-              + "- Project introduction: 프로젝트 소개\n"
-              + "- Expected duration: 예상 기간\n"
-              + "- Expected scope: 예상 범위\n"
-              + "- Collaboration type: 협업 방식\n"
-              + "- Region: 지역\n"
-              + "- Deadline: 마감기한\n"
-              + "- Required skills: 요구 스킬")
+          summary = "회사 프로필 등록 (Create Company Profile)",
+          description = "회사(Linko)의 프로젝트 정보를 등록합니다.\n\n" +
+                  "**등록 정보:**\n\n" +
+                  "- **companyName**: 회사명 (Company name)\n" +
+                  "- **companyType**: 업종 (Business type)\n" +
+                  "  - MANUFACTURING, CONSTRUCTION, WHOLESALE_RETAIL, ACCOMMODATION_FOOD, TRANSPORT_WAREHOUSE, INFORMATION_COMMUNICATION, FINANCE_INSURANCE, REAL_ESTATE, PROFESSIONAL_TECHNICAL\n" +
+                  "- **mainCategory**: 대분류 카테고리 (Main category)\n" +
+                  "  - DESIGN, DEVELOPMENT, MARKETING, CONTENT, BUSINESS\n" +
+                  "- **categoryOfBusiness**: 세부 카테고리 (Sub category)\n" +
+                  "  - Design: LOGO_BRANDING, WEB_MOBILE_DESIGN, PRODUCT_PACKAGE, ILLUSTRATION, PRINT_EDITORIAL\n" +
+                  "  - Development: WEB_DEVELOPMENT, APP_DEVELOPMENT, GAME_DEVELOPMENT, AI_DATA, SYSTEM_NETWORK\n" +
+                  "  - Marketing: DIGITAL_MARKETING, CONTENT_MARKETING, SNS_MARKETING, BRAND_STRATEGY, SEO_SEM\n" +
+                  "  - Content: VIDEO_PRODUCTION, PHOTOGRAPHY, WRITING, TRANSLATION, VOICE_NARRATION\n" +
+                  "  - Business: BUSINESS_CONSULTING, ACCOUNTING_TAX, LEGAL_PATENT, HR_EDUCATION, RESEARCH_ANALYSIS\n" +
+                  "- **projectIntro**: 프로젝트 소개 (Project introduction)\n" +
+                  "- **expectedDuration**: 예상 기간 (Expected duration)\n" +
+                  "- **expectedScope**: 예상 범위 (Expected scope)\n" +
+                  "- **collaborationType**: 협업 방식 (Collaboration type)\n" +
+                  "  - ONLINE (온라인), OFFLINE (오프라인), HYBRID (혼합)\n" +
+                  "- **region**: 지역 (Region)\n" +
+                  "  - SEOUL, GYEONGGI, INCHEON, BUSAN, DAEGU, GWANGJU, DAEJEON, ULSAN, SEJONG, GANGWON, CHUNGBUK, CHUNGNAM, JEONBUK, JEONNAM, GYEONGBUK, GYEONGNAM, JEJU, OVERSEAS\n" +
+                  "- **deadline**: 마감기한 (Deadline)\n" +
+                  "- **requiredSkills**: 요구 스킬 (Required skills)\n" +
+                  "  - JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, REACT, VUE, ANGULAR, SPRING, DJANGO, NODEJS, SWIFT, KOTLIN, FLUTTER, FIGMA, PHOTOSHOP, ILLUSTRATOR 등"
+  )
   @ApiErrorCodeExamples({
     ErrorCode.INVALID_INPUT_VALUE,
     ErrorCode.CATEGORY_MISMATCH,
