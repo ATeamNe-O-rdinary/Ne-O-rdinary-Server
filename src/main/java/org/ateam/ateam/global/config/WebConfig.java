@@ -14,29 +14,27 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
 
-		registry.addMapping("/**")
-			.allowedOrigins(
-				"http://localhost:3000",
-				"http://localhost:5173"
-			)
-			.allowedMethods("*")
-			.allowedHeaders("*")
-			.allowCredentials(true);
-	}
+    registry
+        .addMapping("/**")
+        .allowedOrigins("http://localhost:3000", "http://localhost:5173")
+        .allowedMethods("*")
+        .allowedHeaders("*")
+        .allowCredentials(true);
+  }
 
-    @Bean("kakaoWebClient")
-    public WebClient kakaoWebClient() {
-        return WebClient.builder()
-                .baseUrl("https://kapi.kakao.com") // 사용자 정보 조회
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
-    }
+  @Bean("kakaoWebClient")
+  public WebClient kakaoWebClient() {
+    return WebClient.builder()
+        .baseUrl("https://kapi.kakao.com") // 사용자 정보 조회
+        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .build();
+  }
 
-    @Bean("kakaoTokenWebClient")
-    public WebClient kakaoTokenWebClient() {
-        return WebClient.builder()
-                .baseUrl("https://kauth.kakao.com") // 토큰 갱신용
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .build();
-    }
+  @Bean("kakaoTokenWebClient")
+  public WebClient kakaoTokenWebClient() {
+    return WebClient.builder()
+        .baseUrl("https://kauth.kakao.com") // 토큰 갱신용
+        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+        .build();
+  }
 }

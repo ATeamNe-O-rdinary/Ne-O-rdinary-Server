@@ -56,15 +56,13 @@ public class GlobalExceptionHandler {
         response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
   }
 
-    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
-    protected ResponseEntity<ErrorResponse> handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException e) {
-        LoggingUtils.warn(e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-
-
+  @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+  protected ResponseEntity<ErrorResponse> handleInvalidDataAccessApiUsageException(
+      InvalidDataAccessApiUsageException e) {
+    LoggingUtils.warn(e);
+    final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+  }
 
   @ExceptionHandler(BusinessException.class)
   protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {

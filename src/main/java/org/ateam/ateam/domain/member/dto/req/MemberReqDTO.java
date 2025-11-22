@@ -1,6 +1,5 @@
 package org.ateam.ateam.domain.member.dto.req;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.ateam.ateam.domain.member.annotation.ValidMinSalary;
