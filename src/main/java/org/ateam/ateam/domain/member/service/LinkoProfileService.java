@@ -17,44 +17,44 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LinkoProfileService {
 
-    private final LinkoRepository repository;
+  private final LinkoRepository repository;
 
-    @Transactional
-    public void createProfile(Long memberId, LinkoProfileReqDTO request) {
-        if (repository.existsByMemberId(memberId)) {
-            throw new ProfileAlreadyExistsException();
-        }
-
-        Linko linko = request.toEntity(memberId);
-        repository.save(linko);
-
-        log.info("[Linko Profile] 프로필 등록 완료 - memberId={}", memberId);
+  @Transactional
+  public void createProfile(Long memberId, LinkoProfileReqDTO request) {
+    if (repository.existsByMemberId(memberId)) {
+      throw new ProfileAlreadyExistsException();
     }
 
-    public LinkoProfileResDTO getProfile(Long memberId) {
-        Linko linko = repository.findByMemberId(memberId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
+    Linko linko = request.toEntity(memberId);
+    repository.save(linko);
 
-        return LinkoProfileResDTO.from(linko);
-    }
+    log.info("[Linko Profile] 프로필 등록 완료 - memberId={}", memberId);
+  }
 
-    @Transactional
-    public void updateProfile(Long memberId, LinkoProfileReqDTO request) {
-        Linko linko = repository.findByMemberId(memberId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
+  public LinkoProfileResDTO getProfile(Long memberId) {
+    Linko linko =
+        repository.findByMemberId(memberId).orElseThrow(LinkoProfileNotFoundException::new);
 
-        linko.update(request);
+    return LinkoProfileResDTO.from(linko);
+  }
 
-        log.info("[Linko Profile] 프로필 수정 완료 - memberId={}", memberId);
-    }
+  @Transactional
+  public void updateProfile(Long memberId, LinkoProfileReqDTO request) {
+    Linko linko =
+        repository.findByMemberId(memberId).orElseThrow(LinkoProfileNotFoundException::new);
 
-    @Transactional
-    public void deleteProfile(Long memberId) {
-        Linko linko = repository.findByMemberId(memberId)
-                .orElseThrow(LinkoProfileNotFoundException::new);
+    linko.update(request);
 
-        repository.delete(linko);
+    log.info("[Linko Profile] 프로필 수정 완료 - memberId={}", memberId);
+  }
 
-        log.info("[Linko Profile] 프로필 삭제 완료 - memberId={}", memberId);
-    }
+  @Transactional
+  public void deleteProfile(Long memberId) {
+    Linko linko =
+        repository.findByMemberId(memberId).orElseThrow(LinkoProfileNotFoundException::new);
+
+    repository.delete(linko);
+
+    log.info("[Linko Profile] 프로필 삭제 완료 - memberId={}", memberId);
+  }
 }
