@@ -18,36 +18,21 @@ public class S3Controller {
   private final S3Uploader s3Uploader;
 
   @Operation(summary = "파일 업로드")
-  @ApiErrorCodeExamples({
-      ErrorCode.S3_UPLOAD_FAILED,
-      ErrorCode.S3_INVALID_URL
-  })
+  @ApiErrorCodeExamples({ErrorCode.S3_UPLOAD_FAILED, ErrorCode.S3_INVALID_URL})
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseDto<S3UploadResponse> upload(
       @RequestPart("file") MultipartFile file,
-      @RequestParam(defaultValue = "default") String dirName
-  ) {
+      @RequestParam(defaultValue = "default") String dirName) {
     String url = s3Uploader.upload(file, dirName);
     return ResponseDto.of(
-        HttpStatus.OK,
-        "S3_UPLOAD_SUCCESS",
-        "파일 업로드 성공",
-        new S3UploadResponse(url)
-    );
+        HttpStatus.OK, "S3_UPLOAD_SUCCESS", "파일 업로드 성공", new S3UploadResponse(url));
   }
 
   @Operation(summary = "파일 삭제")
-  @ApiErrorCodeExamples({
-      ErrorCode.S3_DELETE_FAILED,
-      ErrorCode.S3_INVALID_URL
-  })
+  @ApiErrorCodeExamples({ErrorCode.S3_DELETE_FAILED, ErrorCode.S3_INVALID_URL})
   @DeleteMapping
   public ResponseDto<Void> delete(@RequestParam String url) {
     s3Uploader.delete(url);
-    return ResponseDto.of(
-        HttpStatus.NO_CONTENT,
-        "S3_DELETE_SUCCESS",
-        "파일 삭제 성공"
-    );
+    return ResponseDto.of(HttpStatus.NO_CONTENT, "S3_DELETE_SUCCESS", "파일 삭제 성공");
   }
 }

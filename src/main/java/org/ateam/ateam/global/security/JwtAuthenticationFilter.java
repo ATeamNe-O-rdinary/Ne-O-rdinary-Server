@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   // 인증 없이 허용되는 URL 패턴
   private static final List<String> NO_AUTH_URLS =
       List.of(
-          "/auth/**",
+          "/api/v1/auth/**",
           "/actuator/health",
           "/health",
           "/swagger-ui/**",
