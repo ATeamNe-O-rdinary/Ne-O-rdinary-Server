@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.common;
+package org.ateam.ateam.global.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
