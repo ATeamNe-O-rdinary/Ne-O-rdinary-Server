@@ -12,7 +12,6 @@ public enum ErrorCode {
   INVALID_TYPE_VALUE(400, "C005", "유효하지 않은 타입 값입니다."),
   HANDLE_ACCESS_DENIED(403, "C006", "접근이 거부되었습니다."),
   CATEGORY_MISMATCH(400, "C007", "선택한 세부 카테고리가 대분류와 일치하지 않습니다."),
-  PROFILE_ALREADY_EXISTS(409, "P001", "이미 등록된 프로필이 있습니다."),
 
   // JWT
   EXPIRED_JWT(403, "J001", "만료된 JWT 토큰입니다."),
@@ -47,7 +46,13 @@ public enum ErrorCode {
   LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
   LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
 
-  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다.");
+  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
+
+  // Profile
+  PROFILE_NOT_FOUND(404, "P001", "프로필 이미지를 찾을 수 없습니다."),
+  PROFILE_UPLOAD_FAILED(500, "P002", "프로필 이미지 업로드에 실패했습니다."),
+  PROFILE_DELETE_FAILED(500, "P003", "프로필 이미지 삭제에 실패했습니다."),
+  PROFILE_ALREADY_EXISTS(400, "P004", "이미 프로필 이미지가 존재합니다.");
 
   private final String code;
   private final String message;
