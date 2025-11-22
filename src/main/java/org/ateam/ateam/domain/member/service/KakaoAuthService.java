@@ -3,6 +3,9 @@ package org.ateam.ateam.domain.member.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.ateam.ateam.domain.member.exception.InvalidKakaoTokenException;
+import org.ateam.ateam.domain.member.exception.KakaoServerException;
+import org.ateam.ateam.domain.member.exception.KakaoUserInfoFailedException;
 import org.ateam.ateam.domain.member.repository.SocialAuthRepository;
 import org.ateam.ateam.global.auth.dto.KakaoTokenResponseDTO;
 import org.ateam.ateam.global.auth.dto.KakaoUserInfoResponseDTO;
@@ -53,7 +56,9 @@ public class KakaoAuthService {
                         .map(
                             errorBody -> {
                               log.error("[Kakao Service] API 에러 응답: {}", errorBody);
+                              // 커스텀 예외 던지기
                               handleKakaoApiError(errorBody);
+                              // 여기 도달하지 않음 (handleKakaoApiError에서 예외 던짐)
                               return new RuntimeException("카카오 API 실패");
                             }))
             .bodyToMono(KakaoUserInfoResponseDTO.class)
@@ -88,7 +93,7 @@ public class KakaoAuthService {
     String refreshToken =
         socialAuthRepository
             .findRefreshTokenByUserId(userId)
-            .orElseThrow(() -> new RuntimeException("Refresh token not found"));
+            .orElseThrow(() -> new InvalidKakaoTokenException("Refresh token을 찾을 수 없습니다."));
 
     KakaoTokenResponseDTO tokenResponse =
         kakaoTokenWebClient
@@ -118,7 +123,7 @@ public class KakaoAuthService {
     log.debug("[Kakao Service] raw 응답: {}", toJson(tokenResponse));
 
     if (tokenResponse == null || tokenResponse.getAccessToken() == null) {
-      throw new RuntimeException("Failed to refresh Kakao access token");
+      throw new KakaoServerException("카카오 액세스 토큰 갱신에 실패했습니다.");
     }
 
     if (tokenResponse.getRefreshToken() != null) {
@@ -139,7 +144,8 @@ public class KakaoAuthService {
     log.debug("[Kakao Validation] userInfo: {}", userInfo);
 
     if (userInfo == null || userInfo.getId() == null) {
-      throw new IllegalArgumentException("카카오 계정의 고유 ID(auth_id)가 존재하지 않습니다.");
+      // 커스텀 예외
+      throw new KakaoUserInfoFailedException("카카오 계정의 고유 ID(auth_id)가 존재하지 않습니다.");
     }
 
     // 카카오 고유 ID는 항상 제공됨
@@ -159,18 +165,27 @@ public class KakaoAuthService {
     }
   }
 
-  /** 예외 처리 */
+  /** 예외 처리 - 커스텀 예외로 변경 */
   private void handleKakaoApiError(String errorResponse) {
-    if (errorResponse.contains("\"code\": -401")) {
-      throw new IllegalArgumentException("잘못된 Access Token입니다. 재로그인이 필요합니다.");
+    log.error("[Kakao API Error] {}", errorResponse);
+
+    // -401: 유효하지 않은 토큰
+    if (errorResponse.contains("\"code\":-401") || errorResponse.contains("\"code\": -401")) {
+      throw new InvalidKakaoTokenException("카카오 액세스 토큰이 만료되었거나 유효하지 않습니다.");
     }
-    if (errorResponse.contains("\"code\": -402")) {
-      throw new IllegalStateException("카카오 API 사용량 초과. 잠시 후 다시 시도하세요.");
+
+    // -402: API 사용량 초과
+    if (errorResponse.contains("\"code\":-402") || errorResponse.contains("\"code\": -402")) {
+      throw new KakaoServerException("카카오 API 사용량 초과. 잠시 후 다시 시도해주세요.");
     }
-    if (errorResponse.contains("\"code\": -500")) {
-      throw new RuntimeException("카카오 서버 내부 오류 발생. 나중에 다시 시도해주세요.");
+
+    // -500: 카카오 서버 내부 오류
+    if (errorResponse.contains("\"code\":-500") || errorResponse.contains("\"code\": -500")) {
+      throw new KakaoServerException("카카오 서버 내부 오류가 발생했습니다.");
     }
-    throw new RuntimeException("카카오 API 요청 실패: " + errorResponse);
+
+    // 기타 에러
+    throw new KakaoServerException("카카오 API 요청 실패: " + errorResponse);
   }
 
   private String toJson(Object obj) {
@@ -197,7 +212,7 @@ public class KakaoAuthService {
                       .map(
                           errorBody -> {
                             log.error("[Kakao disconnect] API 에러 응답: {}", errorBody);
-                            throw new RuntimeException("카카오 계정 연결 해제 실패: " + errorBody);
+                            throw new KakaoServerException("카카오 계정 연결 해제 실패: " + errorBody);
                           }))
           .bodyToMono(Void.class)
           .block();
