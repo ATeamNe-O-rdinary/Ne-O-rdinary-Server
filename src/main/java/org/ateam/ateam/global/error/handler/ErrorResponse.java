@@ -1,15 +1,14 @@
 package org.ateam.ateam.global.error.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -74,10 +73,12 @@ public class ErrorResponse {
           bindingResult.getFieldErrors();
 
       return fieldErrors.stream()
-          .map(error -> new FieldError(
-              error.getField(),
-              error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
-              error.getDefaultMessage()))
+          .map(
+              error ->
+                  new FieldError(
+                      error.getField(),
+                      error.getRejectedValue() == null ? "" : error.getRejectedValue().toString(),
+                      error.getDefaultMessage()))
           .collect(Collectors.toList());
     }
   }

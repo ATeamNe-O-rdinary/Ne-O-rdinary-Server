@@ -80,20 +80,20 @@ public class Linko extends BaseEntity {
 
     @Builder
     public Linko(
-            Member member,
-            String companyName,
-            String companyImageUrl,
-            CompanyType companyType,
-            MainCategory mainCategory,
-            CategoryOfBusiness categoryOfBusiness,
-            String projectIntro,
-            ExpectedDuration expectedDuration,
-            RateUnit rateUnit,
-            Integer rateAmount,
-            CollaborationType collaborationType,
-            Region region,
-            String deadline,
-            Set<TechStack> techStacks) {
+        Member member,
+        String companyName,
+        String companyImageUrl,
+        CompanyType companyType,
+        MainCategory mainCategory,
+        CategoryOfBusiness categoryOfBusiness,
+        String projectIntro,
+        ExpectedDuration expectedDuration,
+        RateUnit rateUnit,
+        Integer rateAmount,
+        CollaborationType collaborationType,
+        Region region,
+        String deadline,
+        Set<TechStack> techStacks) {
         this.member = member;
         this.companyName = companyName;
         this.companyImageUrl = companyImageUrl;
@@ -108,6 +108,7 @@ public class Linko extends BaseEntity {
         this.region = region;
         this.deadline = deadline;
         this.techStacks = techStacks;
+
     }
 
     @PrePersist
@@ -117,6 +118,7 @@ public class Linko extends BaseEntity {
             throw new BusinessException(ErrorCode.CATEGORY_MISMATCH);
         }
     }
+
     public void updateCompanyImage(String imageUrl) {
         this.companyImageUrl = imageUrl;
     }

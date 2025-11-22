@@ -54,7 +54,6 @@ public enum ErrorCode {
   PROFILE_DELETE_FAILED(500, "P003", "프로필 이미지 삭제에 실패했습니다."),
   PROFILE_ALREADY_EXISTS(400, "P004", "이미 프로필 이미지가 존재합니다.");
 
-
   private final String code;
   private final String message;
   private int status;
