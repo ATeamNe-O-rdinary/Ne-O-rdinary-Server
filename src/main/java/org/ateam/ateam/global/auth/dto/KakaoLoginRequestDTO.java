@@ -9,6 +9,6 @@ public record KakaoLoginRequestDTO(
         @Schema(description = "카카오 서버에서 발급받은 Access Token", example = "LSp3Z06wgUXXKjQDIPsKRNFgRmShI2ivAAAAAQoXFmIAAAGarYbw5LZbzBbpXusm")
         String accessToken,
         @NotBlank(message = "refreshToken은 필수입니다.")
-        @Schema(description = "카카오 서버에서 발급받은 Refresh Token", example = "sJ2ef0AFgqSUePErENlIlmzwre_Z2sAaAAAAAgoXFmIAAAGarYbw3bZbzBbpXus")
+        @Schema(description = "카카오 서버에서 발급받은 Refresh Token", example = "sJ2ef0AFgqSUePErENlIlmzwre_Z2sAaAAAAAgoXFmIAAAGarYbw3bZbzBbpXusm")
         String refreshToken) {
 }
