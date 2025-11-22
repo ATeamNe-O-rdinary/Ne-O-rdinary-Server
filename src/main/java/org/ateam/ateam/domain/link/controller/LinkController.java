@@ -1,6 +1,7 @@
 package org.ateam.ateam.domain.link.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.link.dto.req.LinkReqDTO;
 import org.ateam.ateam.domain.link.service.LinkService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Link", description = "링크 관리 API")
 public class LinkController {
   private final LinkService linkService;
   private final UserContext userContext;

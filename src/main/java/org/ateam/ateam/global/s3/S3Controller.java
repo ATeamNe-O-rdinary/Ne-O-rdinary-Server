@@ -1,6 +1,7 @@
 package org.ateam.ateam.global.s3;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/files")
+@Tag(name = "S3", description = "S3 파일 관리 API")
 public class S3Controller {
 
   private final S3Uploader s3Uploader;
