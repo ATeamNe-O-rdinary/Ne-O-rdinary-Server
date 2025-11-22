@@ -1,8 +1,6 @@
 package org.ateam.ateam.domain.member.repository;
 
 import java.util.Optional;
-
-import org.ateam.ateam.domain.linker.model.entity.Linker;
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.global.auth.enums.Provider;
@@ -52,7 +50,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
       @Param("minSalary") Integer minSalary,
       @Param("maxSalary") Integer maxSalary,
       Pageable pageable);
-
-
-
 }

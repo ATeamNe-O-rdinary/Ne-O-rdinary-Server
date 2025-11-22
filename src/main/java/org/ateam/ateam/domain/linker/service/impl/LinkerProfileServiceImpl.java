@@ -17,17 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LinkerProfileServiceImpl implements LinkerProfileService {
 
-	private final MemberRepository memberRepository;
-	private final LinkerRepository linkerRepository;
+  private final MemberRepository memberRepository;
+  private final LinkerRepository linkerRepository;
 
-	@Override
-	public LinkerProfileSummaryResponse getMyProfileSummary(Long memberId) {
-		Member member = memberRepository.findById(memberId)
-			.orElseThrow(MemberNotFoundException::new);
+  @Override
+  public LinkerProfileSummaryResponse getMyProfileSummary(Long memberId) {
+    Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
 
-		Linker linker = linkerRepository.findByMemberId(memberId)
-			.orElseThrow(LinkerNotFoundException::new);
+    Linker linker =
+        linkerRepository.findByMemberId(memberId).orElseThrow(LinkerNotFoundException::new);
 
-		return LinkerProfileSummaryResponse.of(linker, member);
-	}
+    return LinkerProfileSummaryResponse.of(linker, member);
+  }
 }

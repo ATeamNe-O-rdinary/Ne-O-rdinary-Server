@@ -12,26 +12,20 @@ public class MemberReqDTO {
 
   @Builder
   public record ProfileListDTO(
-          @Schema(description = "업종 (필수)", example = "LOGO_BRANDING")
+      @Schema(description = "업종 (필수)", example = "LOGO_BRANDING")
           @NotNull(message = "업종은 비어있을 수 없습니다.")
           CategoryOfBusiness categoryOfBusiness,
-
-          @Schema(description = "급여 기준 (주급/시급/월급)", example = "HOURLY")
+      @Schema(description = "급여 기준 (주급/시급/월급)", example = "HOURLY")
           @NotNull(message = "급여 기준은 비어있을 수 없습니다.")
           RateUnit rateUnit,
-
-          @Schema(description = "급여 금액 (입력된 기준과 금액으로 월 환산 금액을 계산하여 필터링)", example = "10000")
+      @Schema(description = "급여 금액 (입력된 기준과 금액으로 월 환산 금액을 계산하여 필터링)", example = "10000")
           @NotNull(message = "급여 금액은 비어있을 수 없습니다.")
           @ValidRateAmountSalary
           Integer rateAmount,
-
-          @Schema(description = "역할 (LINKER 또는 LINKO)", example = "LINKER")
+      @Schema(description = "역할 (LINKER 또는 LINKO)", example = "LINKER")
           @NotNull(message = "역할은 비어있을 수 없습니다.")
-          LinkTingRole linkTingRole
-  ) {}
+          LinkTingRole linkTingRole) {}
 
-    @Builder
-    public record TopListDTO(
-            CategoryOfBusiness categoryOfBusiness
-    ){}
+  @Builder
+  public record TopListDTO(CategoryOfBusiness categoryOfBusiness) {}
 }
