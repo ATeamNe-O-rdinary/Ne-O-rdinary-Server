@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.s3;
+package org.ateam.ateam.global.s3.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+
+import org.ateam.ateam.global.s3.S3Config;
 import org.ateam.ateam.global.s3.exception.InvalidS3UrlException;
 import org.ateam.ateam.global.s3.exception.S3DeleteFailedException;
 import org.ateam.ateam.global.s3.exception.S3UploadFailedException;

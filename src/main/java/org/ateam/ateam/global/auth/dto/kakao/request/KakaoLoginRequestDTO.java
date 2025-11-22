@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.auth.dto;
+package org.ateam.ateam.global.auth.dto.kakao.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

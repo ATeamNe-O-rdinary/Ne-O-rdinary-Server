@@ -13,7 +13,7 @@ import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.PagedResponse;
 import org.ateam.ateam.global.dto.ResponseDto;
 import org.ateam.ateam.global.error.ErrorCode;
-import org.ateam.ateam.global.security.UserAuthentication;
+import org.ateam.ateam.global.auth.security.UserAuthentication;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

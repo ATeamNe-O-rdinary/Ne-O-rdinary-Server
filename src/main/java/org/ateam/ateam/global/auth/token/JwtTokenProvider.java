@@ -9,7 +9,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ateam.ateam.global.security.JwtValidationType;
+import org.ateam.ateam.global.auth.security.JwtValidationType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -45,7 +45,6 @@ public class JwtTokenProvider {
     return generateToken(userId, REFRESH_TOKEN_EXPIRE_TIME, "REFRESH");
   }
 
-  /** JWT를 생성합니다. (JJWT 0.12.x 방식) */
   public String generateToken(Long userId, long expiryMillis, String tokenType) {
     Date now = new Date();
     Date expiryDate = new Date(now.getTime() + expiryMillis);
@@ -69,7 +68,6 @@ public class JwtTokenProvider {
     return signingKey;
   }
 
-  /** 토큰의 유효성을 검증합니다. */
   public JwtValidationType validateToken(String token) {
     try {
       final Claims claims = getTokenBody(token);

@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.security;
+package org.ateam.ateam.global.auth.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;

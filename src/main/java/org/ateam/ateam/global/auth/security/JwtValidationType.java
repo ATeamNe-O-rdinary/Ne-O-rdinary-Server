@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.security;
+package org.ateam.ateam.global.auth.security;
 
 public enum JwtValidationType {
   VALID_JWT, // 유효한 JWT

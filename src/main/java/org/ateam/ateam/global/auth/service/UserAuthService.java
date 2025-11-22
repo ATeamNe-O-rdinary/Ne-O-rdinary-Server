@@ -1,6 +1,6 @@
 package org.ateam.ateam.global.auth.service;
 
-import org.ateam.ateam.global.auth.dto.LoginResponseDTO;
+import org.ateam.ateam.global.auth.dto.login.response.LoginResponseDTO;
 import org.ateam.ateam.global.auth.dto.UserAuthInfoDTO;
 import org.ateam.ateam.global.auth.enums.Provider;
 

@@ -5,7 +5,7 @@ import org.ateam.ateam.domain.linko.controller.response.LinkoCompanyImageRespons
 import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.linko.service.LinkoCompanyImageService;
 import org.ateam.ateam.domain.linko.validator.LinkoValidator;
-import org.ateam.ateam.global.s3.S3Uploader;
+import org.ateam.ateam.global.s3.service.S3Uploader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

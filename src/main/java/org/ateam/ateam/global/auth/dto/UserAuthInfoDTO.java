@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserAuthInfoDTO {
-  private String providerId; // OAuth 제공자의 고유 ID
+  private String providerId;
   private Long userId;
   private String email;
   private String username;
-  private LocalDateTime tokenExpiry; // social access token 의 만료일
+  private LocalDateTime tokenExpiry;
 }

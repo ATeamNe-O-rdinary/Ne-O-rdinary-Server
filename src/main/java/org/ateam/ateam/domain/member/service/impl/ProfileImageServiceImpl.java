@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.service.ProfileImageService;
 import org.ateam.ateam.domain.member.validator.ProfileImageValidator;
-import org.ateam.ateam.global.s3.S3Uploader;
+import org.ateam.ateam.global.s3.service.S3Uploader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

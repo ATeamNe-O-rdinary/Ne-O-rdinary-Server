@@ -6,8 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.domain.member.service.KakaoAuthService;
-import org.ateam.ateam.global.auth.dto.KakaoLoginRequestDTO;
-import org.ateam.ateam.global.auth.dto.LoginResponseDTO;
+import org.ateam.ateam.global.auth.dto.kakao.request.KakaoLoginRequestDTO;
+import org.ateam.ateam.global.auth.dto.login.response.LoginResponseDTO;
 import org.ateam.ateam.global.auth.dto.UserAuthInfoDTO;
 import org.ateam.ateam.global.auth.enums.Provider;
 import org.ateam.ateam.global.auth.service.UserAuthService;
@@ -66,11 +66,9 @@ public class KakaoAuthController {
         loginResponse.getUserInfo().getUserId(),
         loginResponse.getUserInfo().getIsNewUser());
 
-    // ResponseDto 생성
     ResponseDto<LoginResponseDTO.LoginUserInfo> response =
         ResponseDto.of(HttpStatus.OK, null, "카카오 로그인에 성공했습니다.", loginResponse.getUserInfo());
 
-    // Access Token을 헤더에 추가
     return ResponseEntity.ok()
         .header("Authorization", "Bearer " + loginResponse.getAccessToken())
         .header("X-Expires-In", String.valueOf(loginResponse.getExpiresIn()))

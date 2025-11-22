@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.auth.dto;
+package org.ateam.ateam.global.auth.dto.login.request;
 
 import jakarta.validation.constraints.NotBlank;
 

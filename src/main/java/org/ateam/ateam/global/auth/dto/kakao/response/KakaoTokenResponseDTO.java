@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.auth.dto;
+package org.ateam.ateam.global.auth.dto.kakao.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

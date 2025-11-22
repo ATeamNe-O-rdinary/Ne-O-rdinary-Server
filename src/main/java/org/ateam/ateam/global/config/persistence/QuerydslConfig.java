@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.config;
+package org.ateam.ateam.global.config.persistence;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

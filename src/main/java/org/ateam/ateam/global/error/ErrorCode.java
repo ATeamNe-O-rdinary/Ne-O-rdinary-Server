@@ -56,6 +56,7 @@ public enum ErrorCode {
   LINKO_NOT_FOUND(404, "L001", "링오 정보를 찾을 수 없습니다."),
   INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
 
+  //LinkTingRole
   LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다.");
 
   private final String code;

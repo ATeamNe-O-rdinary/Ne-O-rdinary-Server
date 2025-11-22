@@ -66,8 +66,20 @@ public class Linker {
   @Column(name = "tech_stack")
   private Set<TechStack> techStacks;
 
-  // 정렬 전용 필드
   private Integer calculatedMonthlyRate;
+
+  private static final String DEFAULT_NICKNAME = "지훈개발자";
+  private static final CategoryOfBusiness DEFAULT_JOB = CategoryOfBusiness.SNS_OPERATION;
+  private static final CareerLevel DEFAULT_CAREER = CareerLevel.MID;
+  private static final String DEFAULT_DESCRIPTION = "3년차 백엔드 개발자입니다.";
+  private static final WorkTimeType DEFAULT_WORK = WorkTimeType.ANYTIME;
+  private static final RateUnit DEFAULT_UNIT = RateUnit.MONTHLY;
+  private static final int DEFAULT_RATE = 3000000;
+  private static final CollaborationType DEFAULT_COLLAB = CollaborationType.ONLINE;
+  private static final Region DEFAULT_REGION = Region.SEOUL;
+  private static final Set<TechStack> DEFAULT_STACKS = Set.of(
+      TechStack.JAVA, TechStack.SPRING_JAVA
+  );
 
   @Builder
   private Linker(
@@ -81,7 +93,8 @@ public class Linker {
       Integer rateAmount,
       CollaborationType collaborationType,
       Region region,
-      Set<TechStack> techStacks) {
+      Set<TechStack> techStacks
+  ) {
     this.member = member;
     this.nickname = nickname;
     this.jobCategory = jobCategory;
@@ -93,7 +106,22 @@ public class Linker {
     this.collaborationType = collaborationType;
     this.region = region;
     this.techStacks = techStacks;
-    this.calculateMonthlyRate();
+
+    applyDefaultValues();
+    calculateMonthlyRate();
+  }
+
+  private void applyDefaultValues() {
+    if (nickname == null) this.nickname = DEFAULT_NICKNAME;
+    if (jobCategory == null) this.jobCategory = DEFAULT_JOB;
+    if (careerLevel == null) this.careerLevel = DEFAULT_CAREER;
+    if (oneLineDescription == null) this.oneLineDescription = DEFAULT_DESCRIPTION;
+    if (workTimeType == null) this.workTimeType = DEFAULT_WORK;
+    if (rateUnit == null) this.rateUnit = DEFAULT_UNIT;
+    if (rateAmount == null) this.rateAmount = DEFAULT_RATE;
+    if (collaborationType == null) this.collaborationType = DEFAULT_COLLAB;
+    if (region == null) this.region = DEFAULT_REGION;
+    if (techStacks == null || techStacks.isEmpty()) this.techStacks = DEFAULT_STACKS;
   }
 
   public void update(
@@ -106,7 +134,8 @@ public class Linker {
       Integer rateAmount,
       CollaborationType collaborationType,
       Region region,
-      Set<TechStack> techStacks) {
+      Set<TechStack> techStacks
+  ) {
     this.nickname = nickname;
     this.jobCategory = jobCategory;
     this.careerLevel = careerLevel;
@@ -119,10 +148,13 @@ public class Linker {
 
     this.techStacks.clear();
     this.techStacks.addAll(techStacks);
+
+    applyDefaultValues();
+    calculateMonthlyRate();
   }
 
-  @PrePersist // DB에 insert 되기 직전에 실행
-  @PreUpdate // DB에 update 되기 직전에 실행
+  @PrePersist
+  @PreUpdate
   public void calculateMonthlyRate() {
     if (this.rateAmount == null || this.rateUnit == null) {
       this.calculatedMonthlyRate = 0;
@@ -130,19 +162,9 @@ public class Linker {
     }
 
     switch (this.rateUnit) {
-      case WEEKLY:
-        // 주급 * 4
-        this.calculatedMonthlyRate = this.rateAmount * 4;
-        break;
-      case HOURLY:
-        // 시급 * 8 * 30
-        this.calculatedMonthlyRate = this.rateAmount * 8 * 30;
-        break;
-      case MONTHLY:
-      default:
-        // 월급은 그대로 적용
-        this.calculatedMonthlyRate = this.rateAmount;
-        break;
+      case WEEKLY -> this.calculatedMonthlyRate = this.rateAmount * 4;
+      case HOURLY -> this.calculatedMonthlyRate = this.rateAmount * 8 * 30;
+      default -> this.calculatedMonthlyRate = this.rateAmount;
     }
   }
 }

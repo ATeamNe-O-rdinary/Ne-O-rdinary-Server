@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.s3;
+package org.ateam.ateam.global.s3.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;
 import org.ateam.ateam.global.error.ErrorCode;
+import org.ateam.ateam.global.s3.dto.S3UploadResponse;
+import org.ateam.ateam.global.s3.service.S3Uploader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

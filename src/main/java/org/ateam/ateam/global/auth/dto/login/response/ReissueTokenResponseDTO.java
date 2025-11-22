@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.auth.dto;
+package org.ateam.ateam.global.auth.dto.login.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

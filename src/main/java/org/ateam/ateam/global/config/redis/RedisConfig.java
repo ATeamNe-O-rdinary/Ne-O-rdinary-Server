@@ -1,4 +1,4 @@
-package org.ateam.ateam.global.config;
+package org.ateam.ateam.global.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

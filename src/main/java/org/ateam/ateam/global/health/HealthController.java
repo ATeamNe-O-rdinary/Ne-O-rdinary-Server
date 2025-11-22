@@ -1,3 +1,7 @@
+/**
+ * 서버 헬스 체크를 위한 컨트롤러
+ */
+
 package org.ateam.ateam.global.health;
 
 import org.springframework.http.ResponseEntity;
