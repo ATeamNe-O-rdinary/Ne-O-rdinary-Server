@@ -15,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -53,6 +55,11 @@ public class MemberServiceImpl implements MemberService {
         }
         return category;
 
+    }
+
+    @Override
+    public List<CategoryOfBusiness> getCategoryOfBusinessList(CategoryOfBusiness categoryOfBusiness){
+        return categoryOfBusiness.getSameMainCategoryList();
     }
 }
 

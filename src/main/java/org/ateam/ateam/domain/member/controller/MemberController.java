@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -50,6 +52,12 @@ public class MemberController {
   public ResponseDto<CategoryOfBusiness> getCategoryOfBusiness(@RequestParam String linkTingRole){
       Long userId = userContext.getCurrentUserId();
       return ResponseDto.of(HttpStatus.OK, null, "회원 카테고리 조회 성공", memberService.getCategoryOfBusiness(userId, linkTingRole));
+
+  }
+
+  @GetMapping("/api/members/category-list")
+    public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(@RequestParam CategoryOfBusiness categoryOfBusiness){
+      return ResponseDto.of(HttpStatus.OK, null, "카테고리 목록 조회 성공", memberService.getCategoryOfBusinessList(categoryOfBusiness));
 
   }
 }
