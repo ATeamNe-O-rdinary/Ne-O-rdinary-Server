@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum RateUnit {
   HOURLY("시급"),
-  PER_CASE("건수"),
+  WEEKLY("주급"),
   MONTHLY("월별");
 
   private final String title;

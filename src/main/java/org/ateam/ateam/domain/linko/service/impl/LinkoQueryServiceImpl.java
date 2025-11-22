@@ -13,12 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LinkoQueryServiceImpl implements LinkoQueryService {
 
-	private final LinkoRepository linkoRepository;
+  private final LinkoRepository linkoRepository;
 
-	@Override
-	public List<LinkoCardResponse> getCards() {
-		return linkoRepository.findAll().stream()
-			.map(LinkoCardResponse::of)
-			.toList();
-	}
+  @Override
+  public List<LinkoCardResponse> getCards() {
+    return linkoRepository.findAll().stream().map(LinkoCardResponse::of).toList();
+  }
 }

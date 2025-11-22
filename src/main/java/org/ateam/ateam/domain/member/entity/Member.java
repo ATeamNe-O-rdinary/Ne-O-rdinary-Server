@@ -46,6 +46,10 @@ public class Member extends BaseEntity {
   @Column(name = "delete_at")
   private LocalDateTime deletedAt;
 
+  private String profileImage;
+
+  private Long view;
+
   @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
   private Spec spec;
 

@@ -9,19 +9,19 @@ import org.ateam.ateam.domain.member.entity.Member;
 @Builder
 public class LinkerProfileSummaryResponse {
 
-	private String nickname;
-	private String profileImageUrl;
-	private String jobCategory;
-	private String careerLevel;
-	private String oneLineDescription;
+  private String nickname;
+  private String profileImageUrl;
+  private String jobCategory;
+  private String careerLevel;
+  private String oneLineDescription;
 
-	public static LinkerProfileSummaryResponse of(Linker linker, Member member) {
-		return LinkerProfileSummaryResponse.builder()
-			.nickname(linker.getNickname())
-			.profileImageUrl(member.getProfileImageUrl())
-			.jobCategory(linker.getJobCategory().getTitle())
-			.careerLevel(linker.getCareerLevel().getTitle())
-			.oneLineDescription(linker.getOneLineDescription())
-			.build();
-	}
+  public static LinkerProfileSummaryResponse of(Linker linker, Member member) {
+    return LinkerProfileSummaryResponse.builder()
+        .nickname(linker.getNickname())
+        .profileImageUrl(member.getProfileImageUrl())
+        .jobCategory(linker.getJobCategory().getTitle())
+        .careerLevel(linker.getCareerLevel().getTitle())
+        .oneLineDescription(linker.getOneLineDescription())
+        .build();
+  }
 }

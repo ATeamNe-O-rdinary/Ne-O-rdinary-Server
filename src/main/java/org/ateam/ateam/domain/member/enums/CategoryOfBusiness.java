@@ -1,6 +1,8 @@
 package org.ateam.ateam.domain.member.enums;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.global.error.ErrorCode;
@@ -37,5 +39,11 @@ public enum CategoryOfBusiness {
         .filter(c -> c.name().equalsIgnoreCase(value) || c.getTitle().equals(value))
         .findFirst()
         .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ENUM_VALUE));
+  }
+
+  public List<CategoryOfBusiness> getSameMainCategoryList() {
+    return Arrays.stream(CategoryOfBusiness.values())
+        .filter(category -> category.getMainCategory() == this.mainCategory)
+        .collect(Collectors.toList());
   }
 }

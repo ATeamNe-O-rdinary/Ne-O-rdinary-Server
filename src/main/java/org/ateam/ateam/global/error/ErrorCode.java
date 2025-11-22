@@ -38,15 +38,7 @@ public enum ErrorCode {
 
   // Spec
   CATEGORY_NOT_FOUND(400, "S001", "잘못된 카테고리 입니다."),
-  INVALID_SALARY(400, "S002", "잘못된 급여 범위 입니다."),
-
-  // Linker
-  LINKER_NOT_FOUND(404, "L001", "링커 정보를 찾을 수 없습니다."),
-  LINKER_ALREADY_EXISTS(409, "L002", "이미 생성된 링커가 있습니다."),
-  LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
-  LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
-
-  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
+  INVALID_RATE_AMOUNT(400, "S002", "잘못된 급여 범위 입니다."),
 
   // Profile
   PROFILE_NOT_FOUND(404, "P001", "프로필 이미지를 찾을 수 없습니다."),
@@ -54,8 +46,17 @@ public enum ErrorCode {
   PROFILE_DELETE_FAILED(500, "P003", "프로필 이미지 삭제에 실패했습니다."),
   PROFILE_ALREADY_EXISTS(400, "P004", "이미 프로필 이미지가 존재합니다."),
 
+  // Linker
+  LINKER_NOT_FOUND(404, "L001", "링커 정보를 찾을 수 없습니다."),
+  LINKER_ALREADY_EXISTS(409, "L002", "이미 생성된 링커가 있습니다."),
+  LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
+  LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
+
   // Linko
-  LINKO_NOT_FOUND(404, "L001", "링오 정보를 찾을 수 없습니다.");
+  LINKO_NOT_FOUND(404, "L001", "링오 정보를 찾을 수 없습니다."),
+  INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
+
+  LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다.");
 
   private final String code;
   private final String message;

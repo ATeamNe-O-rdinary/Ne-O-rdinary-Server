@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import java.util.Set;
 import lombok.*;
 import org.ateam.ateam.domain.linker.model.enums.CareerLevel;
-import org.ateam.ateam.domain.linker.model.enums.CollaborationType;
 import org.ateam.ateam.domain.linker.model.enums.RateUnit;
-import org.ateam.ateam.domain.linker.model.enums.Region;
-import org.ateam.ateam.domain.linker.model.enums.TechStack;
 import org.ateam.ateam.domain.linker.model.enums.WorkTimeType;
 import org.ateam.ateam.domain.member.entity.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
+import org.ateam.ateam.domain.member.enums.CollaborationType;
+import org.ateam.ateam.domain.member.enums.Region;
+import org.ateam.ateam.domain.member.enums.TechStack;
 
 @Entity
 @Getter
@@ -66,6 +66,9 @@ public class Linker {
   @Column(name = "tech_stack")
   private Set<TechStack> techStacks;
 
+  // 정렬 전용 필드
+  private Integer calculatedMonthlyRate;
+
   @Builder
   private Linker(
       Member member,
@@ -90,6 +93,7 @@ public class Linker {
     this.collaborationType = collaborationType;
     this.region = region;
     this.techStacks = techStacks;
+    this.calculateMonthlyRate();
   }
 
   public void update(
@@ -115,5 +119,30 @@ public class Linker {
 
     this.techStacks.clear();
     this.techStacks.addAll(techStacks);
+  }
+
+  @PrePersist // DB에 insert 되기 직전에 실행
+  @PreUpdate // DB에 update 되기 직전에 실행
+  public void calculateMonthlyRate() {
+    if (this.rateAmount == null || this.rateUnit == null) {
+      this.calculatedMonthlyRate = 0;
+      return;
+    }
+
+    switch (this.rateUnit) {
+      case WEEKLY:
+        // 주급 * 4
+        this.calculatedMonthlyRate = this.rateAmount * 4;
+        break;
+      case HOURLY:
+        // 시급 * 8 * 30
+        this.calculatedMonthlyRate = this.rateAmount * 8 * 30;
+        break;
+      case MONTHLY:
+      default:
+        // 월급은 그대로 적용
+        this.calculatedMonthlyRate = this.rateAmount;
+        break;
+    }
   }
 }

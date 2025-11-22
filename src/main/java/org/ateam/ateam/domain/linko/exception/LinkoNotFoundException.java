@@ -4,7 +4,7 @@ import org.ateam.ateam.global.error.ErrorCode;
 import org.ateam.ateam.global.error.exception.BusinessException;
 
 public class LinkoNotFoundException extends BusinessException {
-	public LinkoNotFoundException() {
-		super(ErrorCode.LINKO_NOT_FOUND);
-	}
+  public LinkoNotFoundException() {
+    super(ErrorCode.LINKO_NOT_FOUND);
+  }
 }

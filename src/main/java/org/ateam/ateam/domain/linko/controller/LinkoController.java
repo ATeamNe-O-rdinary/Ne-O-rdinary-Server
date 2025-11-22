@@ -18,19 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Linko", description = "기업 카드 조회 API")
 public class LinkoController {
 
-	private final LinkoQueryService linkoQueryService;
+  private final LinkoQueryService linkoQueryService;
 
-	@Operation(summary = "링코 카드 목록 조회")
-	@GetMapping("/cards")
-	public ResponseDto<List<LinkoCardResponse>> getCards() {
+  @Operation(summary = "링코 카드 목록 조회")
+  @GetMapping("/cards")
+  public ResponseDto<List<LinkoCardResponse>> getCards() {
 
-		List<LinkoCardResponse> response = linkoQueryService.getCards();
+    List<LinkoCardResponse> response = linkoQueryService.getCards();
 
-		return ResponseDto.of(
-			HttpStatus.OK,
-			"LINKO_CARD_LIST_SUCCESS",
-			"링코 카드 목록 조회 성공",
-			response
-		);
-	}
+    return ResponseDto.of(HttpStatus.OK, "LINKO_CARD_LIST_SUCCESS", "링코 카드 목록 조회 성공", response);
+  }
 }

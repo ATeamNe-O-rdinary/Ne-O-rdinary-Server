@@ -18,25 +18,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 public class LinkoCompanyImageServiceImpl implements LinkoCompanyImageService {
 
-	private final MemberRepository memberRepository;
-	private final LinkoValidator linkoValidator;
-	private final S3Uploader s3Uploader;
+  private final MemberRepository memberRepository;
+  private final LinkoValidator linkoValidator;
+  private final S3Uploader s3Uploader;
 
-	@Override
-	public LinkoCompanyImageResponse uploadCompanyImage(Long memberId, MultipartFile file) {
-		Member member = memberRepository.findById(memberId)
-			.orElseThrow(MemberNotFoundException::new);
+  @Override
+  public LinkoCompanyImageResponse uploadCompanyImage(Long memberId, MultipartFile file) {
+    Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
 
-		Linko linko = linkoValidator.getByMemberOrThrow(member);
+    Linko linko = linkoValidator.getByMemberOrThrow(member);
 
-		if (linko.getCompanyImageUrl() != null) {
-			s3Uploader.delete(linko.getCompanyImageUrl());
-		}
+    if (linko.getCompanyImageUrl() != null) {
+      s3Uploader.delete(linko.getCompanyImageUrl());
+    }
 
-		String imageUrl = s3Uploader.upload(file, "linko/company");
+    String imageUrl = s3Uploader.upload(file, "linko/company");
 
-		linko.updateCompanyImage(imageUrl);
+    linko.updateCompanyImage(imageUrl);
 
-		return LinkoCompanyImageResponse.from(imageUrl);
-	}
+    return LinkoCompanyImageResponse.from(imageUrl);
+  }
 }

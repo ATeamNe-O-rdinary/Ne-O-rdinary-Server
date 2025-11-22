@@ -8,17 +8,17 @@ import org.ateam.ateam.domain.linko.model.Linko;
 @Builder
 public class LinkoCardResponse {
 
-	private Long linkoId;
-	private String companyName;
-	private String companyImageUrl;
-	private String category;
+  private Long linkoId;
+  private String companyName;
+  private String companyImageUrl;
+  private String category;
 
-	public static LinkoCardResponse of(Linko linko) {
-		return LinkoCardResponse.builder()
-			.linkoId(linko.getId())
-			.companyName(linko.getCompanyName())
-			.companyImageUrl(linko.getCompanyImageUrl())
-			.category(linko.getMainCategory().getTitle())
-			.build();
-	}
+  public static LinkoCardResponse of(Linko linko) {
+    return LinkoCardResponse.builder()
+        .linkoId(linko.getId())
+        .companyName(linko.getCompanyName())
+        .companyImageUrl(linko.getCompanyImageUrl())
+        .category(linko.getMainCategory().getTitle())
+        .build();
+  }
 }

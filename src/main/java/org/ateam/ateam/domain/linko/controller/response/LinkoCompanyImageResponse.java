@@ -7,11 +7,9 @@ import lombok.Getter;
 @Builder
 public class LinkoCompanyImageResponse {
 
-	private String companyImageUrl;
+  private String companyImageUrl;
 
-	public static LinkoCompanyImageResponse from(String url) {
-		return LinkoCompanyImageResponse.builder()
-			.companyImageUrl(url)
-			.build();
-	}
+  public static LinkoCompanyImageResponse from(String url) {
+    return LinkoCompanyImageResponse.builder().companyImageUrl(url).build();
+  }
 }

@@ -5,5 +5,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface LinkoCompanyImageService {
 
-	LinkoCompanyImageResponse uploadCompanyImage(Long memberId, MultipartFile file);
+  LinkoCompanyImageResponse uploadCompanyImage(Long memberId, MultipartFile file);
 }

@@ -23,28 +23,21 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Linko Company Image", description = "회사 카드 이미지 관리 API")
 public class LinkoCompanyImageController {
 
-	private final LinkoCompanyImageService linkoCompanyImageService;
-	private final UserContext userContext;
+  private final LinkoCompanyImageService linkoCompanyImageService;
+  private final UserContext userContext;
 
-	@Operation(summary = "회사 카드 이미지 업로드")
-	@PostMapping(value = "/company-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@ApiErrorCodeExamples({
-		ErrorCode.LINKO_NOT_FOUND
-	})
-	public ResponseDto<LinkoCompanyImageResponse> uploadCompanyImage(
-		@RequestPart("file") MultipartFile file
-	) {
+  @Operation(summary = "회사 카드 이미지 업로드")
+  @PostMapping(value = "/company-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @ApiErrorCodeExamples({ErrorCode.LINKO_NOT_FOUND})
+  public ResponseDto<LinkoCompanyImageResponse> uploadCompanyImage(
+      @RequestPart("file") MultipartFile file) {
 
-		Long memberId = userContext.getCurrentUserId();
+    Long memberId = userContext.getCurrentUserId();
 
-		LinkoCompanyImageResponse response =
-			linkoCompanyImageService.uploadCompanyImage(memberId, file);
+    LinkoCompanyImageResponse response =
+        linkoCompanyImageService.uploadCompanyImage(memberId, file);
 
-		return ResponseDto.of(
-			HttpStatus.OK,
-			"LINKO_COMPANY_IMAGE_UPLOAD_SUCCESS",
-			"회사 카드 이미지 업로드 성공",
-			response
-		);
-	}
+    return ResponseDto.of(
+        HttpStatus.OK, "LINKO_COMPANY_IMAGE_UPLOAD_SUCCESS", "회사 카드 이미지 업로드 성공", response);
+  }
 }
