@@ -1,0 +1,19 @@
+server:
+  forward-headers-strategy: framework
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
+
+  h2:
+    console:
+      enabled: false
+
+  data:
+    redis:
+      host: ${PROD_REDIS_HOST}
+      port: 6379
+      password: ${PROD_REDIS_PASSWORD}
