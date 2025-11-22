@@ -1,14 +1,16 @@
- package org.ateam.ateam.global.config;
+package org.ateam.ateam.global.config;
 
- import org.springframework.beans.factory.annotation.Value;
- import org.springframework.context.annotation.Bean;
- import org.springframework.context.annotation.Configuration;
- import org.springframework.data.redis.connection.RedisPassword;
- import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
- import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 
- @Configuration
- public class RedisConfig {
+@Configuration
+@Profile("prod")
+public class RedisConfig {
 
   @Value("${spring.data.redis.host}")
   private String host;
@@ -27,4 +29,4 @@
     }
     return new LettuceConnectionFactory(config);
   }
- }
+}
