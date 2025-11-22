@@ -20,25 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Linker Profile Summary", description = "링커 프로필 요약 조회 API")
 public class LinkerProfileController {
 
-	private final LinkerProfileService linkerProfileService;
-	private final UserContext userContext;
+  private final LinkerProfileService linkerProfileService;
+  private final UserContext userContext;
 
-	@Operation(summary = "내 링커 프로필 요약 조회")
-	@ApiErrorCodeExamples({
-		ErrorCode.LINKER_NOT_FOUND,
-		ErrorCode.USER_NOT_FOUND
-	})
-	@GetMapping("/me/summary")
-	public ResponseDto<LinkerProfileSummaryResponse> getMyProfileSummary() {
+  @Operation(summary = "내 링커 프로필 요약 조회")
+  @ApiErrorCodeExamples({ErrorCode.LINKER_NOT_FOUND, ErrorCode.USER_NOT_FOUND})
+  @GetMapping("/me/summary")
+  public ResponseDto<LinkerProfileSummaryResponse> getMyProfileSummary() {
 
-		Long memberId = userContext.getCurrentUserId();
-		LinkerProfileSummaryResponse response = linkerProfileService.getMyProfileSummary(memberId);
+    Long memberId = userContext.getCurrentUserId();
+    LinkerProfileSummaryResponse response = linkerProfileService.getMyProfileSummary(memberId);
 
-		return ResponseDto.of(
-			HttpStatus.OK,
-			"LINKER_PROFILE_SUMMARY_SUCCESS",
-			"링커 프로필 요약 조회 성공",
-			response
-		);
-	}
+    return ResponseDto.of(
+        HttpStatus.OK, "LINKER_PROFILE_SUMMARY_SUCCESS", "링커 프로필 요약 조회 성공", response);
+  }
 }

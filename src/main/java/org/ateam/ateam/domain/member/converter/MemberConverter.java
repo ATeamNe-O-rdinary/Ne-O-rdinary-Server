@@ -2,11 +2,8 @@ package org.ateam.ateam.domain.member.converter;
 
 import org.ateam.ateam.domain.linker.model.entity.Linker;
 import org.ateam.ateam.domain.linko.model.Linko;
-import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
 import org.ateam.ateam.domain.member.dto.res.MemberResDTO;
 import org.ateam.ateam.domain.member.entity.Member;
-import org.ateam.ateam.domain.member.entity.Spec;
-import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 
 public class MemberConverter {
 
@@ -14,53 +11,50 @@ public class MemberConverter {
     return MemberResDTO.ProfileListDTO.builder()
         .memberId(member.getId())
         .username(member.getUsername())
-            .profileImage(member.getProfileImage())
+        .profileImage(member.getProfileImage())
         .build();
   }
 
-    public static MemberResDTO.LinkerProfileDTO toLinkerProfileDTO(Linker linker) {
-        String profileImageUrl = (linker.getMember() != null)
-                ? linker.getMember().getProfileImage()
-                : null;
+  public static MemberResDTO.LinkerProfileDTO toLinkerProfileDTO(Linker linker) {
+    String profileImageUrl =
+        (linker.getMember() != null) ? linker.getMember().getProfileImage() : null;
 
-        return MemberResDTO.LinkerProfileDTO.builder()
-                .nickname(linker.getNickname())
-                .jobCategory(linker.getJobCategory())
-                .careerLevel(linker.getCareerLevel())
-                .oneLineDescription(linker.getOneLineDescription())
-                .workTimeType(linker.getWorkTimeType())
-                .rateUnit(linker.getRateUnit())
-                .rateAmount(linker.getRateAmount())
-                .collaborationType(linker.getCollaborationType())
-                .region(linker.getRegion())
-                .techStacks(linker.getTechStacks()) // Set<TechStack> 그대로 전달
-                .profileImage(profileImageUrl)
-                .build();
-    }
+    return MemberResDTO.LinkerProfileDTO.builder()
+        .nickname(linker.getNickname())
+        .jobCategory(linker.getJobCategory())
+        .careerLevel(linker.getCareerLevel())
+        .oneLineDescription(linker.getOneLineDescription())
+        .workTimeType(linker.getWorkTimeType())
+        .rateUnit(linker.getRateUnit())
+        .rateAmount(linker.getRateAmount())
+        .collaborationType(linker.getCollaborationType())
+        .region(linker.getRegion())
+        .techStacks(linker.getTechStacks()) // Set<TechStack> 그대로 전달
+        .profileImage(profileImageUrl)
+        .build();
+  }
 
-    public static MemberResDTO.LinkoProfileDTO toLinkoProfileDTO(Linko linko) {
-        String profileImageUrl = (linko.getMember() != null)
-                ? linko.getMember().getProfileImage()
-                : null;
+  public static MemberResDTO.LinkoProfileDTO toLinkoProfileDTO(Linko linko) {
+    String profileImageUrl =
+        (linko.getMember() != null) ? linko.getMember().getProfileImage() : null;
 
-        // deadline이 엔티티에서 LocalDateTime일 경우 String 변환 로직이 필요할 수 있음
-        // 여기서는 String으로 가정하고 바로 매핑합니다.
+    // deadline이 엔티티에서 LocalDateTime일 경우 String 변환 로직이 필요할 수 있음
+    // 여기서는 String으로 가정하고 바로 매핑합니다.
 
-        return MemberResDTO.LinkoProfileDTO.builder()
-                .companyName(linko.getCompanyName())
-                .companyType(linko.getCompanyType())
-                .mainCategory(linko.getMainCategory())
-                .categoryOfBusiness(linko.getCategoryOfBusiness())
-                .projectIntro(linko.getProjectIntro())
-                .expectedDuration(linko.getExpectedDuration())
-                .rateUnit(linko.getRateUnit())
-                .rateAmount(linko.getRateAmount())
-                .collaborationType(linko.getCollaborationType())
-                .region(linko.getRegion())
-                .deadline(linko.getDeadline())
-                .techStacks(linko.getTechStacks())
-                .profileImage(profileImageUrl)
-                .build();
-    }
-
+    return MemberResDTO.LinkoProfileDTO.builder()
+        .companyName(linko.getCompanyName())
+        .companyType(linko.getCompanyType())
+        .mainCategory(linko.getMainCategory())
+        .categoryOfBusiness(linko.getCategoryOfBusiness())
+        .projectIntro(linko.getProjectIntro())
+        .expectedDuration(linko.getExpectedDuration())
+        .rateUnit(linko.getRateUnit())
+        .rateAmount(linko.getRateAmount())
+        .collaborationType(linko.getCollaborationType())
+        .region(linko.getRegion())
+        .deadline(linko.getDeadline())
+        .techStacks(linko.getTechStacks())
+        .profileImage(profileImageUrl)
+        .build();
+  }
 }
