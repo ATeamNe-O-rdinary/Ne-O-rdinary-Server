@@ -12,6 +12,7 @@ public class MemberResponse {
 
   @Builder
   public record LinkoProfileDTO(
+      Long linkoId,
       String companyName,
       CompanyType companyType,
       MainCategory mainCategory,
@@ -28,6 +29,7 @@ public class MemberResponse {
 
   @Builder
   public record LinkerProfileDTO(
+      Long linkerId,
       String nickname,
       CategoryOfBusiness jobCategory,
       CareerLevel careerLevel,
@@ -39,7 +41,4 @@ public class MemberResponse {
       Region region,
       Set<TechStack> techStacks,
       String profileImage) {}
-
-  @Builder
-  public record TopListDTO() {}
 }

@@ -47,7 +47,7 @@ public class LinkoProfileService {
 
   public LinkoProfileResDTO getProfile(Long memberId) {
     Linko linko =
-        repository.findByMember_Id(memberId).orElseThrow(LinkoProfileNotFoundException::new);
+        repository.findByMemberId(memberId).orElseThrow(LinkoProfileNotFoundException::new);
 
     return LinkoProfileResDTO.from(linko);
   }

@@ -75,20 +75,78 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public CategoryOfBusiness getCategoryOfBusiness(Long memberId, String linkTingRole) {
-    CategoryOfBusiness category = null;
-    if ("linker".equals(linkTingRole)) {
+  @Transactional
+  public CategoryOfBusiness getCategoryOfBusiness(Long memberId, LinkTingRole linkTingRole) {
 
-    } else if ("linko".equals(linkTingRole)) {
+    if (linkTingRole == LinkTingRole.LINKER) {
+      Linker linker =
+          linkerRepository
+              .findByMemberId(memberId)
+              .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+      return linker.getJobCategory();
+
+    } else if (linkTingRole == LinkTingRole.LINKO) {
+      Linko linko =
+          linkoRepository
+              .findByMemberId(memberId)
+              .orElseThrow(() -> new MemberException(ErrorCode.USER_NOT_FOUND));
+      return linko.getCategoryOfBusiness();
 
     } else {
-
+      throw new MemberException(ErrorCode.LINKTINGROLE_NOT_FOUND);
     }
-    return category;
   }
 
   @Override
   public List<CategoryOfBusiness> getCategoryOfBusinessList(CategoryOfBusiness categoryOfBusiness) {
     return categoryOfBusiness.getSameMainCategoryList();
+  }
+
+  @Override
+  public PagedResponse<?> getTopProfiles(
+      List<CategoryOfBusiness> categoryOfBusinessList,
+      LinkTingRole linkTingRole,
+      Pageable pageable) {
+    Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+    if (linkTingRole == LinkTingRole.LINKER) {
+      Page<Linker> linker =
+          linkerRepository.findByCategoryOfBusinessInOrderByLinkCountDesc(
+              categoryOfBusinessList, unsortedPageable);
+      Page<MemberResDTO.LinkerProfileDTO> pageList =
+          linker.map(MemberConverter::toLinkerProfileDTO);
+      return PagedResponse.pagedFrom(pageList);
+    } else if (linkTingRole == LinkTingRole.LINKO) {
+      Page<Linko> linko =
+          linkoRepository.findByCategoryOfBusinessInOrderByLinkCountDesc(
+              categoryOfBusinessList, unsortedPageable);
+      Page<MemberResDTO.LinkoProfileDTO> pageList = linko.map(MemberConverter::toLinkoProfileDTO);
+      return PagedResponse.pagedFrom(pageList);
+    } else {
+      throw new MemberException(ErrorCode.LINKTINGROLE_NOT_FOUND);
+    }
+  }
+
+  @Override
+  public PagedResponse<?> getLatestProfiles(
+      List<CategoryOfBusiness> categoryOfBusinessList,
+      LinkTingRole linkTingRole,
+      Pageable pageable) {
+    Pageable unsortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
+    if (linkTingRole == LinkTingRole.LINKER) {
+      Page<Linker> linker =
+          linkerRepository.findByCategoryOfBusinessInOrderByIdDesc(
+              categoryOfBusinessList, unsortedPageable);
+      Page<MemberResDTO.LinkerProfileDTO> pageList =
+          linker.map(MemberConverter::toLinkerProfileDTO);
+      return PagedResponse.pagedFrom(pageList);
+    } else if (linkTingRole == LinkTingRole.LINKO) {
+      Page<Linko> linko =
+          linkoRepository.findByCategoryOfBusinessInOrderByIdDesc(
+              categoryOfBusinessList, unsortedPageable);
+      Page<MemberResDTO.LinkoProfileDTO> pageList = linko.map(MemberConverter::toLinkoProfileDTO);
+      return PagedResponse.pagedFrom(pageList);
+    } else {
+      throw new MemberException(ErrorCode.LINKTINGROLE_NOT_FOUND);
+    }
   }
 }
