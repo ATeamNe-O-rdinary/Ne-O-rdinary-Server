@@ -18,25 +18,22 @@ public class SecurityUserContext implements UserContext {
   public Long getCurrentUserId() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+    // 인증이 없으면 그냥 null 반환 (개발용)
     if (authentication == null) {
-      log.warn("[SecurityUserContext] 인증 객체가 null입니다.");
-      throw new UnauthorizedException();
+      log.warn("[SecurityUserContext] 인증 객체가 null -> 개발 모드로 null 반환");
+      return null;
     }
 
-    if (!(authentication instanceof UserAuthentication)) {
-      log.warn(
-          "[SecurityUserContext] 인증 객체 타입이 예상과 다릅니다. 현재 타입: {}",
-          authentication.getClass().getName());
-      log.debug("[SecurityUserContext] authentication 전체 정보: {}", authentication);
-      throw new UnauthorizedException();
+    if (!(authentication instanceof UserAuthentication userAuth)) {
+      log.warn("[SecurityUserContext] 인증 객체 타입 다름 -> 개발 모드로 null 반환");
+      return null;
     }
 
-    UserAuthentication userAuthentication = (UserAuthentication) authentication;
-    Long userId = userAuthentication.getUserId();
+    Long userId = userAuth.getUserId();
 
     if (userId == null) {
-      log.warn("[SecurityUserContext] 인증된 사용자 ID가 null입니다.");
-      throw new UnauthorizedException();
+      log.warn("[SecurityUserContext] userId null -> 개발 모드로 null 반환");
+      return null;
     }
 
     return userId;
