@@ -52,11 +52,13 @@ public enum ErrorCode {
   LINKER_INVALID_FIELD(400, "L003", "링커 입력 값이 잘못되었습니다."),
   LINKER_INVALID_ENUM(400, "L004", "유효하지 않은 ENUM 값입니다."),
 
-  // Linko
-  LINKO_NOT_FOUND(404, "L001", "링오 정보를 찾을 수 없습니다."),
   INVALID_ENUM_VALUE(400, "E001", "유효하지 않은 ENUM 값입니다."),
 
-  LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다.");
+  LINKTINGROLE_NOT_FOUND(400, "L005", "유효하지 않은 LinkTingRole 값입니다."),
+
+  LINKO_NOT_FOUND(404, "L006", "링오 정보를 찾을 수 없습니다."),
+
+  LINK_EXIST(400, "L007", "이미 링크가 존재합니다.");
 
   private final String code;
   private final String message;
