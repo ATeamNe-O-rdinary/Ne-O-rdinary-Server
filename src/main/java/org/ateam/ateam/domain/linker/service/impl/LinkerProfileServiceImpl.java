@@ -6,9 +6,9 @@ import org.ateam.ateam.domain.linker.exception.LinkerNotFoundException;
 import org.ateam.ateam.domain.linker.model.entity.Linker;
 import org.ateam.ateam.domain.linker.repository.LinkerRepository;
 import org.ateam.ateam.domain.linker.service.LinkerProfileService;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.exception.MemberNotFoundException;
-import org.ateam.ateam.domain.member.repository.MemberRepository;
+import org.ateam.ateam.domain.member.repository.member.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

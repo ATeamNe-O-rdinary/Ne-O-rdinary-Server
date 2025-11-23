@@ -5,9 +5,9 @@ import org.ateam.ateam.domain.linker.exception.LinkerAlreadyExistsException;
 import org.ateam.ateam.domain.linker.exception.LinkerNotFoundException;
 import org.ateam.ateam.domain.linker.model.entity.Linker;
 import org.ateam.ateam.domain.linker.repository.LinkerRepository;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.exception.MemberException;
-import org.ateam.ateam.domain.member.repository.MemberRepository;
+import org.ateam.ateam.domain.member.repository.member.MemberRepository;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.stereotype.Component;
 

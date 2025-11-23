@@ -1,8 +1,7 @@
-package org.ateam.ateam.domain.member.service.impl;
+package org.ateam.ateam.domain.member.service.profil;
 
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.member.entity.Member;
-import org.ateam.ateam.domain.member.service.ProfileImageService;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.validator.ProfileImageValidator;
 import org.ateam.ateam.global.s3.service.S3Uploader;
 import org.springframework.stereotype.Service;

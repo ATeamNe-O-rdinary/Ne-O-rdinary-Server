@@ -3,7 +3,7 @@ package org.ateam.ateam.domain.link.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.link.dto.req.LinkReqDTO;
+import org.ateam.ateam.domain.link.dto.request.LinkRequest;
 import org.ateam.ateam.domain.link.service.LinkService;
 import org.ateam.ateam.global.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class LinkController {
 
   @Operation(summary = "링크 요청")
   @PostMapping("/api/v1/links")
-  public ResponseDto<Void> doLink(@RequestBody LinkReqDTO.linkDTO dto) {
+  public ResponseDto<Void> doLink(@RequestBody LinkRequest.linkDTO dto) {
     linkService.doLink(dto);
     return ResponseDto.of(
         HttpStatus.OK,

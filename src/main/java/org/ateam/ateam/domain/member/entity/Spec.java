@@ -2,6 +2,8 @@ package org.ateam.ateam.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 
 @Entity

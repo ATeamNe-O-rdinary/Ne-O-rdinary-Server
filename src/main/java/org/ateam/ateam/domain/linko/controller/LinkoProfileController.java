@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.domain.linko.controller.response.LinkoProfileResDTO;
-import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileRequest;
 import org.ateam.ateam.domain.linko.service.LinkoProfileService;
 import org.ateam.ateam.global.auth.context.UserContext;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
@@ -75,7 +75,7 @@ public class LinkoProfileController {
     ErrorCode.AUTHENTICATION_FAILED
   })
   public ResponseEntity<ResponseDto<Void>> createLinko(
-      @Valid @RequestBody LinkoProfileReqDTO request,
+      @Valid @RequestBody LinkoProfileRequest request,
       @AuthenticationPrincipal UserAuthentication auth) {
 
     Long memberId = userContext.getCurrentUserId();
@@ -134,7 +134,7 @@ public class LinkoProfileController {
   })
   public ResponseEntity<ResponseDto<Void>> updateLinko(
       @PathVariable Long linkoId,
-      @Valid @RequestBody LinkoProfileReqDTO request,
+      @Valid @RequestBody LinkoProfileRequest request,
       @AuthenticationPrincipal UserAuthentication auth) {
 
     Long memberId = userContext.getCurrentUserId();

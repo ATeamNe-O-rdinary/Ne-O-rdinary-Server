@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.dto.req;
+package org.ateam.ateam.domain.member.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import org.ateam.ateam.domain.member.annotation.ValidRateAmountSalary;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.domain.member.enums.LinkTingRole;
 
-public class MemberReqDTO {
+public class MemberRequest {
 
   @Builder
   public record ProfileListDTO(

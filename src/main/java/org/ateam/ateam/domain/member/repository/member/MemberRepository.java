@@ -1,7 +1,7 @@
-package org.ateam.ateam.domain.member.repository;
+package org.ateam.ateam.domain.member.repository.member;
 
 import java.util.Optional;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.global.auth.enums.Provider;
 import org.springframework.data.domain.Page;

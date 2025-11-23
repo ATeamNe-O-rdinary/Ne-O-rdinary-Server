@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ateam.ateam.domain.member.exception.InvalidKakaoTokenException;
 import org.ateam.ateam.domain.member.exception.KakaoServerException;
 import org.ateam.ateam.domain.member.exception.KakaoUserInfoFailedException;
-import org.ateam.ateam.domain.member.repository.SocialAuthRepository;
+import org.ateam.ateam.domain.member.repository.social.SocialAuthRepository;
 import org.ateam.ateam.global.auth.dto.kakao.response.KakaoTokenResponseDTO;
 import org.ateam.ateam.global.auth.dto.kakao.response.KakaoUserInfoResponseDTO;
 import org.ateam.ateam.global.auth.dto.UserAuthInfoDTO;

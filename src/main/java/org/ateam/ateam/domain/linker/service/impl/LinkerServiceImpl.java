@@ -18,7 +18,7 @@ import org.ateam.ateam.domain.linker.service.LinkerService;
 import org.ateam.ateam.domain.linker.validator.LinkerEnumValidator;
 import org.ateam.ateam.domain.linker.validator.LinkerExistValidator;
 import org.ateam.ateam.domain.linker.validator.LinkerRequestValidator;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.domain.member.enums.CollaborationType;
 import org.ateam.ateam.domain.member.enums.Region;

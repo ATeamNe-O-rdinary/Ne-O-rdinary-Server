@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.service;
+package org.ateam.ateam.domain.member.service.profil;
 
 import org.springframework.web.multipart.MultipartFile;
 

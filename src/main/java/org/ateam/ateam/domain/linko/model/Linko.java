@@ -7,8 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ateam.ateam.domain.linker.model.enums.RateUnit;
-import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileRequest;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.*;
 import org.ateam.ateam.global.common.BaseEntity;
 import org.ateam.ateam.global.error.ErrorCode;
@@ -153,7 +153,7 @@ public class Linko extends BaseEntity {
     this.techStacks = techStacks;
   }
 
-  public void update(LinkoProfileReqDTO dto) {
+  public void update(LinkoProfileRequest dto) {
     this.companyName = dto.getCompanyName();
     this.companyType = dto.getCompanyType();
     this.mainCategory = dto.getMainCategory();

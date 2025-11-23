@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.service.impl;
+package org.ateam.ateam.domain.member.service.member.impl;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -8,13 +8,12 @@ import org.ateam.ateam.domain.linker.repository.LinkerRepository;
 import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.linko.repository.LinkoRepository;
 import org.ateam.ateam.domain.member.converter.MemberConverter;
-import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
-import org.ateam.ateam.domain.member.dto.res.MemberResDTO;
+import org.ateam.ateam.domain.member.dto.request.MemberRequest;
+import org.ateam.ateam.domain.member.dto.response.MemberResponse;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.ateam.ateam.domain.member.enums.LinkTingRole;
 import org.ateam.ateam.domain.member.exception.MemberException;
-import org.ateam.ateam.domain.member.repository.MemberRepository;
-import org.ateam.ateam.domain.member.service.MemberService;
+import org.ateam.ateam.domain.member.service.member.MemberService;
 import org.ateam.ateam.global.dto.PagedResponse;
 import org.ateam.ateam.global.error.ErrorCode;
 import org.springframework.data.domain.Page;
@@ -26,13 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-  private final MemberRepository memberRepository;
   private final LinkerRepository linkerRepository;
   private final LinkoRepository linkoRepository;
 
   @Override
   @Transactional
-  public PagedResponse<?> getProfileList(MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
+  public PagedResponse<?> getProfileList(MemberRequest.ProfileListDTO dto, Pageable pageable) {
 
     CategoryOfBusiness category = dto.categoryOfBusiness();
     RateUnit rateUnit = dto.rateUnit();
@@ -61,14 +59,14 @@ public class MemberServiceImpl implements MemberService {
       Page<Linker> linker =
           linkerRepository.findByCategoryAndRateGreaterThan(
               category, calculatedMonthlyRate, unsortedPageable);
-      Page<MemberResDTO.LinkerProfileDTO> pageList =
+      Page<MemberResponse.LinkerProfileDTO> pageList =
           linker.map(MemberConverter::toLinkerProfileDTO);
       return PagedResponse.pagedFrom(pageList);
     } else if (linkTingRole == LinkTingRole.LINKO) {
       Page<Linko> linko =
           linkoRepository.findByCategoryAndRateGreaterThan(
               category, calculatedMonthlyRate, unsortedPageable);
-      Page<MemberResDTO.LinkoProfileDTO> pageList = linko.map(MemberConverter::toLinkoProfileDTO);
+      Page<MemberResponse.LinkoProfileDTO> pageList = linko.map(MemberConverter::toLinkoProfileDTO);
       return PagedResponse.pagedFrom(pageList);
 
     } else {

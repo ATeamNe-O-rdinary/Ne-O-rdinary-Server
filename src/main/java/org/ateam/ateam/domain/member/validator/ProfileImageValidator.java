@@ -1,11 +1,11 @@
 package org.ateam.ateam.domain.member.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.exception.MemberNotFoundException;
 import org.ateam.ateam.domain.member.exception.profile.ProfileAlreadyExistsException;
 import org.ateam.ateam.domain.member.exception.profile.ProfileNotFoundException;
-import org.ateam.ateam.domain.member.repository.MemberRepository;
+import org.ateam.ateam.domain.member.repository.member.MemberRepository;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor

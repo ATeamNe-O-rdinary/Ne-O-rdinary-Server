@@ -2,7 +2,7 @@ package org.ateam.ateam.domain.linko.repository;
 
 import java.util.Optional;
 import org.ateam.ateam.domain.linko.model.Linko;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,13 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface LinkoRepository extends JpaRepository<Linko, Long> {
-  Optional<Linko> findByMemberId(Long memberId);
 
   boolean existsByMember_Id(Long memberId);
 
   Optional<Linko> findByMember(Member member);
 
-  boolean existsByMemberId(Long memberId);
 
   @Query(
       value =

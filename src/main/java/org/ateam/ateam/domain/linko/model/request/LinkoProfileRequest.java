@@ -7,12 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ateam.ateam.domain.linker.model.enums.RateUnit;
 import org.ateam.ateam.domain.linko.model.Linko;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.enums.*;
 
 @Getter
 @NoArgsConstructor
-public class LinkoProfileReqDTO {
+public class LinkoProfileRequest {
 
   @NotBlank(message = "회사명은 필수입니다.")
   private String companyName;

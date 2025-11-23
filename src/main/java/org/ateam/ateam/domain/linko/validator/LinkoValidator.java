@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ateam.ateam.domain.linko.exception.LinkoNotFoundException;
 import org.ateam.ateam.domain.linko.model.Linko;
 import org.ateam.ateam.domain.linko.repository.LinkoRepository;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.springframework.stereotype.Component;
 
 @Component

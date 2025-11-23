@@ -3,7 +3,7 @@ package org.ateam.ateam.domain.linker.controller.response;
 import lombok.Builder;
 import lombok.Getter;
 import org.ateam.ateam.domain.linker.model.entity.Linker;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 
 @Getter
 @Builder

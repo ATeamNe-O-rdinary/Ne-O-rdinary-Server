@@ -1,4 +1,4 @@
-package org.ateam.ateam.domain.member.repository;
+package org.ateam.ateam.domain.member.repository.social;
 
 import java.util.List;
 import java.util.Optional;

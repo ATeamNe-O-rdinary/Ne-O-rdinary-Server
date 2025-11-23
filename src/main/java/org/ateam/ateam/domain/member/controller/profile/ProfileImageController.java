@@ -1,9 +1,9 @@
-package org.ateam.ateam.domain.member.controller;
+package org.ateam.ateam.domain.member.controller.profile;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.member.service.ProfileImageService;
+import org.ateam.ateam.domain.member.service.profil.ProfileImageService;
 import org.ateam.ateam.global.auth.context.UserContext;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.ResponseDto;

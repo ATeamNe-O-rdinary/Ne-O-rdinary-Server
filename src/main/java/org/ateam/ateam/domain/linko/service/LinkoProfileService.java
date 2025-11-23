@@ -7,11 +7,11 @@ import org.ateam.ateam.domain.linko.exception.LinkoAccessDeniedException;
 import org.ateam.ateam.domain.linko.exception.LinkoProfileNotFoundException;
 import org.ateam.ateam.domain.linko.exception.ProfileAlreadyExistsException;
 import org.ateam.ateam.domain.linko.model.Linko;
-import org.ateam.ateam.domain.linko.model.request.LinkoProfileReqDTO;
+import org.ateam.ateam.domain.linko.model.request.LinkoProfileRequest;
 import org.ateam.ateam.domain.linko.repository.LinkoRepository;
-import org.ateam.ateam.domain.member.entity.Member;
+import org.ateam.ateam.domain.member.entity.member.Member;
 import org.ateam.ateam.domain.member.exception.MemberNotFoundException;
-import org.ateam.ateam.domain.member.repository.MemberRepository;
+import org.ateam.ateam.domain.member.repository.member.MemberRepository;
 import org.ateam.ateam.global.dto.PagedResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +29,7 @@ public class LinkoProfileService {
   private final MemberRepository memberRepository;
 
   @Transactional
-  public void createProfile(Long memberId, LinkoProfileReqDTO request) {
+  public void createProfile(Long memberId, LinkoProfileRequest request) {
     if (repository.existsByMember_Id(memberId)) {
       throw new ProfileAlreadyExistsException();
     }
@@ -65,7 +65,7 @@ public class LinkoProfileService {
   }
 
   @Transactional
-  public void updateProfile(Long linkoId, Long memberId, LinkoProfileReqDTO request) {
+  public void updateProfile(Long linkoId, Long memberId, LinkoProfileRequest request) {
     Linko linko = repository.findById(linkoId).orElseThrow(LinkoProfileNotFoundException::new);
 
     // 본인 확인

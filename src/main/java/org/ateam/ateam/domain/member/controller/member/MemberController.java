@@ -1,12 +1,12 @@
-package org.ateam.ateam.domain.member.controller;
+package org.ateam.ateam.domain.member.controller.member;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.member.dto.req.MemberReqDTO;
+import org.ateam.ateam.domain.member.dto.request.MemberRequest;
 import org.ateam.ateam.domain.member.enums.CategoryOfBusiness;
-import org.ateam.ateam.domain.member.service.MemberService;
+import org.ateam.ateam.domain.member.service.member.MemberService;
 import org.ateam.ateam.global.auth.context.UserContext;
 import org.ateam.ateam.global.config.swagger.ApiErrorCodeExamples;
 import org.ateam.ateam.global.dto.PagedResponse;
@@ -33,7 +33,7 @@ public class MemberController {
   @ApiErrorCodeExamples({ErrorCode.INVALID_RATE_AMOUNT, ErrorCode.LINKTINGROLE_NOT_FOUND})
   @GetMapping("/api/members/profiles")
   public ResponseDto<PagedResponse<?>> getMemberList(
-      @Valid @ModelAttribute MemberReqDTO.ProfileListDTO dto, Pageable pageable) {
+      @Valid @ModelAttribute MemberRequest.ProfileListDTO dto, Pageable pageable) {
     PagedResponse<?> result = memberService.getProfileList(dto, pageable);
 
     return ResponseDto.of(HttpStatus.OK, null, "회원 프로필 목록 조회 성공", result);
@@ -49,18 +49,4 @@ public class MemberController {
         memberService.getCategoryOfBusiness(userId, linkTingRole));
   }
 
-  //  @GetMapping("/api/members/category-list")
-  //    public ResponseDto<List<CategoryOfBusiness>> getCategoryOfBusinessList(@RequestParam
-  // CategoryOfBusiness categoryOfBusiness){
-  //      return ResponseDto.of(HttpStatus.OK, null, "카테고리 목록 조회 성공",
-  // memberService.getCategoryOfBusinessList(categoryOfBusiness));
-  //
-  //  }
-
-  //  @GetMapping("/api/members/top")
-  //    public ResponseDto<PagedResponse<MemberResDTO.ProfileListDTO>> getMemberTopList(@RequestBody
-  // MemberReqDTO.TopListDTO dto){
-  //
-  //
-  //  }
 }

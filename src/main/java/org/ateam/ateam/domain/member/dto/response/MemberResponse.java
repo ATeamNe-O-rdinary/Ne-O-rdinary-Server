@@ -1,11 +1,11 @@
-package org.ateam.ateam.domain.member.dto.res;
+package org.ateam.ateam.domain.member.dto.response;
 
 import java.util.Set;
 import lombok.Builder;
 import org.ateam.ateam.domain.linker.model.enums.*;
 import org.ateam.ateam.domain.member.enums.*;
 
-public class MemberResDTO {
+public class MemberResponse {
 
   @Builder
   public record ProfileListDTO(Long memberId, String username, String profileImage) {}

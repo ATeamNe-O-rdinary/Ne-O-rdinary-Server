@@ -1,7 +1,7 @@
 package org.ateam.ateam.domain.link.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.ateam.ateam.domain.link.dto.req.LinkReqDTO;
+import org.ateam.ateam.domain.link.dto.request.LinkRequest;
 import org.ateam.ateam.domain.link.repository.LinkRepository;
 import org.ateam.ateam.domain.link.service.LinkService;
 import org.ateam.ateam.domain.linker.repository.LinkerRepository;
@@ -18,10 +18,6 @@ public class LinkServiceImpl implements LinkService {
 
   @Override
   @Transactional
-  public void doLink(LinkReqDTO.linkDTO dto) {
-    //        Linker linker = linkerRepository.findById(dto.linkerId());
-    //        Linko linko = linkoRepository.findById(dto.linkoId());
-    //        linkRepository.save(LinkConverter.toLinkEntity(linker, linko));
-
+  public void doLink(LinkRequest.linkDTO dto) {
   }
 }
