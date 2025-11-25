@@ -37,8 +37,6 @@ public interface LinkoRepository extends JpaRepository<Linko, Long> {
 
   boolean existsByMember_Id(Long memberId);
 
-
-
   @Query(
       value =
           "SELECT l "
