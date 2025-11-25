@@ -27,7 +27,7 @@
 - **External API**: 소셜 로그인 (OAuth)
 
 ## 시스템 아키텍처
-![img.png](img/img.png)
+<img src="img/img.png" width="75%" alt="LinkTing 시스템 아키텍처" />
 
 개발/배포 환경을 분리하여 Blue-Green 배포 전략을 통해 무중단 배포를 구현했습니다.
 
